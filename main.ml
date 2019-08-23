@@ -103,6 +103,7 @@ let ignore = fun s ->
     let msg = "Warning: unrecognizable argument '" ^ s ^ "' is ignored" in
     Log.prerrln 0 msg
 
+(* main entrance *)
 let _ =
     Arg.parse args ignore usage_msg;
     solve !srcpath
