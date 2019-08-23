@@ -1,0 +1,71 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> br (set_x_one (IncCounter Zero (Loop end))) end.
+IncCounter n f -> br (RunLoop n f) (IncCounter (Succ n) f).
+RunLoop n f -> n Decr (set_x_zero f).
+Zero f x -> x.
+Succ n f x -> f (n f x).
+Loop k -> loop (Loop k).
+Decr k -> decr k.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 set_x_one -> (1, q0).
+q0 end -> \true.
+q0 set_x_zero -> (1, q2).
+q0 decr -> (1, q1).
+q2 loop -> (1, q2).
+q1 br -> (1, q1) \land (2, q1).
+q1 set_x_zero -> (1, q2).
+q1 decr -> (1, q1).
+priorities:
+q0 -> 0.
+q2 -> 0.
+q1 -> 1.
+<< original HORS ***/
+%HES
+S#1 =_\mu S#0;
+F'38#1 =_\mu F'38#0;
+IncCounter#1 =_\mu IncCounter#0;
+F'39#1 =_\mu F'39#0;
+RunLoop#1 =_\mu RunLoop#0;
+Zero#1 =_\mu Zero#0;
+Succ#1 =_\mu Succ#0;
+Loop#1 =_\mu Loop#0;
+Decr#1 =_\mu Decr#0;
+S#0 =_\nu br (set_x_one F'38#0 F'38#1) (set_x_one F'38#1 F'38#1) end end;
+F'38#0 =_\nu IncCounter#0 Zero#0 Zero#1 (Loop#0 end end) (Loop#1 end end);
+IncCounter#0 =_\nu \lambda n#0. \lambda n#1. \lambda f#0. \lambda f#1. br (RunLoop#0 n#0 n#1 f#0 f#1) (RunLoop#1 n#1 n#1 f#1 f#1) (F'39#0 n#0 n#1 f#0 f#1) (F'39#1 n#1 n#1 f#1 f#1);
+F'39#0 =_\nu \lambda n#0. \lambda n#1. \lambda f#0. \lambda f#1. IncCounter#0 (Succ#0 n#0 n#1) (Succ#1 n#1 n#1) f#0 f#1;
+RunLoop#0 =_\nu \lambda n#0. \lambda n#1. \lambda f#0. \lambda f#1. n#0 Decr#0 Decr#1 (set_x_zero f#0 f#1) (set_x_zero f#1 f#1);
+Zero#0 =_\nu \lambda f#0. \lambda f#1. \lambda x#0. \lambda x#1. x#0;
+Succ#0 =_\nu \lambda n#0. \lambda n#1. \lambda f#0. \lambda f#1. \lambda x#0. \lambda x#1. f#0 (n#0 f#0 f#1 x#0 x#1) (n#1 f#1 f#1 x#1 x#1);
+Loop#0 =_\nu \lambda k#0. \lambda k#1. loop (Loop#0 k#0 k#1) (Loop#1 k#1 k#1);
+Decr#0 =_\nu \lambda k#0. \lambda k#1. decr k#0 k#1;
+br =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <br#0>([$1]y$1#0 \land [$2]y$2#0) \lor <br#1>([$1]y$1#1 \land [$2]y$2#1);
+set_x_one =_\nu \lambda y$1#0. \lambda y$1#1. <set_x_one#0>[$1]y$1#0 \lor <set_x_one#1>[$1]y$1#1;
+end =_\nu <end#0>\true \lor <end#1>\true;
+set_x_zero =_\nu \lambda y$1#0. \lambda y$1#1. <set_x_zero#0>[$1]y$1#0 \lor <set_x_zero#1>[$1]y$1#1;
+loop =_\nu \lambda y$1#0. \lambda y$1#1. <loop#0>[$1]y$1#0 \lor <loop#1>[$1]y$1#1;
+decr =_\nu \lambda y$1#0. \lambda y$1#1. <decr#0>[$1]y$1#0 \lor <decr#1>[$1]y$1#1;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 set_x_one#0 -> $1@q0.
+@q0 end#0 -> true.
+@q0 set_x_zero#0 -> $1@q2.
+@q0 decr#0 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q0 $1 -> @q0.
+$1@q2 $1 -> @q2.
+@q2 loop#0 -> $1@q2.
+$1@q1 $1 -> @q1.
+@q1 br#1 -> $1@q1&$2@q1.
+@q1 set_x_zero#1 -> $1@q2.
+@q1 decr#1 -> $1@q1.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.

@@ -1,0 +1,124 @@
+/*** original HORS >>
+%HORS
+S -> GenConsume Newr Read Close (GenConsume Neww Write Close end).
+GenConsume gen use finish k -> gen (Use use finish k).
+Use use finish k x -> Loop use x (finish x k).
+Loop use x k -> br k (Loop use x (use x k)).
+I x y -> x y.
+K x y -> y.
+Newr k -> br (newr (k I)) (k K).
+Neww k -> br (neww (k I)) (k K).
+Close x k -> x Close_gen k.
+Read x k -> x Read_gen k.
+Write y k -> y Write_gen k.
+Close_gen gen1878 -> close gen1878.
+Read_gen gen1879 -> read gen1879.
+Write_gen gen1880 -> write gen1880.
+%APT
+intial state: q0
+transitions:
+q0 end -> \true.
+q0 br -> (2, q0) \land (1, q0).
+q0 newr -> (1, qnewr).
+q0 neww -> (1, q0).
+q0 close -> (1, q0).
+q0 read -> (1, q0).
+q0 write -> (1, q0).
+qnewr end -> \true.
+qnewr br -> (2, qnewr) \land (1, qnewr).
+qnewr neww -> (1, qnewr).
+qnewr close -> (1, qnewr).
+qnewr read -> (1, qrd).
+qnewr write -> (1, qnewr).
+qrd close -> (1, qtrue).
+qrd read -> (1, qrd).
+qtrue end -> \true.
+qtrue br -> (2, qtrue) \land (1, qtrue).
+qtrue newr -> (1, qtrue).
+qtrue neww -> (1, qtrue).
+qtrue close -> (1, qtrue).
+qtrue read -> (1, qtrue).
+qtrue write -> (1, qtrue).
+priorities:
+q0 -> 2.
+qnewr -> 2.
+qrd -> 1.
+qtrue -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+GenConsume#2 =_\nu GenConsume#1;
+Use#2 =_\nu Use#1;
+Loop#2 =_\nu Loop#1;
+F'74#2 =_\nu F'74#1;
+I#2 =_\nu I#1;
+K#2 =_\nu K#1;
+Newr#2 =_\nu Newr#1;
+F'75#2 =_\nu F'75#1;
+Neww#2 =_\nu Neww#1;
+F'76#2 =_\nu F'76#1;
+Close#2 =_\nu Close#1;
+Read#2 =_\nu Read#1;
+Write#2 =_\nu Write#1;
+Close_gen#2 =_\nu Close_gen#1;
+Read_gen#2 =_\nu Read_gen#1;
+Write_gen#2 =_\nu Write_gen#1;
+S#1 =_\mu GenConsume#1 Newr#1 Newr#2 Read#1 Read#2 Close#1 Close#2 (GenConsume#1 Neww#1 Neww#2 Write#1 Write#2 Close#1 Close#2 end end) (GenConsume#2 Neww#2 Neww#2 Write#2 Write#2 Close#2 Close#2 end end);
+GenConsume#1 =_\mu \lambda gen#1. \lambda gen#2. \lambda use#1. \lambda use#2. \lambda finish#1. \lambda finish#2. \lambda k#1. \lambda k#2. gen#1 (Use#1 use#1 use#2 finish#1 finish#2 k#1 k#2) (Use#2 use#2 use#2 finish#2 finish#2 k#2 k#2);
+Use#1 =_\mu \lambda use#1. \lambda use#2. \lambda finish#1. \lambda finish#2. \lambda k#1. \lambda k#2. \lambda x#1. \lambda x#2. Loop#1 use#1 use#2 x#1 x#2 (finish#1 x#1 x#2 k#1 k#2) (finish#2 x#2 x#2 k#2 k#2);
+Loop#1 =_\mu \lambda use#1. \lambda use#2. \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. br k#1 k#2 (F'74#1 use#1 use#2 x#1 x#2 k#1 k#2) (F'74#2 use#2 use#2 x#2 x#2 k#2 k#2);
+F'74#1 =_\mu \lambda use#1. \lambda use#2. \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. Loop#1 use#1 use#2 x#1 x#2 (use#1 x#1 x#2 k#1 k#2) (use#2 x#2 x#2 k#2 k#2);
+I#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1 y#1 y#2;
+K#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+Newr#1 =_\mu \lambda k#1. \lambda k#2. br (F'75#1 k#1 k#2) (F'75#2 k#2 k#2) (k#1 K#1 K#2) (k#2 K#2 K#2);
+F'75#1 =_\mu \lambda k#1. \lambda k#2. newr (k#1 I#1 I#2) (k#2 I#2 I#2);
+Neww#1 =_\mu \lambda k#1. \lambda k#2. br (F'76#1 k#1 k#2) (F'76#2 k#2 k#2) (k#1 K#1 K#2) (k#2 K#2 K#2);
+F'76#1 =_\mu \lambda k#1. \lambda k#2. neww (k#1 I#1 I#2) (k#2 I#2 I#2);
+Close#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Close_gen#1 Close_gen#2 k#1 k#2;
+Read#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Read_gen#1 Read_gen#2 k#1 k#2;
+Write#1 =_\mu \lambda y#1. \lambda y#2. \lambda k#1. \lambda k#2. y#1 Write_gen#1 Write_gen#2 k#1 k#2;
+Close_gen#1 =_\mu \lambda gen1878#1. \lambda gen1878#2. close gen1878#1 gen1878#2;
+Read_gen#1 =_\mu \lambda gen1879#1. \lambda gen1879#2. read gen1879#1 gen1879#2;
+Write_gen#1 =_\mu \lambda gen1880#1. \lambda gen1880#2. write gen1880#1 gen1880#2;
+end =_\nu <end#1>\true \lor <end#2>\true;
+br =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. <br#1>([$1]y$1#1 \land [$2]y$2#1) \lor <br#2>([$1]y$1#2 \land [$2]y$2#2);
+newr =_\nu \lambda y$1#1. \lambda y$1#2. <newr#1>[$1]y$1#1 \lor <newr#2>[$1]y$1#2;
+neww =_\nu \lambda y$1#1. \lambda y$1#2. <neww#1>[$1]y$1#1 \lor <neww#2>[$1]y$1#2;
+close =_\nu \lambda y$1#1. \lambda y$1#2. <close#1>[$1]y$1#1 \lor <close#2>[$1]y$1#2;
+read =_\nu \lambda y$1#1. \lambda y$1#2. <read#1>[$1]y$1#1 \lor <read#2>[$1]y$1#2;
+write =_\nu \lambda y$1#1. \lambda y$1#2. <write#1>[$1]y$1#1 \lor <write#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q0 end#2 -> true.
+@q0 br#2 -> $1@q0&$2@q0.
+@q0 newr#2 -> $1@qnewr.
+@q0 neww#2 -> $1@q0.
+@q0 close#2 -> $1@q0.
+@q0 read#2 -> $1@q0.
+@q0 write#2 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@qnewr $1 -> @qnewr.
+@qnewr end#2 -> true.
+@qnewr br#2 -> $1@qnewr&$2@qnewr.
+@qnewr neww#2 -> $1@qnewr.
+@qnewr close#2 -> $1@qnewr.
+@qnewr read#2 -> $1@qrd.
+@qnewr write#2 -> $1@qnewr.
+$1@q0 $1 -> @q0.
+$1@qnewr&$2@qnewr $1 -> @qnewr.
+$1@qnewr&$2@qnewr $2 -> @qnewr.
+$1@qrd $1 -> @qrd.
+@qrd close#1 -> $1@qtrue.
+@qrd read#1 -> $1@qrd.
+$1@qtrue $1 -> @qtrue.
+@qtrue end#2 -> true.
+@qtrue br#2 -> $1@qtrue&$2@qtrue.
+@qtrue newr#2 -> $1@qtrue.
+@qtrue neww#2 -> $1@qtrue.
+@qtrue close#2 -> $1@qtrue.
+@qtrue read#2 -> $1@qtrue.
+@qtrue write#2 -> $1@qtrue.
+$1@qtrue&$2@qtrue $1 -> @qtrue.
+$1@qtrue&$2@qtrue $2 -> @qtrue.

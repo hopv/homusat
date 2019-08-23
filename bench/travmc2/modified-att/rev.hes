@@ -1,0 +1,107 @@
+/*** original HORS >>
+%HORS
+S -> Rev Empty.
+Empty x -> x.
+Rev x -> case (endI (RevE x)) (aI (Rev (Concat A_gen x))) (bI (Rev (Concat B_gen x))).
+RevE x -> x end.
+Concat x y z -> x (y z).
+A_gen gen3988 -> a gen3988.
+B_gen gen3989 -> b gen3989.
+%APT
+intial state: q0
+transitions:
+q0 case -> (3, q0) \land (2, q0) \land (1, q0).
+q0 endI -> (1, q2).
+q0 aI -> (1, q0).
+q0 bI -> (1, q1).
+q1 case -> (3, q1) \land (2, q1) \land (1, q1).
+q1 endI -> (1, q0) \lor (1, q2).
+q1 aI -> (1, qany).
+q1 bI -> (1, q1).
+q2 case -> (3, q2) \land (2, q2) \land (1, q2).
+q2 end -> \true.
+q2 a -> (1, q3).
+q2 b -> (1, q2).
+qany case -> (3, qany) \land (2, qany) \land (1, qany).
+qany endI -> (1, qany).
+qany aI -> (1, qany).
+qany bI -> (1, qany).
+qany end -> \true.
+qany a -> (1, qany).
+qany b -> (1, qany).
+q3 case -> (3, q3) \land (2, q3) \land (1, q3).
+q3 end -> \true.
+q3 a -> (1, q3).
+priorities:
+q0 -> 2.
+q1 -> 2.
+q2 -> 2.
+qany -> 2.
+q3 -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu Rev#2 Empty#2;
+Empty#2 =_\nu \lambda x#2. x#2;
+Rev#2 =_\nu \lambda x#2. case (F'39#2 x#2) (F'41#2 x#2) (F'43#2 x#2);
+F'43#2 =_\nu \lambda x#2. bI (F'42#2 x#2);
+F'42#2 =_\nu \lambda x#2. Rev#2 (Concat#2 B_gen#2 x#2);
+F'41#2 =_\nu \lambda x#2. aI (F'40#2 x#2);
+F'40#2 =_\nu \lambda x#2. Rev#2 (Concat#2 A_gen#2 x#2);
+F'39#2 =_\nu \lambda x#2. endI (RevE#2 x#2);
+RevE#2 =_\nu \lambda x#2. x#2 end;
+Concat#2 =_\nu \lambda x#2. \lambda y#2. \lambda z#2. x#2 (y#2 z#2);
+A_gen#2 =_\nu \lambda gen3988#2. a gen3988#2;
+B_gen#2 =_\nu \lambda gen3989#2. b gen3989#2;
+case =_\nu \lambda y$1#2. \lambda y$2#2. \lambda y$3#2. <case#2>([$1]y$1#2 \land [$2]y$2#2 \land [$3]y$3#2);
+endI =_\nu \lambda y$1#2. <endI#2>[$1]y$1#2;
+aI =_\nu \lambda y$1#2. <aI#2>[$1]y$1#2;
+bI =_\nu \lambda y$1#2. <bI#2>[$1]y$1#2;
+end =_\nu <end#2>\true;
+a =_\nu \lambda y$1#2. <a#2>[$1]y$1#2;
+b =_\nu \lambda y$1#2. <b#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q0 case#2 -> $1@q0&$2@q0&$3@q0.
+@q0 endI#2 -> $1@q2.
+@q0 aI#2 -> $1@q0.
+@q0 bI#2 -> $1@q1.
+$1@q0&$2@q0&$3@q0 $1 -> @q0.
+$1@q0&$2@q0&$3@q0 $2 -> @q0.
+$1@q0&$2@q0&$3@q0 $3 -> @q0.
+$1@q2 $1 -> @q2.
+@q2 case#2 -> $1@q2&$2@q2&$3@q2.
+@q2 end#2 -> true.
+@q2 a#2 -> $1@q3.
+@q2 b#2 -> $1@q2.
+$1@q0 $1 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 case#2 -> $1@q1&$2@q1&$3@q1.
+@q1 endI#2 -> $1@q2.
+@q1 endI#2 -> $1@q0.
+@q1 aI#2 -> $1@qany.
+@q1 bI#2 -> $1@q1.
+$1@q1&$2@q1&$3@q1 $1 -> @q1.
+$1@q1&$2@q1&$3@q1 $2 -> @q1.
+$1@q1&$2@q1&$3@q1 $3 -> @q1.
+$1@qany $1 -> @qany.
+@qany case#2 -> $1@qany&$2@qany&$3@qany.
+@qany endI#2 -> $1@qany.
+@qany aI#2 -> $1@qany.
+@qany bI#2 -> $1@qany.
+@qany end#2 -> true.
+@qany a#2 -> $1@qany.
+@qany b#2 -> $1@qany.
+$1@q2&$2@q2&$3@q2 $1 -> @q2.
+$1@q2&$2@q2&$3@q2 $2 -> @q2.
+$1@q2&$2@q2&$3@q2 $3 -> @q2.
+$1@q3 $1 -> @q3.
+@q3 case#2 -> $1@q3&$2@q3&$3@q3.
+@q3 end#2 -> true.
+@q3 a#2 -> $1@q3.
+$1@qany&$2@qany&$3@qany $1 -> @qany.
+$1@qany&$2@qany&$3@qany $2 -> @qany.
+$1@qany&$2@qany&$3@qany $3 -> @qany.
+$1@q3&$2@q3&$3@q3 $1 -> @q3.
+$1@q3&$2@q3&$3@q3 $2 -> @q3.
+$1@q3&$2@q3&$3@q3 $3 -> @q3.

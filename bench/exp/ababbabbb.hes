@@ -1,0 +1,53 @@
+// from horsatp/input4
+/*** original HORS >>
+%HORS
+S -> F True.
+True x y -> x.
+False x y -> y.
+Br x y -> br x y.
+F i -> a (i (G Br i) (G False i)).
+G i j -> b (j (F i) (G i Br)).
+%APT
+intial state: q0
+transitions:
+q1 br -> (1, q0).
+q1 a -> (1, q1).
+q1 b -> (1, q0).
+q0 br -> (1, q0).
+q0 a -> (1, q1).
+q0 b -> (1, q0).
+priorities:
+q1 -> 1.
+q0 -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+True#2 =_\nu True#1;
+False#2 =_\nu False#1;
+Br#2 =_\nu Br#1;
+F#2 =_\nu F#1;
+F'30#2 =_\nu F'30#1;
+G#2 =_\nu G#1;
+F'31#2 =_\nu F'31#1;
+S#1 =_\mu F#1 True#1 True#2;
+True#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1;
+False#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+Br#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. br x#1 x#2 y#1 y#2;
+F#1 =_\mu \lambda i#1. \lambda i#2. a (F'30#1 i#1 i#2) (F'30#2 i#2 i#2);
+F'30#1 =_\mu \lambda i#1. \lambda i#2. i#1 (G#1 Br#1 Br#2 i#1 i#2) (G#2 Br#2 Br#2 i#2 i#2) (G#1 False#1 False#2 i#1 i#2) (G#2 False#2 False#2 i#2 i#2);
+G#1 =_\mu \lambda i#1. \lambda i#2. \lambda j#1. \lambda j#2. b (F'31#1 i#1 i#2 j#1 j#2) (F'31#2 i#2 i#2 j#2 j#2);
+F'31#1 =_\mu \lambda i#1. \lambda i#2. \lambda j#1. \lambda j#2. j#1 (F#1 i#1 i#2) (F#2 i#2 i#2) (G#1 i#1 i#2 Br#1 Br#2) (G#2 i#2 i#2 Br#2 Br#2);
+br =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. <br#1>([$1]y$1#1 \land [$2]y$2#1) \lor <br#2>([$1]y$1#2 \land [$2]y$2#2);
+a =_\nu \lambda y$1#1. \lambda y$1#2. <a#1>[$1]y$1#1 \lor <a#2>[$1]y$1#2;
+b =_\nu \lambda y$1#1. \lambda y$1#2. <b#1>[$1]y$1#1 \lor <b#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q1 br#1 -> $1@q0.
+@q1 a#1 -> $1@q1.
+@q1 b#1 -> $1@q0.
+$1@q0 $1 -> @q0.
+@q0 br#2 -> $1@q0.
+@q0 a#2 -> $1@q1.
+@q0 b#2 -> $1@q0.
+$1@q1 $1 -> @q1.

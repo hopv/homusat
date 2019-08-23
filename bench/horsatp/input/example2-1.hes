@@ -1,0 +1,37 @@
+/*** original HORS >>
+%HORS
+S -> F c.
+F x -> a x (F (b x)).
+%APT
+intial state: q0
+transitions:
+q0 c -> \true.
+q0 a -> (1, q0) \land (2, q0).
+q0 b -> (1, q1).
+q1 c -> \true.
+q1 b -> (1, q1).
+priorities:
+q0 -> 0.
+q1 -> 1.
+<< original HORS ***/
+%HES
+S#1 =_\mu S#0;
+F#1 =_\mu F#0;
+F'11#1 =_\mu F'11#0;
+S#0 =_\nu F#0 c c;
+F#0 =_\nu \lambda x#0. \lambda x#1. a x#0 x#1 (F'11#0 x#0 x#1) (F'11#1 x#1 x#1);
+F'11#0 =_\nu \lambda x#0. \lambda x#1. F#0 (b x#0 x#1) (b x#1 x#1);
+c =_\nu <c#0>\true \lor <c#1>\true;
+a =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <a#0>([$1]y$1#0 \land [$2]y$2#0) \lor <a#1>([$1]y$1#1 \land [$2]y$2#1);
+b =_\nu \lambda y$1#0. \lambda y$1#1. <b#0>[$1]y$1#0 \lor <b#1>[$1]y$1#1;
+%LTS
+initial state: @q0
+transitions:
+@q0 c#0 -> true.
+@q0 a#0 -> $1@q0&$2@q0.
+@q0 b#0 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 c#1 -> true.
+@q1 b#1 -> $1@q1.

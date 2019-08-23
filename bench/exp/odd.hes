@@ -1,0 +1,47 @@
+// from horsat2/examples
+/*** original HORS >>
+%HORS
+S -> F One Three.
+F x y -> br (x e) (F y (Plus x y)).
+Plus x y z -> x (y z).
+One z -> s z.
+Three z -> s (s (s z)).
+%APT
+intial state: q0
+transitions:
+odd br -> \false.
+odd e -> \false.
+odd s -> (1, even).
+q0 br -> (1, odd) \land (2, q0).
+q0 e -> \false.
+q0 s -> \false.
+even br -> \false.
+even e -> \true.
+even s -> (1, odd).
+priorities:
+odd -> 0.
+q0 -> 0.
+even -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu F#0 One#0 Three#0;
+F#0 =_\nu \lambda x#0. \lambda y#0. br (x#0 e) (F'26#0 x#0 y#0);
+F'26#0 =_\nu \lambda x#0. \lambda y#0. F#0 y#0 (Plus#0 x#0 y#0);
+Plus#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. x#0 (y#0 z#0);
+One#0 =_\nu \lambda z#0. s z#0;
+Three#0 =_\nu \lambda z#0. s (F'27#0 z#0);
+F'27#0 =_\nu \lambda z#0. s (s z#0);
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+e =_\nu <e#0>\true;
+s =_\nu \lambda y$1#0. <s#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@odd s#0 -> $1@even.
+$1@even $1 -> @even.
+@even e#0 -> true.
+@even s#0 -> $1@odd.
+@q0 br#0 -> $1@odd&$2@q0.
+$1@odd&$2@q0 $1 -> @odd.
+$1@odd&$2@q0 $2 -> @q0.
+$1@odd $1 -> @odd.

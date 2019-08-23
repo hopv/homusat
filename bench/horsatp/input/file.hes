@@ -1,0 +1,73 @@
+/*** original HORS >>
+%HORS
+S -> F end.
+F k -> Read (C k).
+C k b -> b (close k) (F k).
+Read k -> br (r_eof (k True)) (read (k False)).
+True x y -> x.
+False x y -> y.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 r_eof -> (1, q2).
+q0 read -> (1, q1).
+q1 br -> (1, q1) \land (2, q1).
+q1 r_eof -> (1, q2).
+q1 read -> (1, q1).
+q2 close -> (1, q3).
+q2 br -> (1, q2) \land (2, q2).
+q3 end -> \true.
+q3 br -> (1, q3) \land (2, q3).
+priorities:
+q0 -> 1.
+q1 -> 2.
+q2 -> 1.
+q3 -> 1.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+F#2 =_\nu F#1;
+C#2 =_\nu C#1;
+Read#2 =_\nu Read#1;
+F'34#2 =_\nu F'34#1;
+F'33#2 =_\nu F'33#1;
+True#2 =_\nu True#1;
+False#2 =_\nu False#1;
+S#1 =_\mu F#1 end end;
+F#1 =_\mu \lambda k#1. \lambda k#2. Read#1 (C#1 k#1 k#2) (C#2 k#2 k#2);
+C#1 =_\mu \lambda k#1. \lambda k#2. \lambda b#1. \lambda b#2. b#1 (close k#1 k#2) (close k#2 k#2) (F#1 k#1 k#2) (F#2 k#2 k#2);
+Read#1 =_\mu \lambda k#1. \lambda k#2. br (F'33#1 k#1 k#2) (F'33#2 k#2 k#2) (F'34#1 k#1 k#2) (F'34#2 k#2 k#2);
+F'34#1 =_\mu \lambda k#1. \lambda k#2. read (k#1 False#1 False#2) (k#2 False#2 False#2);
+F'33#1 =_\mu \lambda k#1. \lambda k#2. r_eof (k#1 True#1 True#2) (k#2 True#2 True#2);
+True#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1;
+False#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+end =_\nu <end#1>\true \lor <end#2>\true;
+close =_\nu \lambda y$1#1. \lambda y$1#2. <close#1>[$1]y$1#1 \lor <close#2>[$1]y$1#2;
+br =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. <br#1>([$1]y$1#1 \land [$2]y$2#1) \lor <br#2>([$1]y$1#2 \land [$2]y$2#2);
+r_eof =_\nu \lambda y$1#1. \lambda y$1#2. <r_eof#1>[$1]y$1#1 \lor <r_eof#2>[$1]y$1#2;
+read =_\nu \lambda y$1#1. \lambda y$1#2. <read#1>[$1]y$1#1 \lor <read#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#1 -> $1@q0&$2@q0.
+@q0 r_eof#1 -> $1@q2.
+@q0 read#1 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q2 $1 -> @q2.
+@q2 close#1 -> $1@q3.
+@q2 br#1 -> $1@q2&$2@q2.
+$1@q1 $1 -> @q1.
+@q1 br#2 -> $1@q1&$2@q1.
+@q1 r_eof#2 -> $1@q2.
+@q1 read#2 -> $1@q1.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q3 $1 -> @q3.
+@q3 end#1 -> true.
+@q3 br#1 -> $1@q3&$2@q3.
+$1@q2&$2@q2 $1 -> @q2.
+$1@q2&$2@q2 $2 -> @q2.
+$1@q3&$2@q3 $1 -> @q3.
+$1@q3&$2@q3 $2 -> @q3.

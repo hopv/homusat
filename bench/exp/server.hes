@@ -1,0 +1,47 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> Loop end.
+Loop k -> Accept (Handle (Send (Loop k))).
+Accept k -> accept k.
+Handle k -> handle (Handle k).
+Send k -> send k.
+%APT
+intial state: q0
+transitions:
+q1 handle -> (1, q1).
+q1 send -> (1, q0).
+q0 accept -> (1, q1).
+q0 handle -> (1, q0).
+priorities:
+q1 -> 1.
+q0 -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+Loop#2 =_\nu Loop#1;
+F'22#2 =_\nu F'22#1;
+F'21#2 =_\nu F'21#1;
+Accept#2 =_\nu Accept#1;
+Handle#2 =_\nu Handle#1;
+Send#2 =_\nu Send#1;
+S#1 =_\mu Loop#1 end end;
+Loop#1 =_\mu \lambda k#1. \lambda k#2. Accept#1 (F'22#1 k#1 k#2) (F'22#2 k#2 k#2);
+F'22#1 =_\mu \lambda k#1. \lambda k#2. Handle#1 (F'21#1 k#1 k#2) (F'21#2 k#2 k#2);
+F'21#1 =_\mu \lambda k#1. \lambda k#2. Send#1 (Loop#1 k#1 k#2) (Loop#2 k#2 k#2);
+Accept#1 =_\mu \lambda k#1. \lambda k#2. accept k#1 k#2;
+Handle#1 =_\mu \lambda k#1. \lambda k#2. handle (Handle#1 k#1 k#2) (Handle#2 k#2 k#2);
+Send#1 =_\mu \lambda k#1. \lambda k#2. send k#1 k#2;
+end =_\nu <end#1>\true \lor <end#2>\true;
+accept =_\nu \lambda y$1#1. \lambda y$1#2. <accept#1>[$1]y$1#1 \lor <accept#2>[$1]y$1#2;
+handle =_\nu \lambda y$1#1. \lambda y$1#2. <handle#1>[$1]y$1#1 \lor <handle#2>[$1]y$1#2;
+send =_\nu \lambda y$1#1. \lambda y$1#2. <send#1>[$1]y$1#1 \lor <send#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q1 handle#1 -> $1@q1.
+@q1 send#1 -> $1@q0.
+$1@q1 $1 -> @q1.
+$1@q0 $1 -> @q0.
+@q0 accept#2 -> $1@q1.
+@q0 handle#2 -> $1@q0.

@@ -1,0 +1,122 @@
+/*** original HORS >>
+%HORS
+S -> Newr C1.
+C1 x -> Neww (C2 x).
+C2 x y -> F x y Zero end.
+F x y n k -> br (Read x (F x y (Succ n) k)) (Closer x (G y n k)).
+G y n k -> n (Write y) (Closew y k).
+I x y -> x y.
+K x y -> y.
+Newr k -> newr (k I).
+Neww k -> neww (k I).
+Closer x k -> x Closer' k.
+Closew x k -> x Closew' k.
+Read x k -> x Read' k.
+Write x k -> x Write' k.
+Closer' k -> closer k.
+Closew' k -> closew k.
+Read' k -> read k.
+Write' k -> write k.
+Zero f x -> x.
+Succ n f x -> f (n f x).
+%APT
+intial state: q0
+transitions:
+q0 end -> \true.
+q0 br -> (1, q0) \land (2, q0).
+q0 newr -> (1, q0).
+q0 neww -> (1, q0).
+q0 closer -> (1, q1) \land (1, q0).
+q0 closew -> (1, q0).
+q0 read -> (1, q0).
+q0 write -> (1, q0).
+q1 br -> (1, q1) \land (2, q1).
+q1 newr -> (1, q1).
+q1 neww -> (1, q1).
+q1 closer -> (1, q1).
+q1 closew -> \true.
+q1 read -> (1, q1).
+q1 write -> (1, q1).
+priorities:
+q0 -> 0.
+q1 -> 1.
+<< original HORS ***/
+%HES
+S#1 =_\mu S#0;
+C1#1 =_\mu C1#0;
+C2#1 =_\mu C2#0;
+F#1 =_\mu F#0;
+F'88#1 =_\mu F'88#0;
+F'87#1 =_\mu F'87#0;
+F'86#1 =_\mu F'86#0;
+G#1 =_\mu G#0;
+I#1 =_\mu I#0;
+K#1 =_\mu K#0;
+Newr#1 =_\mu Newr#0;
+Neww#1 =_\mu Neww#0;
+Closer#1 =_\mu Closer#0;
+Closew#1 =_\mu Closew#0;
+Read#1 =_\mu Read#0;
+Write#1 =_\mu Write#0;
+Closer'#1 =_\mu Closer'#0;
+Closew'#1 =_\mu Closew'#0;
+Read'#1 =_\mu Read'#0;
+Write'#1 =_\mu Write'#0;
+Zero#1 =_\mu Zero#0;
+Succ#1 =_\mu Succ#0;
+S#0 =_\nu Newr#0 C1#0 C1#1;
+C1#0 =_\nu \lambda x#0. \lambda x#1. Neww#0 (C2#0 x#0 x#1) (C2#1 x#1 x#1);
+C2#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. F#0 x#0 x#1 y#0 y#1 Zero#0 Zero#1 end end;
+F#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda n#0. \lambda n#1. \lambda k#0. \lambda k#1. br (F'87#0 x#0 x#1 y#0 y#1 n#0 n#1 k#0 k#1) (F'87#1 x#1 x#1 y#1 y#1 n#1 n#1 k#1 k#1) (F'88#0 x#0 x#1 y#0 y#1 n#0 n#1 k#0 k#1) (F'88#1 x#1 x#1 y#1 y#1 n#1 n#1 k#1 k#1);
+F'88#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda n#0. \lambda n#1. \lambda k#0. \lambda k#1. Closer#0 x#0 x#1 (G#0 y#0 y#1 n#0 n#1 k#0 k#1) (G#1 y#1 y#1 n#1 n#1 k#1 k#1);
+F'87#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda n#0. \lambda n#1. \lambda k#0. \lambda k#1. Read#0 x#0 x#1 (F'86#0 x#0 x#1 y#0 y#1 n#0 n#1 k#0 k#1) (F'86#1 x#1 x#1 y#1 y#1 n#1 n#1 k#1 k#1);
+F'86#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda n#0. \lambda n#1. \lambda k#0. \lambda k#1. F#0 x#0 x#1 y#0 y#1 (Succ#0 n#0 n#1) (Succ#1 n#1 n#1) k#0 k#1;
+G#0 =_\nu \lambda y#0. \lambda y#1. \lambda n#0. \lambda n#1. \lambda k#0. \lambda k#1. n#0 (Write#0 y#0 y#1) (Write#1 y#1 y#1) (Closew#0 y#0 y#1 k#0 k#1) (Closew#1 y#1 y#1 k#1 k#1);
+I#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. x#0 y#0 y#1;
+K#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. y#0;
+Newr#0 =_\nu \lambda k#0. \lambda k#1. newr (k#0 I#0 I#1) (k#1 I#1 I#1);
+Neww#0 =_\nu \lambda k#0. \lambda k#1. neww (k#0 I#0 I#1) (k#1 I#1 I#1);
+Closer#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Closer'#0 Closer'#1 k#0 k#1;
+Closew#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Closew'#0 Closew'#1 k#0 k#1;
+Read#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Read'#0 Read'#1 k#0 k#1;
+Write#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Write'#0 Write'#1 k#0 k#1;
+Closer'#0 =_\nu \lambda k#0. \lambda k#1. closer k#0 k#1;
+Closew'#0 =_\nu \lambda k#0. \lambda k#1. closew k#0 k#1;
+Read'#0 =_\nu \lambda k#0. \lambda k#1. read k#0 k#1;
+Write'#0 =_\nu \lambda k#0. \lambda k#1. write k#0 k#1;
+Zero#0 =_\nu \lambda f#0. \lambda f#1. \lambda x#0. \lambda x#1. x#0;
+Succ#0 =_\nu \lambda n#0. \lambda n#1. \lambda f#0. \lambda f#1. \lambda x#0. \lambda x#1. f#0 (n#0 f#0 f#1 x#0 x#1) (n#1 f#1 f#1 x#1 x#1);
+end =_\nu <end#0>\true \lor <end#1>\true;
+br =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <br#0>([$1]y$1#0 \land [$2]y$2#0) \lor <br#1>([$1]y$1#1 \land [$2]y$2#1);
+newr =_\nu \lambda y$1#0. \lambda y$1#1. <newr#0>[$1]y$1#0 \lor <newr#1>[$1]y$1#1;
+neww =_\nu \lambda y$1#0. \lambda y$1#1. <neww#0>[$1]y$1#0 \lor <neww#1>[$1]y$1#1;
+closer =_\nu \lambda y$1#0. \lambda y$1#1. <closer#0>[$1]y$1#0 \lor <closer#1>[$1]y$1#1;
+closew =_\nu \lambda y$1#0. \lambda y$1#1. <closew#0>[$1]y$1#0 \lor <closew#1>[$1]y$1#1;
+read =_\nu \lambda y$1#0. \lambda y$1#1. <read#0>[$1]y$1#0 \lor <read#1>[$1]y$1#1;
+write =_\nu \lambda y$1#0. \lambda y$1#1. <write#0>[$1]y$1#0 \lor <write#1>[$1]y$1#1;
+%LTS
+initial state: @q0
+transitions:
+@q0 end#0 -> true.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 newr#0 -> $1@q0.
+@q0 neww#0 -> $1@q0.
+@q0 closer#0 -> $1@q0&$1@q1.
+@q0 closew#0 -> $1@q0.
+@q0 read#0 -> $1@q0.
+@q0 write#0 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q0 $1 -> @q0.
+$1@q0&$1@q1 $1 -> @q0.
+$1@q0&$1@q1 $1 -> @q1.
+@q1 br#1 -> $1@q1&$2@q1.
+@q1 newr#1 -> $1@q1.
+@q1 neww#1 -> $1@q1.
+@q1 closer#1 -> $1@q1.
+@q1 closew#1 -> true.
+@q1 read#1 -> $1@q1.
+@q1 write#1 -> $1@q1.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q1 $1 -> @q1.

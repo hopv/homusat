@@ -1,0 +1,615 @@
+/*** original HORS >>
+%HORS
+RSFDStart -> S Case0.
+S e -> S_2 e e.
+S_2 e e_2 -> Specialize_2 e e Empty_1 Empty_2 K0_1 K0_2.
+Specialize_2 e e_2 env env_2 k k_2 -> e (CASE5 env env_2 k k_2) (br fail_z fail_s) (br fail_true fail_false) (CASE6 env env_2 k k_2).
+Empty_1 y -> terr.
+Empty_2 y y_2 -> T_terr.
+K0_1 ret -> ret.
+K0_2 ret ret_2 -> ret_2.
+Lookup_1 x env -> env x.
+Lookup_2 x x_2 env env_2 -> env_2 x x.
+KK_1 x e2 env k ret -> Specialize_1 e2 (Extend_1 x ret env) k.
+KK_2 x x_2 e2 e2_2 env env_2 k k_2 ret ret_2 -> Specialize_2 e2 e2 (Extend_1 x ret env) (Extend_2 x x ret ret_2 env env_2) k k_2.
+T_vclosure x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+K1_1 e2 env k ret -> F1_1 e2 env k Case3.
+K1_2 e2 e2_2 env env_2 k k_2 ret ret_2 -> br ret (br ret_2 (F1_2 e2 e2 env env_2 k k_2 Case3 Case3)).
+Extend_1 x v env y -> Eq_1 x y v (env y).
+Extend_2 x x_2 v v_2 env env_2 y y_2 -> Eq_2 x x y y v v_2 (env y) (env_2 y y).
+T_fix x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+T_vtrue -> success__.
+T_vfalse -> success__.
+K3_1 e2 e3 env k ret -> F2_1 e2 e3 env k Case3.
+K3_2 e2 e2_2 e3 e3_2 env env_2 k k_2 ret ret_2 -> br (F2_2 e2 e2 e3 e3 env env_2 k k_2 Case3 Case3) ret_2.
+KKK_1 x e2 env k ret -> let (Copy_1 x) ret (Specialize_1 e2 env k).
+KKK_2 x x_2 e2 e2_2 env env_2 k k_2 ret ret_2 -> T_let (Copy_1 x) (Copy_2 x x) ret ret_2 (Specialize_1 e2 env k) (Specialize_2 e2 e2 env env_2 k k_2).
+T_abs x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+Specialize_1 e env k -> e (CASE7 env k) (br fail_z fail_s) (br fail_true fail_false) (CASE8 env k).
+K5_1 e2 env k ret -> Specialize_1 e2 env (K6_1 k ret).
+K5_2 e2 e2_2 env env_2 k k_2 ret ret_2 -> Specialize_2 e2 e2 env env_2 (K6_1 k ret) (K6_2 k k_2 ret ret_2).
+K7_1 x k ret -> k (fix (Copy_1 x) ret).
+K7_2 x x_2 k k_2 ret ret_2 -> k_2 (fix (Copy_1 x) ret) (T_fix (Copy_1 x) (Copy_2 x x) ret ret_2).
+T_const x1 x1_2 -> x1_2.
+Copy_1 x -> x CASE9 (br z (s (Copy_1 Case1))) (br true false) CASE10.
+Copy_2 x x_2 -> x CASE11 (br T_z (T_s (Copy_1 Case1) (Copy_2 Case1 Case1))) (br T_true T_false) CASE12.
+K8_1 e2 e3 env k ret -> k (if ret (Specialize_1 e2 env K0_1) (Specialize_1 e3 env K0_1)).
+K8_2 e2 e2_2 e3 e3_2 env env_2 k k_2 ret ret_2 -> k_2 (if ret (Specialize_1 e2 env K0_1) (Specialize_1 e3 env K0_1)) (T_if ret ret_2 (Specialize_1 e2 env K0_1) (Specialize_2 e2 e2 env env_2 K0_1 K0_2) (Specialize_1 e3 env K0_1) (Specialize_2 e3 e3 env env_2 K0_1 K0_2)).
+K11_1 k ret -> k (F3_1 Case3).
+K11_2 k k_2 ret ret_2 -> br (k_2 (F3_1 Case3) (F3_2 Case3 Case3)) ret_2.
+T_terr -> success__.
+F1_1 e env k w -> w (br (br (br (k terr) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (k terr)))) (br (br (k terr) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (k terr))))) (br fail_z fail_s) (br fail_true fail_false) (br (br (br (br (k terr) (Specialize_1 e env (K2_1 Case1 Case0 env k))) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (br (k terr) (k terr))))) (br (br (br (k terr) (k terr)) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (br (k terr) (k terr)))))).
+F1_2 e e_2 env env_2 k k_2 w w_2 -> w (br (br (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr)))) (br (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr))))) (br fail_z fail_s) (br fail_true fail_false) (CASE13 e env env_2 k k_2).
+Eq_1 x y t f -> x (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br (Eq1_1 y t f) (Eq2_1 y t f Case1)) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+Eq_2 x x_2 y y_2 t t_2 f f_2 -> x (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br (Eq1_2 y y t t_2 f f_2) (Eq2_2 y y t t_2 f f_2 Case1 Case1)) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+F2_1 et ef env k w -> w (br (br (br (k terr) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (k terr)))) (br (br (k terr) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (k terr))))) (br fail_z fail_s) (br fail_true fail_false) (br (br (br (br (k terr) (k terr)) (br (Specialize_1 et env k) (Specialize_1 ef env k))) (br (br (k terr) (k terr)) (br (k terr) (br (k terr) (k terr))))) (br (br (br (k terr) (k terr)) (br (k terr) (k terr))) (br (br (k terr) (k terr)) (br (k terr) (br (k terr) (k terr)))))).
+F2_2 et et_2 ef ef_2 env env_2 k k_2 w w_2 -> w (br (br (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr)))) (br (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr))))) (br fail_z fail_s) (br fail_true fail_false) (CASE14 et ef env env_2 k k_2).
+K6_1 k ret1 ret2 -> k (app ret1 ret2).
+K6_2 k k_2 ret1 ret1_2 ret2 ret2_2 -> k_2 (app ret1 ret2) (T_app ret1 ret1_2 ret2 ret2_2).
+T_z -> success__.
+T_s x1 x1_2 -> x1_2.
+T_true -> success__.
+T_false -> success__.
+T_var x1 x1_2 -> x1_2.
+T_let x1 x1_2 x2 x2_2 x3 x3_2 -> br x1_2 (br x2_2 x3_2).
+T_app x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+T_ulet x1 x1_2 x2 x2_2 x3 x3_2 -> br x1_2 (br x2_2 x3_2).
+T_uabs x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+T_uapp x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+T_ufix x1 x1_2 x2 x2_2 -> br x1_2 x2_2.
+T_uconst x1 x1_2 -> x1_2.
+T_uif x1 x1_2 x2 x2_2 x3 x3_2 -> br x1_2 (br x2_2 x3_2).
+T_lift x1 x1_2 -> x1_2.
+T_if x1 x1_2 x2 x2_2 x3 x3_2 -> br x1_2 (br x2_2 x3_2).
+F3_1 e -> e (br (br (br terr (br terr terr)) (br (br terr terr) (br terr terr))) (br (br terr (br terr terr)) (br (br terr terr) (br terr terr)))) (br fail_z fail_s) (br fail_true fail_false) (br (br (br (br terr terr) (br (const true) (const false))) (br (br terr terr) (br terr (br terr terr)))) (br (br (br terr terr) (br terr terr)) (br (br terr terr) (br terr (br terr terr))))).
+F3_2 e e_2 -> e (br (br (br T_terr (br T_terr T_terr)) (br (br T_terr T_terr) (br T_terr T_terr))) (br (br T_terr (br T_terr T_terr)) (br (br T_terr T_terr) (br T_terr T_terr)))) (br fail_z fail_s) (br fail_true fail_false) (br (br (br (br T_terr T_terr) (br (T_const true T_true) (T_const false T_false))) (br (br T_terr T_terr) (br T_terr (br T_terr T_terr)))) (br (br (br T_terr T_terr) (br T_terr T_terr)) (br (br T_terr T_terr) (br T_terr (br T_terr T_terr))))).
+K2_1 x e1 env k ret -> Specialize_1 e1 (Extend_1 x ret env) k.
+K2_2 x x_2 e1 e1_2 env env_2 k k_2 ret ret_2 -> Specialize_2 e1 e1 (Extend_1 x ret env) (Extend_2 x x ret ret_2 env env_2) k k_2.
+Eq1_1 y t f -> y (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br t f) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+Eq2_1 y t f x1 -> y (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br f (Eq_1 x1 Case1 t f)) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+Eq1_2 y y_2 t t_2 f f_2 -> y (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br t_2 f_2) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+Eq2_2 y y_2 t t_2 f f_2 x1 x1_2 -> y (br (br (br fail_var (br fail_let fail_abs)) (br (br fail_app fail_fix) (br fail_const fail_if))) (br (br fail_ulet (br fail_uabs fail_uapp)) (br (br fail_ufix fail_uconst) (br fail_uif fail_lift)))) (br f_2 (Eq_2 x1 x1 Case1 Case1 t t_2 f f_2)) (br fail_true fail_false) (br (br (br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br fail_var fail_let) (br fail_abs (br fail_app fail_fix)))) (br (br (br fail_const fail_if) (br fail_ulet fail_uabs)) (br (br fail_uapp fail_ufix) (br fail_uconst (br fail_uif fail_lift))))).
+CASE5 env env_2 k k_2 -> br (br (br (k_2 (Lookup_1 Case1 env) (Lookup_2 Case1 Case1 env env_2)) (br (Specialize_2 Case0 Case0 env env_2 (KK_1 Case1 Case0 env k) (KK_2 Case1 Case1 Case0 Case0 env env_2 k k_2)) (k_2 (vclosure (Copy_1 Case1) (Copy_1 Case0)) (T_vclosure (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0))))) (br (br (Specialize_2 Case0 Case0 env env_2 (K1_1 Case0 env k) (K1_2 Case0 Case0 env env_2 k k_2)) (Specialize_2 Case0 Case0 (Extend_1 Case1 (fix (Copy_1 Case1) (Copy_1 Case0)) env) (Extend_2 Case1 Case1 (fix (Copy_1 Case1) (Copy_1 Case0)) (T_fix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0)) env env_2) k k_2)) (br (br (k_2 vtrue T_vtrue) (k_2 vfalse T_vfalse)) (Specialize_2 Case0 Case0 env env_2 (K3_1 Case0 Case0 env k) (K3_2 Case0 Case0 Case0 Case0 env env_2 k k_2))))) (br (br (Specialize_2 Case0 Case0 env env_2 (KKK_1 Case1 Case0 env k) (KKK_2 Case1 Case1 Case0 Case0 env env_2 k k_2)) (br (k_2 (abs (Copy_1 Case1) (Specialize_1 Case0 env K0_1)) (T_abs (Copy_1 Case1) (Copy_2 Case1 Case1) (Specialize_1 Case0 env K0_1) (Specialize_2 Case0 Case0 env env_2 K0_1 K0_2))) (Specialize_2 Case0 Case0 env env_2 (K5_1 Case0 env k) (K5_2 Case0 Case0 env env_2 k k_2)))) (br (br (Specialize_2 Case0 Case0 env env_2 (K7_1 Case1 k) (K7_2 Case1 Case1 k k_2)) (k_2 (const (Copy_1 Case2)) (T_const (Copy_1 Case2) (Copy_2 Case2 Case2)))) (br (Specialize_2 Case0 Case0 env env_2 (K8_1 Case0 Case0 env k) (K8_2 Case0 Case0 Case0 Case0 env env_2 k k_2)) (Specialize_2 Case0 Case0 env env_2 (K11_1 k) (K11_2 k k_2))))).
+CASE6 env env_2 k k_2 -> br (br (br (br (k_2 terr T_terr) fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br (k_2 (Lookup_1 Case1 env) (Lookup_2 Case1 Case1 env env_2)) (Specialize_2 Case3 Case3 env env_2 (KK_1 Case1 Case3 env k) (KK_2 Case1 Case1 Case3 Case3 env env_2 k k_2))) (br (k_2 (vclosure (Copy_1 Case1) (Copy_1 Case3)) (T_vclosure (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3))) (br (Specialize_2 Case3 Case3 env env_2 (K1_1 Case3 env k) (K1_2 Case3 Case3 env env_2 k k_2)) (Specialize_2 Case3 Case3 (Extend_1 Case1 (fix (Copy_1 Case1) (Copy_1 Case3)) env) (Extend_2 Case1 Case1 (fix (Copy_1 Case1) (Copy_1 Case3)) (T_fix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3)) env env_2) k k_2))))) (br (br (br (br (k_2 vtrue T_vtrue) (k_2 vfalse T_vfalse)) (Specialize_2 Case3 Case3 env env_2 (K3_1 Case3 Case3 env k) (K3_2 Case3 Case3 Case3 Case3 env env_2 k k_2))) (br (Specialize_2 Case3 Case3 env env_2 (KKK_1 Case1 Case3 env k) (KKK_2 Case1 Case1 Case3 Case3 env env_2 k k_2)) (k_2 (abs (Copy_1 Case1) (Specialize_1 Case3 env K0_1)) (T_abs (Copy_1 Case1) (Copy_2 Case1 Case1) (Specialize_1 Case3 env K0_1) (Specialize_2 Case3 Case3 env env_2 K0_1 K0_2))))) (br (br (Specialize_2 Case3 Case3 env env_2 (K5_1 Case3 env k) (K5_2 Case3 Case3 env env_2 k k_2)) (Specialize_2 Case3 Case3 env env_2 (K7_1 Case1 k) (K7_2 Case1 Case1 k k_2))) (br (k_2 (const (Copy_1 Case2)) (T_const (Copy_1 Case2) (Copy_2 Case2 Case2))) (br (Specialize_2 Case3 Case3 env env_2 (K8_1 Case3 Case3 env k) (K8_2 Case3 Case3 Case3 Case3 env env_2 k k_2)) (Specialize_2 Case3 Case3 env env_2 (K11_1 k) (K11_2 k k_2)))))).
+CASE7 env k -> br (br (br (k (Lookup_1 Case1 env)) (br (Specialize_1 Case0 env (KK_1 Case1 Case0 env k)) (k (vclosure (Copy_1 Case1) (Copy_1 Case0))))) (br (br (Specialize_1 Case0 env (K1_1 Case0 env k)) (Specialize_1 Case0 (Extend_1 Case1 (fix (Copy_1 Case1) (Copy_1 Case0)) env) k)) (br (br (k vtrue) (k vfalse)) (Specialize_1 Case0 env (K3_1 Case0 Case0 env k))))) (br (br (Specialize_1 Case0 env (KKK_1 Case1 Case0 env k)) (br (k (abs (Copy_1 Case1) (Specialize_1 Case0 env K0_1))) (Specialize_1 Case0 env (K5_1 Case0 env k)))) (br (br (Specialize_1 Case0 env (K7_1 Case1 k)) (k (const (Copy_1 Case2)))) (br (Specialize_1 Case0 env (K8_1 Case0 Case0 env k)) (Specialize_1 Case0 env (K11_1 k))))).
+CASE8 env k -> br (br (br (br (k terr) fail_vclosure) (br fail_vtrue fail_vfalse)) (br (br (k (Lookup_1 Case1 env)) (Specialize_1 Case3 env (KK_1 Case1 Case3 env k))) (br (k (vclosure (Copy_1 Case1) (Copy_1 Case3))) (br (Specialize_1 Case3 env (K1_1 Case3 env k)) (Specialize_1 Case3 (Extend_1 Case1 (fix (Copy_1 Case1) (Copy_1 Case3)) env) k))))) (br (br (br (br (k vtrue) (k vfalse)) (Specialize_1 Case3 env (K3_1 Case3 Case3 env k))) (br (Specialize_1 Case3 env (KKK_1 Case1 Case3 env k)) (k (abs (Copy_1 Case1) (Specialize_1 Case3 env K0_1))))) (br (br (Specialize_1 Case3 env (K5_1 Case3 env k)) (Specialize_1 Case3 env (K7_1 Case1 k))) (br (k (const (Copy_1 Case2))) (br (Specialize_1 Case3 env (K8_1 Case3 Case3 env k)) (Specialize_1 Case3 env (K11_1 k)))))).
+CASE9 -> br (br (br (var (Copy_1 Case1)) (br (let (Copy_1 Case1) (Copy_1 Case0) (Copy_1 Case0)) (abs (Copy_1 Case1) (Copy_1 Case0)))) (br (br (app (Copy_1 Case0) (Copy_1 Case0)) (fix (Copy_1 Case1) (Copy_1 Case0))) (br (const (Copy_1 Case2)) (if (Copy_1 Case0) (Copy_1 Case0) (Copy_1 Case0))))) (br (br (ulet (Copy_1 Case1) (Copy_1 Case0) (Copy_1 Case0)) (br (uabs (Copy_1 Case1) (Copy_1 Case0)) (uapp (Copy_1 Case0) (Copy_1 Case0)))) (br (br (ufix (Copy_1 Case1) (Copy_1 Case0)) (uconst (Copy_1 Case2))) (br (uif (Copy_1 Case0) (Copy_1 Case0) (Copy_1 Case0)) (lift (Copy_1 Case0))))).
+CASE10 -> br (br (br (br terr (vclosure (Copy_1 Case1) (Copy_1 Case0))) (br vtrue vfalse)) (br (br (var (Copy_1 Case1)) (let (Copy_1 Case1) (Copy_1 Case3) (Copy_1 Case3))) (br (abs (Copy_1 Case1) (Copy_1 Case3)) (br (app (Copy_1 Case3) (Copy_1 Case3)) (fix (Copy_1 Case1) (Copy_1 Case3)))))) (br (br (br (const (Copy_1 Case2)) (if (Copy_1 Case3) (Copy_1 Case3) (Copy_1 Case3))) (br (ulet (Copy_1 Case1) (Copy_1 Case3) (Copy_1 Case3)) (uabs (Copy_1 Case1) (Copy_1 Case3)))) (br (br (uapp (Copy_1 Case3) (Copy_1 Case3)) (ufix (Copy_1 Case1) (Copy_1 Case3))) (br (uconst (Copy_1 Case2)) (br (uif (Copy_1 Case3) (Copy_1 Case3) (Copy_1 Case3)) (lift (Copy_1 Case3)))))).
+CASE11 -> br (br (br (T_var (Copy_1 Case1) (Copy_2 Case1 Case1)) (br (T_let (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0)) (T_abs (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0)))) (br (br (T_app (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0)) (T_fix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0))) (br (T_const (Copy_1 Case2) (Copy_2 Case2 Case2)) (T_if (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0))))) (br (br (T_ulet (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0)) (br (T_uabs (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0)) (T_uapp (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0)))) (br (br (T_ufix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0)) (T_uconst (Copy_1 Case2) (Copy_2 Case2 Case2))) (br (T_uif (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0) (Copy_1 Case0) (Copy_2 Case0 Case0)) (T_lift (Copy_1 Case0) (Copy_2 Case0 Case0))))).
+CASE12 -> br (br (br (br T_terr (T_vclosure (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case0) (Copy_2 Case0 Case0))) (br T_vtrue T_vfalse)) (br (br (T_var (Copy_1 Case1) (Copy_2 Case1 Case1)) (T_let (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3))) (br (T_abs (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3)) (br (T_app (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3)) (T_fix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3)))))) (br (br (br (T_const (Copy_1 Case2) (Copy_2 Case2 Case2)) (T_if (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3))) (br (T_ulet (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3)) (T_uabs (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3)))) (br (br (T_uapp (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3)) (T_ufix (Copy_1 Case1) (Copy_2 Case1 Case1) (Copy_1 Case3) (Copy_2 Case3 Case3))) (br (T_uconst (Copy_1 Case2) (Copy_2 Case2 Case2)) (br (T_uif (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3) (Copy_1 Case3) (Copy_2 Case3 Case3)) (T_lift (Copy_1 Case3) (Copy_2 Case3 Case3)))))).
+CASE13 e env env_2 k k_2 -> br (br (br (br (k_2 terr T_terr) (Specialize_2 e e env env_2 (K2_1 Case1 Case0 env k) (K2_2 Case1 Case1 Case0 Case0 env env_2 k k_2))) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))))) (br (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))))).
+CASE14 et ef env env_2 k k_2 -> br (br (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (Specialize_2 et et env env_2 k k_2) (Specialize_2 ef ef env env_2 k k_2))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))))) (br (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (k_2 terr T_terr))) (br (br (k_2 terr T_terr) (k_2 terr T_terr)) (br (k_2 terr T_terr) (br (k_2 terr T_terr) (k_2 terr T_terr))))).
+Case0 x y z w -> x.
+Case1 x y z w -> y.
+Case2 x y z w -> z.
+Case3 x y z w -> w.
+%APT
+intial state: q0p
+transitions:
+q0p br -> (2, q0p) \land (1, q0p).
+q0p terr -> \true.
+q0p success__ -> \true.
+q0p let -> (3, q0p) \land (2, q0p) \land (1, q1).
+q0p fix -> (2, q0p) \land (1, q1).
+q0p if -> (3, q0p) \land (2, q0p) \land (1, q0p).
+q0p app -> (2, q0p) \land (1, q0p).
+q0p const -> (1, q2).
+q0p vclosure -> (2, q0) \land (1, q1).
+q0p vtrue -> \true.
+q0p vfalse -> \true.
+q0p abs -> (2, q0p) \land (1, q1).
+q0p var -> (1, q1).
+q0p ulet -> (3, q0p) \land (2, q0p) \land (1, q1).
+q0p uabs -> (2, q0p) \land (1, q1).
+q0p uapp -> (2, q0p) \land (1, q0p).
+q0p ufix -> (2, q0p) \land (1, q1).
+q0p uconst -> (1, q2).
+q0p uif -> (3, q0p) \land (2, q0p) \land (1, q0p).
+q0p lift -> (1, q0p).
+q0 br -> (2, q0) \land (1, q0).
+q0 success__ -> \true.
+q0 let -> (3, q0) \land (2, q0) \land (1, q1).
+q0 fix -> (2, q0) \land (1, q1).
+q0 if -> (3, q0) \land (2, q0) \land (1, q0).
+q0 app -> (2, q0) \land (1, q0).
+q0 const -> (1, q2).
+q0 abs -> (2, q0) \land (1, q1).
+q0 var -> (1, q1).
+q0 ulet -> (3, q0) \land (2, q0) \land (1, q1).
+q0 uabs -> (2, q0) \land (1, q1).
+q0 uapp -> (2, q0) \land (1, q0).
+q0 ufix -> (2, q0) \land (1, q1).
+q0 uconst -> (1, q2).
+q0 uif -> (3, q0) \land (2, q0) \land (1, q0).
+q0 lift -> (1, q0).
+q1 br -> (2, q1) \land (1, q1).
+q1 success__ -> \true.
+q1 z -> \true.
+q1 s -> (1, q1).
+q2 br -> (2, q2) \land (1, q2).
+q2 success__ -> \true.
+q2 true -> \true.
+q2 false -> \true.
+priorities:
+q0p -> 0.
+q0 -> 0.
+q1 -> 0.
+q2 -> 0.
+<< original HORS ***/
+%HES
+RSFDStart#0 =_\nu S#0 Case0#0;
+S#0 =_\nu \lambda e#0. S_2#0 e#0 e#0;
+S_2#0 =_\nu \lambda e#0. \lambda e_2#0. Specialize_2#0 e#0 e#0 Empty_1#0 Empty_2#0 K0_1#0 K0_2#0;
+Specialize_2#0 =_\nu \lambda e#0. \lambda e_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. e#0 (CASE5#0 env#0 env_2#0 k#0 k_2#0) (br fail_z fail_s) (br fail_true fail_false) (CASE6#0 env#0 env_2#0 k#0 k_2#0);
+Empty_1#0 =_\nu \lambda y#0. terr;
+Empty_2#0 =_\nu \lambda y#0. \lambda y_2#0. T_terr#0;
+K0_1#0 =_\nu \lambda ret#0. ret#0;
+K0_2#0 =_\nu \lambda ret#0. \lambda ret_2#0. ret_2#0;
+Lookup_1#0 =_\nu \lambda x#0. \lambda env#0. env#0 x#0;
+Lookup_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda env#0. \lambda env_2#0. env_2#0 x#0 x#0;
+KK_1#0 =_\nu \lambda x#0. \lambda e2#0. \lambda env#0. \lambda k#0. \lambda ret#0. Specialize_1#0 e2#0 (Extend_1#0 x#0 ret#0 env#0) k#0;
+KK_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda e2#0. \lambda e2_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. Specialize_2#0 e2#0 e2#0 (Extend_1#0 x#0 ret#0 env#0) (Extend_2#0 x#0 x#0 ret#0 ret_2#0 env#0 env_2#0) k#0 k_2#0;
+T_vclosure#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+K1_1#0 =_\nu \lambda e2#0. \lambda env#0. \lambda k#0. \lambda ret#0. F1_1#0 e2#0 env#0 k#0 Case3#0;
+K1_2#0 =_\nu \lambda e2#0. \lambda e2_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. br ret#0 (F'582#0 e2#0 env#0 env_2#0 k#0 k_2#0 ret_2#0);
+F'582#0 =_\nu \lambda e2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret_2#0. br ret_2#0 (F1_2#0 e2#0 e2#0 env#0 env_2#0 k#0 k_2#0 Case3#0 Case3#0);
+Extend_1#0 =_\nu \lambda x#0. \lambda v#0. \lambda env#0. \lambda y#0. Eq_1#0 x#0 y#0 v#0 (env#0 y#0);
+Extend_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda v#0. \lambda v_2#0. \lambda env#0. \lambda env_2#0. \lambda y#0. \lambda y_2#0. Eq_2#0 x#0 x#0 y#0 y#0 v#0 v_2#0 (env#0 y#0) (env_2#0 y#0 y#0);
+T_fix#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+T_vtrue#0 =_\nu success__;
+T_vfalse#0 =_\nu success__;
+K3_1#0 =_\nu \lambda e2#0. \lambda e3#0. \lambda env#0. \lambda k#0. \lambda ret#0. F2_1#0 e2#0 e3#0 env#0 k#0 Case3#0;
+K3_2#0 =_\nu \lambda e2#0. \lambda e2_2#0. \lambda e3#0. \lambda e3_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. br (F2_2#0 e2#0 e2#0 e3#0 e3#0 env#0 env_2#0 k#0 k_2#0 Case3#0 Case3#0) ret_2#0;
+KKK_1#0 =_\nu \lambda x#0. \lambda e2#0. \lambda env#0. \lambda k#0. \lambda ret#0. let (Copy_1#0 x#0) ret#0 (Specialize_1#0 e2#0 env#0 k#0);
+KKK_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda e2#0. \lambda e2_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. T_let#0 (Copy_1#0 x#0) (Copy_2#0 x#0 x#0) ret#0 ret_2#0 (Specialize_1#0 e2#0 env#0 k#0) (Specialize_2#0 e2#0 e2#0 env#0 env_2#0 k#0 k_2#0);
+T_abs#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+Specialize_1#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. e#0 (CASE7#0 env#0 k#0) (br fail_z fail_s) (br fail_true fail_false) (CASE8#0 env#0 k#0);
+K5_1#0 =_\nu \lambda e2#0. \lambda env#0. \lambda k#0. \lambda ret#0. Specialize_1#0 e2#0 env#0 (K6_1#0 k#0 ret#0);
+K5_2#0 =_\nu \lambda e2#0. \lambda e2_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. Specialize_2#0 e2#0 e2#0 env#0 env_2#0 (K6_1#0 k#0 ret#0) (K6_2#0 k#0 k_2#0 ret#0 ret_2#0);
+K7_1#0 =_\nu \lambda x#0. \lambda k#0. \lambda ret#0. k#0 (F'583#0 x#0 ret#0);
+F'583#0 =_\nu \lambda x#0. \lambda ret#0. fix (Copy_1#0 x#0) ret#0;
+K7_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. k_2#0 (F'584#0 x#0 ret#0) (F'585#0 x#0 ret#0 ret_2#0);
+F'585#0 =_\nu \lambda x#0. \lambda ret#0. \lambda ret_2#0. T_fix#0 (Copy_1#0 x#0) (Copy_2#0 x#0 x#0) ret#0 ret_2#0;
+F'584#0 =_\nu \lambda x#0. \lambda ret#0. fix (Copy_1#0 x#0) ret#0;
+T_const#0 =_\nu \lambda x1#0. \lambda x1_2#0. x1_2#0;
+Copy_1#0 =_\nu \lambda x#0. x#0 CASE9#0 (br z F'586#0) (br true false) CASE10#0;
+F'586#0 =_\nu s (Copy_1#0 Case1#0);
+Copy_2#0 =_\nu \lambda x#0. \lambda x_2#0. x#0 CASE11#0 (br T_z#0 F'587#0) (br T_true#0 T_false#0) CASE12#0;
+F'587#0 =_\nu T_s#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0);
+K8_1#0 =_\nu \lambda e2#0. \lambda e3#0. \lambda env#0. \lambda k#0. \lambda ret#0. k#0 (F'588#0 e2#0 e3#0 env#0 ret#0);
+F'588#0 =_\nu \lambda e2#0. \lambda e3#0. \lambda env#0. \lambda ret#0. if ret#0 (Specialize_1#0 e2#0 env#0 K0_1#0) (Specialize_1#0 e3#0 env#0 K0_1#0);
+K8_2#0 =_\nu \lambda e2#0. \lambda e2_2#0. \lambda e3#0. \lambda e3_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. k_2#0 (F'589#0 e2#0 e3#0 env#0 ret#0) (F'590#0 e2#0 e3#0 env#0 env_2#0 ret#0 ret_2#0);
+F'590#0 =_\nu \lambda e2#0. \lambda e3#0. \lambda env#0. \lambda env_2#0. \lambda ret#0. \lambda ret_2#0. T_if#0 ret#0 ret_2#0 (Specialize_1#0 e2#0 env#0 K0_1#0) (Specialize_2#0 e2#0 e2#0 env#0 env_2#0 K0_1#0 K0_2#0) (Specialize_1#0 e3#0 env#0 K0_1#0) (Specialize_2#0 e3#0 e3#0 env#0 env_2#0 K0_1#0 K0_2#0);
+F'589#0 =_\nu \lambda e2#0. \lambda e3#0. \lambda env#0. \lambda ret#0. if ret#0 (Specialize_1#0 e2#0 env#0 K0_1#0) (Specialize_1#0 e3#0 env#0 K0_1#0);
+K11_1#0 =_\nu \lambda k#0. \lambda ret#0. k#0 (F3_1#0 Case3#0);
+K11_2#0 =_\nu \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. br (F'591#0 k_2#0) ret_2#0;
+F'591#0 =_\nu \lambda k_2#0. k_2#0 (F3_1#0 Case3#0) (F3_2#0 Case3#0 Case3#0);
+T_terr#0 =_\nu success__;
+F1_1#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. \lambda w#0. w#0 (F'596#0 k#0) (br fail_z fail_s) (br fail_true fail_false) (F'603#0 e#0 env#0 k#0);
+F'603#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. br (F'601#0 e#0 env#0 k#0) (F'602#0 k#0);
+F'602#0 =_\nu \lambda k#0. br (F'594#0 k#0) (F'600#0 k#0);
+F'601#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. br (F'599#0 e#0 env#0 k#0) (F'600#0 k#0);
+F'600#0 =_\nu \lambda k#0. br (F'592#0 k#0) (F'593#0 k#0);
+F'599#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. br (F'598#0 e#0 env#0 k#0) (F'592#0 k#0);
+F'598#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. br (k#0 terr) (F'597#0 e#0 env#0 k#0);
+F'597#0 =_\nu \lambda e#0. \lambda env#0. \lambda k#0. Specialize_1#0 e#0 env#0 (K2_1#0 Case1#0 Case0#0 env#0 k#0);
+F'596#0 =_\nu \lambda k#0. br (F'595#0 k#0) (F'595#0 k#0);
+F'595#0 =_\nu \lambda k#0. br (F'593#0 k#0) (F'594#0 k#0);
+F'594#0 =_\nu \lambda k#0. br (F'592#0 k#0) (F'592#0 k#0);
+F'593#0 =_\nu \lambda k#0. br (k#0 terr) (F'592#0 k#0);
+F'592#0 =_\nu \lambda k#0. br (k#0 terr) (k#0 terr);
+F1_2#0 =_\nu \lambda e#0. \lambda e_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda w#0. \lambda w_2#0. w#0 (F'608#0 k_2#0) (br fail_z fail_s) (br fail_true fail_false) (CASE13#0 e#0 env#0 env_2#0 k#0 k_2#0);
+F'608#0 =_\nu \lambda k_2#0. br (F'607#0 k_2#0) (F'607#0 k_2#0);
+F'607#0 =_\nu \lambda k_2#0. br (F'605#0 k_2#0) (F'606#0 k_2#0);
+F'606#0 =_\nu \lambda k_2#0. br (F'604#0 k_2#0) (F'604#0 k_2#0);
+F'605#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (F'604#0 k_2#0);
+F'604#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (k_2#0 terr T_terr#0);
+Eq_1#0 =_\nu \lambda x#0. \lambda y#0. \lambda t#0. \lambda f#0. x#0 F'613#0 (F'614#0 y#0 t#0 f#0) (br fail_true fail_false) F'621#0;
+F'621#0 =_\nu br (br F'615#0 F'617#0) (br F'618#0 F'620#0);
+F'620#0 =_\nu br (br fail_uapp fail_ufix) F'619#0;
+F'619#0 =_\nu br fail_uconst (br fail_uif fail_lift);
+F'618#0 =_\nu br (br fail_const fail_if) (br fail_ulet fail_uabs);
+F'617#0 =_\nu br (br fail_var fail_let) F'616#0;
+F'616#0 =_\nu br fail_abs (br fail_app fail_fix);
+F'615#0 =_\nu br (br fail_terr fail_vclosure) (br fail_vtrue fail_vfalse);
+F'614#0 =_\nu \lambda y#0. \lambda t#0. \lambda f#0. br (Eq1_1#0 y#0 t#0 f#0) (Eq2_1#0 y#0 t#0 f#0 Case1#0);
+F'613#0 =_\nu br (br F'609#0 F'610#0) (br F'611#0 F'612#0);
+F'612#0 =_\nu br (br fail_ufix fail_uconst) (br fail_uif fail_lift);
+F'611#0 =_\nu br fail_ulet (br fail_uabs fail_uapp);
+F'610#0 =_\nu br (br fail_app fail_fix) (br fail_const fail_if);
+F'609#0 =_\nu br fail_var (br fail_let fail_abs);
+Eq_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda y#0. \lambda y_2#0. \lambda t#0. \lambda t_2#0. \lambda f#0. \lambda f_2#0. x#0 F'613#0 (F'622#0 y#0 t#0 t_2#0 f#0 f_2#0) (br fail_true fail_false) F'621#0;
+F'622#0 =_\nu \lambda y#0. \lambda t#0. \lambda t_2#0. \lambda f#0. \lambda f_2#0. br (Eq1_2#0 y#0 y#0 t#0 t_2#0 f#0 f_2#0) (Eq2_2#0 y#0 y#0 t#0 t_2#0 f#0 f_2#0 Case1#0 Case1#0);
+F2_1#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda k#0. \lambda w#0. w#0 (F'627#0 k#0) (br fail_z fail_s) (br fail_true fail_false) (F'633#0 et#0 ef#0 env#0 k#0);
+F'633#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda k#0. br (F'631#0 et#0 ef#0 env#0 k#0) (F'632#0 k#0);
+F'632#0 =_\nu \lambda k#0. br (F'625#0 k#0) (F'630#0 k#0);
+F'631#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda k#0. br (F'629#0 et#0 ef#0 env#0 k#0) (F'630#0 k#0);
+F'630#0 =_\nu \lambda k#0. br (F'623#0 k#0) (F'624#0 k#0);
+F'629#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda k#0. br (F'623#0 k#0) (F'628#0 et#0 ef#0 env#0 k#0);
+F'628#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda k#0. br (Specialize_1#0 et#0 env#0 k#0) (Specialize_1#0 ef#0 env#0 k#0);
+F'627#0 =_\nu \lambda k#0. br (F'626#0 k#0) (F'626#0 k#0);
+F'626#0 =_\nu \lambda k#0. br (F'624#0 k#0) (F'625#0 k#0);
+F'625#0 =_\nu \lambda k#0. br (F'623#0 k#0) (F'623#0 k#0);
+F'624#0 =_\nu \lambda k#0. br (k#0 terr) (F'623#0 k#0);
+F'623#0 =_\nu \lambda k#0. br (k#0 terr) (k#0 terr);
+F2_2#0 =_\nu \lambda et#0. \lambda et_2#0. \lambda ef#0. \lambda ef_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda w#0. \lambda w_2#0. w#0 (F'638#0 k_2#0) (br fail_z fail_s) (br fail_true fail_false) (CASE14#0 et#0 ef#0 env#0 env_2#0 k#0 k_2#0);
+F'638#0 =_\nu \lambda k_2#0. br (F'637#0 k_2#0) (F'637#0 k_2#0);
+F'637#0 =_\nu \lambda k_2#0. br (F'635#0 k_2#0) (F'636#0 k_2#0);
+F'636#0 =_\nu \lambda k_2#0. br (F'634#0 k_2#0) (F'634#0 k_2#0);
+F'635#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (F'634#0 k_2#0);
+F'634#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (k_2#0 terr T_terr#0);
+K6_1#0 =_\nu \lambda k#0. \lambda ret1#0. \lambda ret2#0. k#0 (app ret1#0 ret2#0);
+K6_2#0 =_\nu \lambda k#0. \lambda k_2#0. \lambda ret1#0. \lambda ret1_2#0. \lambda ret2#0. \lambda ret2_2#0. k_2#0 (app ret1#0 ret2#0) (T_app#0 ret1#0 ret1_2#0 ret2#0 ret2_2#0);
+T_z#0 =_\nu success__;
+T_s#0 =_\nu \lambda x1#0. \lambda x1_2#0. x1_2#0;
+T_true#0 =_\nu success__;
+T_false#0 =_\nu success__;
+T_var#0 =_\nu \lambda x1#0. \lambda x1_2#0. x1_2#0;
+T_let#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. \lambda x3#0. \lambda x3_2#0. br x1_2#0 (br x2_2#0 x3_2#0);
+T_app#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+T_ulet#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. \lambda x3#0. \lambda x3_2#0. br x1_2#0 (br x2_2#0 x3_2#0);
+T_uabs#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+T_uapp#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+T_ufix#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. br x1_2#0 x2_2#0;
+T_uconst#0 =_\nu \lambda x1#0. \lambda x1_2#0. x1_2#0;
+T_uif#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. \lambda x3#0. \lambda x3_2#0. br x1_2#0 (br x2_2#0 x3_2#0);
+T_lift#0 =_\nu \lambda x1#0. \lambda x1_2#0. x1_2#0;
+T_if#0 =_\nu \lambda x1#0. \lambda x1_2#0. \lambda x2#0. \lambda x2_2#0. \lambda x3#0. \lambda x3_2#0. br x1_2#0 (br x2_2#0 x3_2#0);
+F3_1#0 =_\nu \lambda e#0. e#0 F'641#0 (br fail_z fail_s) (br fail_true fail_false) F'645#0;
+F'645#0 =_\nu br (br F'643#0 F'644#0) (br F'640#0 F'644#0);
+F'644#0 =_\nu br (br terr terr) F'639#0;
+F'643#0 =_\nu br (br terr terr) F'642#0;
+F'642#0 =_\nu br (const true) (const false);
+F'641#0 =_\nu br (br F'639#0 F'640#0) (br F'639#0 F'640#0);
+F'640#0 =_\nu br (br terr terr) (br terr terr);
+F'639#0 =_\nu br terr (br terr terr);
+F3_2#0 =_\nu \lambda e#0. \lambda e_2#0. e#0 F'648#0 (br fail_z fail_s) (br fail_true fail_false) F'652#0;
+F'652#0 =_\nu br (br F'650#0 F'651#0) (br F'647#0 F'651#0);
+F'651#0 =_\nu br (br T_terr#0 T_terr#0) F'646#0;
+F'650#0 =_\nu br (br T_terr#0 T_terr#0) F'649#0;
+F'649#0 =_\nu br (T_const#0 true T_true#0) (T_const#0 false T_false#0);
+F'648#0 =_\nu br (br F'646#0 F'647#0) (br F'646#0 F'647#0);
+F'647#0 =_\nu br (br T_terr#0 T_terr#0) (br T_terr#0 T_terr#0);
+F'646#0 =_\nu br T_terr#0 (br T_terr#0 T_terr#0);
+K2_1#0 =_\nu \lambda x#0. \lambda e1#0. \lambda env#0. \lambda k#0. \lambda ret#0. Specialize_1#0 e1#0 (Extend_1#0 x#0 ret#0 env#0) k#0;
+K2_2#0 =_\nu \lambda x#0. \lambda x_2#0. \lambda e1#0. \lambda e1_2#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. \lambda ret#0. \lambda ret_2#0. Specialize_2#0 e1#0 e1#0 (Extend_1#0 x#0 ret#0 env#0) (Extend_2#0 x#0 x#0 ret#0 ret_2#0 env#0 env_2#0) k#0 k_2#0;
+Eq1_1#0 =_\nu \lambda y#0. \lambda t#0. \lambda f#0. y#0 F'613#0 (br t#0 f#0) (br fail_true fail_false) F'621#0;
+Eq2_1#0 =_\nu \lambda y#0. \lambda t#0. \lambda f#0. \lambda x1#0. y#0 F'613#0 (F'653#0 t#0 f#0 x1#0) (br fail_true fail_false) F'621#0;
+F'653#0 =_\nu \lambda t#0. \lambda f#0. \lambda x1#0. br f#0 (Eq_1#0 x1#0 Case1#0 t#0 f#0);
+Eq1_2#0 =_\nu \lambda y#0. \lambda y_2#0. \lambda t#0. \lambda t_2#0. \lambda f#0. \lambda f_2#0. y#0 F'613#0 (br t_2#0 f_2#0) (br fail_true fail_false) F'621#0;
+Eq2_2#0 =_\nu \lambda y#0. \lambda y_2#0. \lambda t#0. \lambda t_2#0. \lambda f#0. \lambda f_2#0. \lambda x1#0. \lambda x1_2#0. y#0 F'613#0 (F'654#0 t#0 t_2#0 f#0 f_2#0 x1#0) (br fail_true fail_false) F'621#0;
+F'654#0 =_\nu \lambda t#0. \lambda t_2#0. \lambda f#0. \lambda f_2#0. \lambda x1#0. br f_2#0 (Eq_2#0 x1#0 x1#0 Case1#0 Case1#0 t#0 t_2#0 f#0 f_2#0);
+CASE5#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'670#0 env#0 env_2#0 k#0 k_2#0) (F'686#0 env#0 env_2#0 k#0 k_2#0);
+F'686#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'677#0 env#0 env_2#0 k#0 k_2#0) (F'685#0 env#0 env_2#0 k#0 k_2#0);
+F'685#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'681#0 env#0 env_2#0 k#0 k_2#0) (F'684#0 env#0 env_2#0 k#0 k_2#0);
+F'684#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'682#0 env#0 env_2#0 k#0 k_2#0) (F'683#0 env#0 env_2#0 k#0 k_2#0);
+F'683#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K11_1#0 k#0) (K11_2#0 k#0 k_2#0);
+F'682#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K8_1#0 Case0#0 Case0#0 env#0 k#0) (K8_2#0 Case0#0 Case0#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'681#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'678#0 env#0 env_2#0 k#0 k_2#0) (k_2#0 F'679#0 F'680#0);
+F'680#0 =_\nu T_const#0 (Copy_1#0 Case2#0) (Copy_2#0 Case2#0 Case2#0);
+F'679#0 =_\nu const (Copy_1#0 Case2#0);
+F'678#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K7_1#0 Case1#0 k#0) (K7_2#0 Case1#0 Case1#0 k#0 k_2#0);
+F'677#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'671#0 env#0 env_2#0 k#0 k_2#0) (F'676#0 env#0 env_2#0 k#0 k_2#0);
+F'676#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'674#0 env#0 env_2#0 k_2#0) (F'675#0 env#0 env_2#0 k#0 k_2#0);
+F'675#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K5_1#0 Case0#0 env#0 k#0) (K5_2#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'674#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k_2#0. k_2#0 (F'672#0 env#0) (F'673#0 env#0 env_2#0);
+F'673#0 =_\nu \lambda env#0. \lambda env_2#0. T_abs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Specialize_1#0 Case0#0 env#0 K0_1#0) (Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 K0_1#0 K0_2#0);
+F'672#0 =_\nu \lambda env#0. abs (Copy_1#0 Case1#0) (Specialize_1#0 Case0#0 env#0 K0_1#0);
+F'671#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (KKK_1#0 Case1#0 Case0#0 env#0 k#0) (KKK_2#0 Case1#0 Case1#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'670#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'660#0 env#0 env_2#0 k#0 k_2#0) (F'669#0 env#0 env_2#0 k#0 k_2#0);
+F'669#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'665#0 env#0 env_2#0 k#0 k_2#0) (F'668#0 env#0 env_2#0 k#0 k_2#0);
+F'668#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'666#0 k_2#0) (F'667#0 env#0 env_2#0 k#0 k_2#0);
+F'667#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K3_1#0 Case0#0 Case0#0 env#0 k#0) (K3_2#0 Case0#0 Case0#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'666#0 =_\nu \lambda k_2#0. br (k_2#0 vtrue T_vtrue#0) (k_2#0 vfalse T_vfalse#0);
+F'665#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'661#0 env#0 env_2#0 k#0 k_2#0) (F'664#0 env#0 env_2#0 k#0 k_2#0);
+F'664#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 (Extend_1#0 Case1#0 F'662#0 env#0) (Extend_2#0 Case1#0 Case1#0 F'662#0 F'663#0 env#0 env_2#0) k#0 k_2#0;
+F'663#0 =_\nu T_fix#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'662#0 =_\nu fix (Copy_1#0 Case1#0) (Copy_1#0 Case0#0);
+F'661#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (K1_1#0 Case0#0 env#0 k#0) (K1_2#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'660#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'655#0 env#0 env_2#0 k_2#0) (F'659#0 env#0 env_2#0 k#0 k_2#0);
+F'659#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'656#0 env#0 env_2#0 k#0 k_2#0) (k_2#0 F'657#0 F'658#0);
+F'658#0 =_\nu T_vclosure#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'657#0 =_\nu vclosure (Copy_1#0 Case1#0) (Copy_1#0 Case0#0);
+F'656#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case0#0 Case0#0 env#0 env_2#0 (KK_1#0 Case1#0 Case0#0 env#0 k#0) (KK_2#0 Case1#0 Case1#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+F'655#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k_2#0. k_2#0 (Lookup_1#0 Case1#0 env#0) (Lookup_2#0 Case1#0 Case1#0 env#0 env_2#0);
+CASE6#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'701#0 env#0 env_2#0 k#0 k_2#0) (F'719#0 env#0 env_2#0 k#0 k_2#0);
+F'719#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'710#0 env#0 env_2#0 k#0 k_2#0) (F'718#0 env#0 env_2#0 k#0 k_2#0);
+F'718#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'713#0 env#0 env_2#0 k#0 k_2#0) (F'717#0 env#0 env_2#0 k#0 k_2#0);
+F'717#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (k_2#0 F'679#0 F'680#0) (F'716#0 env#0 env_2#0 k#0 k_2#0);
+F'716#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'714#0 env#0 env_2#0 k#0 k_2#0) (F'715#0 env#0 env_2#0 k#0 k_2#0);
+F'715#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K11_1#0 k#0) (K11_2#0 k#0 k_2#0);
+F'714#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K8_1#0 Case3#0 Case3#0 env#0 k#0) (K8_2#0 Case3#0 Case3#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'713#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'711#0 env#0 env_2#0 k#0 k_2#0) (F'712#0 env#0 env_2#0 k#0 k_2#0);
+F'712#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K7_1#0 Case1#0 k#0) (K7_2#0 Case1#0 Case1#0 k#0 k_2#0);
+F'711#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K5_1#0 Case3#0 env#0 k#0) (K5_2#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'710#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'704#0 env#0 env_2#0 k#0 k_2#0) (F'709#0 env#0 env_2#0 k#0 k_2#0);
+F'709#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'705#0 env#0 env_2#0 k#0 k_2#0) (F'708#0 env#0 env_2#0 k_2#0);
+F'708#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k_2#0. k_2#0 (F'706#0 env#0) (F'707#0 env#0 env_2#0);
+F'707#0 =_\nu \lambda env#0. \lambda env_2#0. T_abs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Specialize_1#0 Case3#0 env#0 K0_1#0) (Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 K0_1#0 K0_2#0);
+F'706#0 =_\nu \lambda env#0. abs (Copy_1#0 Case1#0) (Specialize_1#0 Case3#0 env#0 K0_1#0);
+F'705#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (KKK_1#0 Case1#0 Case3#0 env#0 k#0) (KKK_2#0 Case1#0 Case1#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'704#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'702#0 k_2#0) (F'703#0 env#0 env_2#0 k#0 k_2#0);
+F'703#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K3_1#0 Case3#0 Case3#0 env#0 k#0) (K3_2#0 Case3#0 Case3#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'702#0 =_\nu \lambda k_2#0. br (k_2#0 vtrue T_vtrue#0) (k_2#0 vfalse T_vfalse#0);
+F'701#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'688#0 k_2#0) (F'700#0 env#0 env_2#0 k#0 k_2#0);
+F'700#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'691#0 env#0 env_2#0 k#0 k_2#0) (F'699#0 env#0 env_2#0 k#0 k_2#0);
+F'699#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (k_2#0 F'692#0 F'693#0) (F'698#0 env#0 env_2#0 k#0 k_2#0);
+F'698#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'694#0 env#0 env_2#0 k#0 k_2#0) (F'697#0 env#0 env_2#0 k#0 k_2#0);
+F'697#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 (Extend_1#0 Case1#0 F'695#0 env#0) (Extend_2#0 Case1#0 Case1#0 F'695#0 F'696#0 env#0 env_2#0) k#0 k_2#0;
+F'696#0 =_\nu T_fix#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'695#0 =_\nu fix (Copy_1#0 Case1#0) (Copy_1#0 Case3#0);
+F'694#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (K1_1#0 Case3#0 env#0 k#0) (K1_2#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'693#0 =_\nu T_vclosure#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'692#0 =_\nu vclosure (Copy_1#0 Case1#0) (Copy_1#0 Case3#0);
+F'691#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'689#0 env#0 env_2#0 k_2#0) (F'690#0 env#0 env_2#0 k#0 k_2#0);
+F'690#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 Case3#0 Case3#0 env#0 env_2#0 (KK_1#0 Case1#0 Case3#0 env#0 k#0) (KK_2#0 Case1#0 Case1#0 Case3#0 Case3#0 env#0 env_2#0 k#0 k_2#0);
+F'689#0 =_\nu \lambda env#0. \lambda env_2#0. \lambda k_2#0. k_2#0 (Lookup_1#0 Case1#0 env#0) (Lookup_2#0 Case1#0 Case1#0 env#0 env_2#0);
+F'688#0 =_\nu \lambda k_2#0. br (F'687#0 k_2#0) (br fail_vtrue fail_vfalse);
+F'687#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) fail_vclosure;
+CASE7#0 =_\nu \lambda env#0. \lambda k#0. br (F'731#0 env#0 k#0) (F'744#0 env#0 k#0);
+F'744#0 =_\nu \lambda env#0. \lambda k#0. br (F'737#0 env#0 k#0) (F'743#0 env#0 k#0);
+F'743#0 =_\nu \lambda env#0. \lambda k#0. br (F'739#0 env#0 k#0) (F'742#0 env#0 k#0);
+F'742#0 =_\nu \lambda env#0. \lambda k#0. br (F'740#0 env#0 k#0) (F'741#0 env#0 k#0);
+F'741#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K11_1#0 k#0);
+F'740#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K8_1#0 Case0#0 Case0#0 env#0 k#0);
+F'739#0 =_\nu \lambda env#0. \lambda k#0. br (F'738#0 env#0 k#0) (k#0 F'679#0);
+F'738#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K7_1#0 Case1#0 k#0);
+F'737#0 =_\nu \lambda env#0. \lambda k#0. br (F'732#0 env#0 k#0) (F'736#0 env#0 k#0);
+F'736#0 =_\nu \lambda env#0. \lambda k#0. br (F'734#0 env#0 k#0) (F'735#0 env#0 k#0);
+F'735#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K5_1#0 Case0#0 env#0 k#0);
+F'734#0 =_\nu \lambda env#0. \lambda k#0. k#0 (F'733#0 env#0);
+F'733#0 =_\nu \lambda env#0. abs (Copy_1#0 Case1#0) (Specialize_1#0 Case0#0 env#0 K0_1#0);
+F'732#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (KKK_1#0 Case1#0 Case0#0 env#0 k#0);
+F'731#0 =_\nu \lambda env#0. \lambda k#0. br (F'723#0 env#0 k#0) (F'730#0 env#0 k#0);
+F'730#0 =_\nu \lambda env#0. \lambda k#0. br (F'726#0 env#0 k#0) (F'729#0 env#0 k#0);
+F'729#0 =_\nu \lambda env#0. \lambda k#0. br (F'727#0 k#0) (F'728#0 env#0 k#0);
+F'728#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K3_1#0 Case0#0 Case0#0 env#0 k#0);
+F'727#0 =_\nu \lambda k#0. br (k#0 vtrue) (k#0 vfalse);
+F'726#0 =_\nu \lambda env#0. \lambda k#0. br (F'724#0 env#0 k#0) (F'725#0 env#0 k#0);
+F'725#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 (Extend_1#0 Case1#0 F'662#0 env#0) k#0;
+F'724#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (K1_1#0 Case0#0 env#0 k#0);
+F'723#0 =_\nu \lambda env#0. \lambda k#0. br (F'720#0 env#0 k#0) (F'722#0 env#0 k#0);
+F'722#0 =_\nu \lambda env#0. \lambda k#0. br (F'721#0 env#0 k#0) (k#0 F'657#0);
+F'721#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case0#0 env#0 (KK_1#0 Case1#0 Case0#0 env#0 k#0);
+F'720#0 =_\nu \lambda env#0. \lambda k#0. k#0 (Lookup_1#0 Case1#0 env#0);
+CASE8#0 =_\nu \lambda env#0. \lambda k#0. br (F'755#0 env#0 k#0) (F'772#0 env#0 k#0);
+F'772#0 =_\nu \lambda env#0. \lambda k#0. br (F'763#0 env#0 k#0) (F'771#0 env#0 k#0);
+F'771#0 =_\nu \lambda env#0. \lambda k#0. br (F'766#0 env#0 k#0) (F'770#0 env#0 k#0);
+F'770#0 =_\nu \lambda env#0. \lambda k#0. br (k#0 F'679#0) (F'769#0 env#0 k#0);
+F'769#0 =_\nu \lambda env#0. \lambda k#0. br (F'767#0 env#0 k#0) (F'768#0 env#0 k#0);
+F'768#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K11_1#0 k#0);
+F'767#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K8_1#0 Case3#0 Case3#0 env#0 k#0);
+F'766#0 =_\nu \lambda env#0. \lambda k#0. br (F'764#0 env#0 k#0) (F'765#0 env#0 k#0);
+F'765#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K7_1#0 Case1#0 k#0);
+F'764#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K5_1#0 Case3#0 env#0 k#0);
+F'763#0 =_\nu \lambda env#0. \lambda k#0. br (F'758#0 env#0 k#0) (F'762#0 env#0 k#0);
+F'762#0 =_\nu \lambda env#0. \lambda k#0. br (F'759#0 env#0 k#0) (F'761#0 env#0 k#0);
+F'761#0 =_\nu \lambda env#0. \lambda k#0. k#0 (F'760#0 env#0);
+F'760#0 =_\nu \lambda env#0. abs (Copy_1#0 Case1#0) (Specialize_1#0 Case3#0 env#0 K0_1#0);
+F'759#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (KKK_1#0 Case1#0 Case3#0 env#0 k#0);
+F'758#0 =_\nu \lambda env#0. \lambda k#0. br (F'756#0 k#0) (F'757#0 env#0 k#0);
+F'757#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K3_1#0 Case3#0 Case3#0 env#0 k#0);
+F'756#0 =_\nu \lambda k#0. br (k#0 vtrue) (k#0 vfalse);
+F'755#0 =_\nu \lambda env#0. \lambda k#0. br (F'746#0 k#0) (F'754#0 env#0 k#0);
+F'754#0 =_\nu \lambda env#0. \lambda k#0. br (F'749#0 env#0 k#0) (F'753#0 env#0 k#0);
+F'753#0 =_\nu \lambda env#0. \lambda k#0. br (k#0 F'692#0) (F'752#0 env#0 k#0);
+F'752#0 =_\nu \lambda env#0. \lambda k#0. br (F'750#0 env#0 k#0) (F'751#0 env#0 k#0);
+F'751#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 (Extend_1#0 Case1#0 F'695#0 env#0) k#0;
+F'750#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (K1_1#0 Case3#0 env#0 k#0);
+F'749#0 =_\nu \lambda env#0. \lambda k#0. br (F'747#0 env#0 k#0) (F'748#0 env#0 k#0);
+F'748#0 =_\nu \lambda env#0. \lambda k#0. Specialize_1#0 Case3#0 env#0 (KK_1#0 Case1#0 Case3#0 env#0 k#0);
+F'747#0 =_\nu \lambda env#0. \lambda k#0. k#0 (Lookup_1#0 Case1#0 env#0);
+F'746#0 =_\nu \lambda k#0. br (F'745#0 k#0) (br fail_vtrue fail_vfalse);
+F'745#0 =_\nu \lambda k#0. br (k#0 terr) fail_vclosure;
+CASE9#0 =_\nu br (br F'776#0 F'779#0) (br F'783#0 F'788#0);
+F'788#0 =_\nu br (br F'784#0 F'785#0) (br F'786#0 F'787#0);
+F'787#0 =_\nu lift (Copy_1#0 Case0#0);
+F'786#0 =_\nu uif (Copy_1#0 Case0#0) (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'785#0 =_\nu uconst (Copy_1#0 Case2#0);
+F'784#0 =_\nu ufix (Copy_1#0 Case1#0) (Copy_1#0 Case0#0);
+F'783#0 =_\nu br F'780#0 (br F'781#0 F'782#0);
+F'782#0 =_\nu uapp (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'781#0 =_\nu uabs (Copy_1#0 Case1#0) (Copy_1#0 Case0#0);
+F'780#0 =_\nu ulet (Copy_1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'779#0 =_\nu br (br F'777#0 F'662#0) (br F'679#0 F'778#0);
+F'778#0 =_\nu if (Copy_1#0 Case0#0) (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'777#0 =_\nu app (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'776#0 =_\nu br F'773#0 (br F'774#0 F'775#0);
+F'775#0 =_\nu abs (Copy_1#0 Case1#0) (Copy_1#0 Case0#0);
+F'774#0 =_\nu let (Copy_1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_1#0 Case0#0);
+F'773#0 =_\nu var (Copy_1#0 Case1#0);
+CASE10#0 =_\nu br (br F'789#0 F'794#0) (br F'798#0 F'804#0);
+F'804#0 =_\nu br (br F'799#0 F'800#0) F'803#0;
+F'803#0 =_\nu br F'785#0 (br F'801#0 F'802#0);
+F'802#0 =_\nu lift (Copy_1#0 Case3#0);
+F'801#0 =_\nu uif (Copy_1#0 Case3#0) (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'800#0 =_\nu ufix (Copy_1#0 Case1#0) (Copy_1#0 Case3#0);
+F'799#0 =_\nu uapp (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'798#0 =_\nu br (br F'679#0 F'795#0) (br F'796#0 F'797#0);
+F'797#0 =_\nu uabs (Copy_1#0 Case1#0) (Copy_1#0 Case3#0);
+F'796#0 =_\nu ulet (Copy_1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'795#0 =_\nu if (Copy_1#0 Case3#0) (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'794#0 =_\nu br (br F'773#0 F'790#0) F'793#0;
+F'793#0 =_\nu br F'791#0 (br F'792#0 F'695#0);
+F'792#0 =_\nu app (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'791#0 =_\nu abs (Copy_1#0 Case1#0) (Copy_1#0 Case3#0);
+F'790#0 =_\nu let (Copy_1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_1#0 Case3#0);
+F'789#0 =_\nu br (br terr F'657#0) (br vtrue vfalse);
+CASE11#0 =_\nu br (br F'808#0 F'811#0) (br F'815#0 F'820#0);
+F'820#0 =_\nu br (br F'816#0 F'817#0) (br F'818#0 F'819#0);
+F'819#0 =_\nu T_lift#0 (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'818#0 =_\nu T_uif#0 (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'817#0 =_\nu T_uconst#0 (Copy_1#0 Case2#0) (Copy_2#0 Case2#0 Case2#0);
+F'816#0 =_\nu T_ufix#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'815#0 =_\nu br F'812#0 (br F'813#0 F'814#0);
+F'814#0 =_\nu T_uapp#0 (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'813#0 =_\nu T_uabs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'812#0 =_\nu T_ulet#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'811#0 =_\nu br (br F'809#0 F'663#0) (br F'680#0 F'810#0);
+F'810#0 =_\nu T_if#0 (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'809#0 =_\nu T_app#0 (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'808#0 =_\nu br F'805#0 (br F'806#0 F'807#0);
+F'807#0 =_\nu T_abs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'806#0 =_\nu T_let#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0) (Copy_1#0 Case0#0) (Copy_2#0 Case0#0 Case0#0);
+F'805#0 =_\nu T_var#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0);
+CASE12#0 =_\nu br (br F'821#0 F'826#0) (br F'830#0 F'836#0);
+F'836#0 =_\nu br (br F'831#0 F'832#0) F'835#0;
+F'835#0 =_\nu br F'817#0 (br F'833#0 F'834#0);
+F'834#0 =_\nu T_lift#0 (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'833#0 =_\nu T_uif#0 (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'832#0 =_\nu T_ufix#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'831#0 =_\nu T_uapp#0 (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'830#0 =_\nu br (br F'680#0 F'827#0) (br F'828#0 F'829#0);
+F'829#0 =_\nu T_uabs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'828#0 =_\nu T_ulet#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'827#0 =_\nu T_if#0 (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'826#0 =_\nu br (br F'805#0 F'822#0) F'825#0;
+F'825#0 =_\nu br F'823#0 (br F'824#0 F'696#0);
+F'824#0 =_\nu T_app#0 (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'823#0 =_\nu T_abs#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'822#0 =_\nu T_let#0 (Copy_1#0 Case1#0) (Copy_2#0 Case1#0 Case1#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0) (Copy_1#0 Case3#0) (Copy_2#0 Case3#0 Case3#0);
+F'821#0 =_\nu br (br T_terr#0 F'658#0) (br T_vtrue#0 T_vfalse#0);
+CASE13#0 =_\nu \lambda e#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'843#0 e#0 env#0 env_2#0 k#0 k_2#0) (F'845#0 k_2#0);
+F'845#0 =_\nu \lambda k_2#0. br (F'844#0 k_2#0) (F'842#0 k_2#0);
+F'844#0 =_\nu \lambda k_2#0. br (F'839#0 k_2#0) (F'839#0 k_2#0);
+F'843#0 =_\nu \lambda e#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'840#0 e#0 env#0 env_2#0 k#0 k_2#0) (F'842#0 k_2#0);
+F'842#0 =_\nu \lambda k_2#0. br (F'839#0 k_2#0) (F'841#0 k_2#0);
+F'841#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (F'839#0 k_2#0);
+F'840#0 =_\nu \lambda e#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'838#0 e#0 env#0 env_2#0 k#0 k_2#0) (F'839#0 k_2#0);
+F'839#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (k_2#0 terr T_terr#0);
+F'838#0 =_\nu \lambda e#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (k_2#0 terr T_terr#0) (F'837#0 e#0 env#0 env_2#0 k#0 k_2#0);
+F'837#0 =_\nu \lambda e#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. Specialize_2#0 e#0 e#0 env#0 env_2#0 (K2_1#0 Case1#0 Case0#0 env#0 k#0) (K2_2#0 Case1#0 Case1#0 Case0#0 Case0#0 env#0 env_2#0 k#0 k_2#0);
+CASE14#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'851#0 et#0 ef#0 env#0 env_2#0 k#0 k_2#0) (F'853#0 k_2#0);
+F'853#0 =_\nu \lambda k_2#0. br (F'852#0 k_2#0) (F'850#0 k_2#0);
+F'852#0 =_\nu \lambda k_2#0. br (F'846#0 k_2#0) (F'846#0 k_2#0);
+F'851#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'848#0 et#0 ef#0 env#0 env_2#0 k#0 k_2#0) (F'850#0 k_2#0);
+F'850#0 =_\nu \lambda k_2#0. br (F'846#0 k_2#0) (F'849#0 k_2#0);
+F'849#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (F'846#0 k_2#0);
+F'848#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (F'846#0 k_2#0) (F'847#0 et#0 ef#0 env#0 env_2#0 k#0 k_2#0);
+F'847#0 =_\nu \lambda et#0. \lambda ef#0. \lambda env#0. \lambda env_2#0. \lambda k#0. \lambda k_2#0. br (Specialize_2#0 et#0 et#0 env#0 env_2#0 k#0 k_2#0) (Specialize_2#0 ef#0 ef#0 env#0 env_2#0 k#0 k_2#0);
+F'846#0 =_\nu \lambda k_2#0. br (k_2#0 terr T_terr#0) (k_2#0 terr T_terr#0);
+Case0#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. \lambda w#0. x#0;
+Case1#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. \lambda w#0. y#0;
+Case2#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. \lambda w#0. z#0;
+Case3#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. \lambda w#0. w#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+fail_z =_\nu <fail_z#0>\true;
+fail_s =_\nu <fail_s#0>\true;
+fail_true =_\nu <fail_true#0>\true;
+fail_false =_\nu <fail_false#0>\true;
+terr =_\nu <terr#0>\true;
+success__ =_\nu <success__#0>\true;
+let =_\nu \lambda y$1#0. \lambda y$2#0. \lambda y$3#0. <let#0>([$1]y$1#0 \land [$2]y$2#0 \land [$3]y$3#0);
+fix =_\nu \lambda y$1#0. \lambda y$2#0. <fix#0>([$1]y$1#0 \land [$2]y$2#0);
+z =_\nu <z#0>\true;
+s =_\nu \lambda y$1#0. <s#0>[$1]y$1#0;
+true =_\nu <true#0>\true;
+false =_\nu <false#0>\true;
+if =_\nu \lambda y$1#0. \lambda y$2#0. \lambda y$3#0. <if#0>([$1]y$1#0 \land [$2]y$2#0 \land [$3]y$3#0);
+fail_var =_\nu <fail_var#0>\true;
+fail_let =_\nu <fail_let#0>\true;
+fail_abs =_\nu <fail_abs#0>\true;
+fail_app =_\nu <fail_app#0>\true;
+fail_fix =_\nu <fail_fix#0>\true;
+fail_const =_\nu <fail_const#0>\true;
+fail_if =_\nu <fail_if#0>\true;
+fail_ulet =_\nu <fail_ulet#0>\true;
+fail_uabs =_\nu <fail_uabs#0>\true;
+fail_uapp =_\nu <fail_uapp#0>\true;
+fail_ufix =_\nu <fail_ufix#0>\true;
+fail_uconst =_\nu <fail_uconst#0>\true;
+fail_uif =_\nu <fail_uif#0>\true;
+fail_lift =_\nu <fail_lift#0>\true;
+fail_terr =_\nu <fail_terr#0>\true;
+fail_vclosure =_\nu <fail_vclosure#0>\true;
+fail_vtrue =_\nu <fail_vtrue#0>\true;
+fail_vfalse =_\nu <fail_vfalse#0>\true;
+app =_\nu \lambda y$1#0. \lambda y$2#0. <app#0>([$1]y$1#0 \land [$2]y$2#0);
+const =_\nu \lambda y$1#0. <const#0>[$1]y$1#0;
+vclosure =_\nu \lambda y$1#0. \lambda y$2#0. <vclosure#0>([$1]y$1#0 \land [$2]y$2#0);
+vtrue =_\nu <vtrue#0>\true;
+vfalse =_\nu <vfalse#0>\true;
+abs =_\nu \lambda y$1#0. \lambda y$2#0. <abs#0>([$1]y$1#0 \land [$2]y$2#0);
+var =_\nu \lambda y$1#0. <var#0>[$1]y$1#0;
+ulet =_\nu \lambda y$1#0. \lambda y$2#0. \lambda y$3#0. <ulet#0>([$1]y$1#0 \land [$2]y$2#0 \land [$3]y$3#0);
+uabs =_\nu \lambda y$1#0. \lambda y$2#0. <uabs#0>([$1]y$1#0 \land [$2]y$2#0);
+uapp =_\nu \lambda y$1#0. \lambda y$2#0. <uapp#0>([$1]y$1#0 \land [$2]y$2#0);
+ufix =_\nu \lambda y$1#0. \lambda y$2#0. <ufix#0>([$1]y$1#0 \land [$2]y$2#0);
+uconst =_\nu \lambda y$1#0. <uconst#0>[$1]y$1#0;
+uif =_\nu \lambda y$1#0. \lambda y$2#0. \lambda y$3#0. <uif#0>([$1]y$1#0 \land [$2]y$2#0 \land [$3]y$3#0);
+lift =_\nu \lambda y$1#0. <lift#0>[$1]y$1#0;
+%LTS
+initial state: @q0p
+transitions:
+@q0p br#0 -> $1@q0p&$2@q0p.
+@q0p terr#0 -> true.
+@q0p success__#0 -> true.
+@q0p let#0 -> $1@q1&$2@q0p&$3@q0p.
+@q0p fix#0 -> $1@q1&$2@q0p.
+@q0p if#0 -> $1@q0p&$2@q0p&$3@q0p.
+@q0p app#0 -> $1@q0p&$2@q0p.
+@q0p const#0 -> $1@q2.
+@q0p vclosure#0 -> $1@q1&$2@q0.
+@q0p vtrue#0 -> true.
+@q0p vfalse#0 -> true.
+@q0p abs#0 -> $1@q1&$2@q0p.
+@q0p var#0 -> $1@q1.
+@q0p ulet#0 -> $1@q1&$2@q0p&$3@q0p.
+@q0p uabs#0 -> $1@q1&$2@q0p.
+@q0p uapp#0 -> $1@q0p&$2@q0p.
+@q0p ufix#0 -> $1@q1&$2@q0p.
+@q0p uconst#0 -> $1@q2.
+@q0p uif#0 -> $1@q0p&$2@q0p&$3@q0p.
+@q0p lift#0 -> $1@q0p.
+$1@q0p&$2@q0p $1 -> @q0p.
+$1@q0p&$2@q0p $2 -> @q0p.
+$1@q1&$2@q0p&$3@q0p $1 -> @q1.
+$1@q1&$2@q0p&$3@q0p $2 -> @q0p.
+$1@q1&$2@q0p&$3@q0p $3 -> @q0p.
+@q1 z#0 -> true.
+@q1 br#0 -> $1@q1&$2@q1.
+@q1 success__#0 -> true.
+@q1 s#0 -> $1@q1.
+$1@q1&$2@q0p $1 -> @q1.
+$1@q1&$2@q0p $2 -> @q0p.
+$1@q0p&$2@q0p&$3@q0p $1 -> @q0p.
+$1@q0p&$2@q0p&$3@q0p $2 -> @q0p.
+$1@q0p&$2@q0p&$3@q0p $3 -> @q0p.
+$1@q2 $1 -> @q2.
+@q2 br#0 -> $1@q2&$2@q2.
+@q2 success__#0 -> true.
+@q2 true#0 -> true.
+@q2 false#0 -> true.
+$1@q1&$2@q0 $1 -> @q1.
+$1@q1&$2@q0 $2 -> @q0.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 success__#0 -> true.
+@q0 let#0 -> $1@q1&$2@q0&$3@q0.
+@q0 fix#0 -> $1@q1&$2@q0.
+@q0 if#0 -> $1@q0&$2@q0&$3@q0.
+@q0 app#0 -> $1@q0&$2@q0.
+@q0 const#0 -> $1@q2.
+@q0 abs#0 -> $1@q1&$2@q0.
+@q0 var#0 -> $1@q1.
+@q0 ulet#0 -> $1@q1&$2@q0&$3@q0.
+@q0 uabs#0 -> $1@q1&$2@q0.
+@q0 uapp#0 -> $1@q0&$2@q0.
+@q0 ufix#0 -> $1@q1&$2@q0.
+@q0 uconst#0 -> $1@q2.
+@q0 uif#0 -> $1@q0&$2@q0&$3@q0.
+@q0 lift#0 -> $1@q0.
+$1@q1 $1 -> @q1.
+$1@q0p $1 -> @q0p.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1&$2@q0&$3@q0 $1 -> @q1.
+$1@q1&$2@q0&$3@q0 $2 -> @q0.
+$1@q1&$2@q0&$3@q0 $3 -> @q0.
+$1@q0&$2@q0&$3@q0 $1 -> @q0.
+$1@q0&$2@q0&$3@q0 $2 -> @q0.
+$1@q0&$2@q0&$3@q0 $3 -> @q0.
+$1@q0 $1 -> @q0.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q2&$2@q2 $1 -> @q2.
+$1@q2&$2@q2 $2 -> @q2.

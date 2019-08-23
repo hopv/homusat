@@ -1,0 +1,107 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> Isort e.
+Insert q x -> q (br (x (a (a (Copy Q0))) (a (Insert Q0 B))) (x (a (b (Copy Q1))) (b (b (Copy Q1))))) (x (a (b (Copy Q1))) (b (b (Copy Q1)))).
+Copy q -> q (br3 e (ia (a (Copy Q0))) (ib (b (Copy Q1)))) (br e (ib (b (Copy Q1)))).
+Isort o -> br3 o (ia (Isort (Insert Q0 A))) (ib (Isort (Insert Q0 B))).
+Q0 x y -> x.
+Q1 x y -> y.
+A x y -> x.
+B x y -> y.
+%APT
+intial state: q0
+transitions:
+q0 e -> \true.
+q0 br -> (1, q0) \land (2, q0).
+q0 a -> (1, q1).
+q0 b -> (1, q1).
+q0 br3 -> (1, q0) \land (2, q0) \land (3, q0).
+q0 ia -> (1, q1).
+q0 ib -> (1, q1).
+q0 ic -> (1, q1).
+q0 c -> (1, q1).
+q1 e -> \true.
+q1 br -> (1, q0) \land (2, q0).
+q1 a -> (1, q1).
+q1 b -> (1, q1).
+q1 br3 -> (1, q0) \land (2, q0) \land (3, q0).
+q1 ia -> (1, q1).
+q1 ib -> (1, q1).
+q1 ic -> (1, q1).
+q1 c -> (1, q1).
+priorities:
+q0 -> 1.
+q1 -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+Insert#2 =_\nu Insert#1;
+F'48#2 =_\nu F'48#1;
+F'47#2 =_\nu F'47#1;
+F'46#2 =_\nu F'46#1;
+F'45#2 =_\nu F'45#1;
+F'44#2 =_\nu F'44#1;
+F'43#2 =_\nu F'43#1;
+Copy#2 =_\nu Copy#1;
+F'50#2 =_\nu F'50#1;
+F'49#2 =_\nu F'49#1;
+Isort#2 =_\nu Isort#1;
+F'52#2 =_\nu F'52#1;
+F'51#2 =_\nu F'51#1;
+Q0#2 =_\nu Q0#1;
+Q1#2 =_\nu Q1#1;
+A#2 =_\nu A#1;
+B#2 =_\nu B#1;
+S#1 =_\mu Isort#1 e e;
+Insert#1 =_\mu \lambda q#1. \lambda q#2. \lambda x#1. \lambda x#2. q#1 (F'48#1 x#1 x#2) (F'48#2 x#2 x#2) (F'47#1 x#1 x#2) (F'47#2 x#2 x#2);
+F'48#1 =_\mu \lambda x#1. \lambda x#2. br (F'45#1 x#1 x#2) (F'45#2 x#2 x#2) (F'47#1 x#1 x#2) (F'47#2 x#2 x#2);
+F'47#1 =_\mu \lambda x#1. \lambda x#2. x#1 (a F'46#1 F'46#2) (a F'46#2 F'46#2) (b F'46#1 F'46#2) (b F'46#2 F'46#2);
+F'46#1 =_\mu b (Copy#1 Q1#1 Q1#2) (Copy#2 Q1#2 Q1#2);
+F'45#1 =_\mu \lambda x#1. \lambda x#2. x#1 (a F'43#1 F'43#2) (a F'43#2 F'43#2) F'44#1 F'44#2;
+F'44#1 =_\mu a (Insert#1 Q0#1 Q0#2 B#1 B#2) (Insert#2 Q0#2 Q0#2 B#2 B#2);
+F'43#1 =_\mu a (Copy#1 Q0#1 Q0#2) (Copy#2 Q0#2 Q0#2);
+Copy#1 =_\mu \lambda q#1. \lambda q#2. q#1 F'49#1 F'49#2 F'50#1 F'50#2;
+F'50#1 =_\mu br e e (ib F'46#1 F'46#2) (ib F'46#2 F'46#2);
+F'49#1 =_\mu br3 e e (ia F'43#1 F'43#2) (ia F'43#2 F'43#2) (ib F'46#1 F'46#2) (ib F'46#2 F'46#2);
+Isort#1 =_\mu \lambda o#1. \lambda o#2. br3 o#1 o#2 (ia F'51#1 F'51#2) (ia F'51#2 F'51#2) (ib F'52#1 F'52#2) (ib F'52#2 F'52#2);
+F'52#1 =_\mu Isort#1 (Insert#1 Q0#1 Q0#2 B#1 B#2) (Insert#2 Q0#2 Q0#2 B#2 B#2);
+F'51#1 =_\mu Isort#1 (Insert#1 Q0#1 Q0#2 A#1 A#2) (Insert#2 Q0#2 Q0#2 A#2 A#2);
+Q0#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1;
+Q1#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+A#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1;
+B#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+e =_\nu <e#1>\true \lor <e#2>\true;
+br =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. <br#1>([$1]y$1#1 \land [$2]y$2#1) \lor <br#2>([$1]y$1#2 \land [$2]y$2#2);
+a =_\nu \lambda y$1#1. \lambda y$1#2. <a#1>[$1]y$1#1 \lor <a#2>[$1]y$1#2;
+b =_\nu \lambda y$1#1. \lambda y$1#2. <b#1>[$1]y$1#1 \lor <b#2>[$1]y$1#2;
+br3 =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. \lambda y$3#1. \lambda y$3#2. <br3#1>([$1]y$1#1 \land [$2]y$2#1 \land [$3]y$3#1) \lor <br3#2>([$1]y$1#2 \land [$2]y$2#2 \land [$3]y$3#2);
+ia =_\nu \lambda y$1#1. \lambda y$1#2. <ia#1>[$1]y$1#1 \lor <ia#2>[$1]y$1#2;
+ib =_\nu \lambda y$1#1. \lambda y$1#2. <ib#1>[$1]y$1#1 \lor <ib#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q0 e#1 -> true.
+@q0 br#1 -> $1@q0&$2@q0.
+@q0 a#1 -> $1@q1.
+@q0 b#1 -> $1@q1.
+@q0 br3#1 -> $1@q0&$2@q0&$3@q0.
+@q0 ia#1 -> $1@q1.
+@q0 ib#1 -> $1@q1.
+@q0 ic#1 -> $1@q1.
+@q0 c#1 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 e#2 -> true.
+@q1 br#2 -> $1@q0&$2@q0.
+@q1 a#2 -> $1@q1.
+@q1 b#2 -> $1@q1.
+@q1 br3#2 -> $1@q0&$2@q0&$3@q0.
+@q1 ia#2 -> $1@q1.
+@q1 ib#2 -> $1@q1.
+@q1 ic#2 -> $1@q1.
+@q1 c#2 -> $1@q1.
+$1@q0&$2@q0&$3@q0 $1 -> @q0.
+$1@q0&$2@q0&$3@q0 $2 -> @q0.
+$1@q0&$2@q0&$3@q0 $3 -> @q0.

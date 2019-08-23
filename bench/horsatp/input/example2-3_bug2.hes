@@ -1,0 +1,34 @@
+/*** original HORS >>
+%HORS
+S -> br (F1 T) (F0 T).
+F1 k -> G1 k.
+F0 k -> G0 k.
+G1 k -> k.
+G0 k -> fail.
+T -> t T.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 t -> (1, q0).
+priorities:
+q0 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu br (F1#0 T#0) (F0#0 T#0);
+F1#0 =_\nu \lambda k#0. G1#0 k#0;
+F0#0 =_\nu \lambda k#0. G0#0 k#0;
+G1#0 =_\nu \lambda k#0. k#0;
+G0#0 =_\nu \lambda k#0. fail;
+T#0 =_\nu t T#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+fail =_\nu <fail#0>\true;
+t =_\nu \lambda y$1#0. <t#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 t#0 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q0 $1 -> @q0.

@@ -1,0 +1,68 @@
+// from horsat2/compress
+/*** original HORS >>
+%HORS
+S -> One (One (One (Zero (Zero (One (One (One (One Step)))))))) f e.
+Step g z -> g (lpar (plus (H g (lpar (minus (H g z)))))).
+Zero h g z -> h (h g) z.
+One h g z -> h (h (Step g)) z.
+H g z -> g (rpar (g z)).
+%APT
+intial state: q0
+transitions:
+q1 f -> (1, q2).
+q1 e -> \true.
+q1 lpar -> (1, q0).
+q1 plus -> (1, q0).
+q1 minus -> (1, q0).
+q1 rpar -> (1, q0).
+q0 f -> (1, q1).
+q0 e -> \true.
+q0 lpar -> (1, q0).
+q0 plus -> (1, q0).
+q0 minus -> (1, q0).
+q0 rpar -> (1, q0).
+priorities:
+q1 -> 0.
+q0 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu One#0 F'35#0 f e;
+F'35#0 =_\nu One#0 (One#0 F'34#0);
+F'34#0 =_\nu Zero#0 (Zero#0 F'33#0);
+F'33#0 =_\nu One#0 (One#0 F'32#0);
+F'32#0 =_\nu One#0 (One#0 Step#0);
+Step#0 =_\nu \lambda g#0. \lambda z#0. g#0 (F'40#0 g#0 z#0);
+F'40#0 =_\nu \lambda g#0. \lambda z#0. lpar (F'39#0 g#0 z#0);
+F'39#0 =_\nu \lambda g#0. \lambda z#0. plus (F'38#0 g#0 z#0);
+F'38#0 =_\nu \lambda g#0. \lambda z#0. H#0 g#0 (F'37#0 g#0 z#0);
+F'37#0 =_\nu \lambda g#0. \lambda z#0. lpar (F'36#0 g#0 z#0);
+F'36#0 =_\nu \lambda g#0. \lambda z#0. minus (H#0 g#0 z#0);
+Zero#0 =_\nu \lambda h#0. \lambda g#0. \lambda z#0. h#0 (h#0 g#0) z#0;
+One#0 =_\nu \lambda h#0. \lambda g#0. \lambda z#0. h#0 (F'41#0 h#0 g#0) z#0;
+F'41#0 =_\nu \lambda h#0. \lambda g#0. h#0 (Step#0 g#0);
+H#0 =_\nu \lambda g#0. \lambda z#0. g#0 (F'42#0 g#0 z#0);
+F'42#0 =_\nu \lambda g#0. \lambda z#0. rpar (g#0 z#0);
+f =_\nu \lambda y$1#0. <f#0>[$1]y$1#0;
+e =_\nu <e#0>\true;
+lpar =_\nu \lambda y$1#0. <lpar#0>[$1]y$1#0;
+plus =_\nu \lambda y$1#0. <plus#0>[$1]y$1#0;
+minus =_\nu \lambda y$1#0. <minus#0>[$1]y$1#0;
+rpar =_\nu \lambda y$1#0. <rpar#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q1 f#0 -> $1@q2.
+@q1 e#0 -> true.
+@q1 lpar#0 -> $1@q0.
+@q1 plus#0 -> $1@q0.
+@q1 minus#0 -> $1@q0.
+@q1 rpar#0 -> $1@q0.
+$1@q2 $1 -> @q2.
+$1@q0 $1 -> @q0.
+@q0 f#0 -> $1@q1.
+@q0 e#0 -> true.
+@q0 lpar#0 -> $1@q0.
+@q0 plus#0 -> $1@q0.
+@q0 minus#0 -> $1@q0.
+@q0 rpar#0 -> $1@q0.
+$1@q1 $1 -> @q1.

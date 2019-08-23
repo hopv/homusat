@@ -1,0 +1,471 @@
+// from horsat2/cfa
+/*** original HORS >>
+%HORS
+S -> A3 I5.
+A3 var1233 -> a_lab3 (F2_1 var1233 C27).
+F2_1 var1234 var1235 -> f_lab2_1 (A4 var1235 var1234).
+A4 var1235 var1236 -> a_lab4 (F var1236 var1235).
+F var1237 var1238 -> f_lab14_1 (A12_1st var1237 var1238 unit).
+A12_1st var1237 var1238 var1239 -> a_lab12_1st (var1237 var1239 (C1 var1237 var1238)).
+C1 var1237 var1238 var1240 -> A12_2nd var1237 var1238 unit.
+A12_2nd var1237 var1238 var1241 -> a_lab12_2nd (I0 var1241 (C2 var1237 var1238)).
+I0 var1330 var1331 -> i_lab0 (var1331 unit).
+C2 var1237 var1238 var1242 -> A13_test var1237 var1238 unit.
+A13_test var1237 var1238 var1243 -> a_lab13_test (P12 var1243 (C3 var1237 var1238)).
+P12 var1328 var1329 -> p_lab12 (var1329 unit).
+C3 var1237 var1238 var1244 -> C4 var1237 var1238.
+C4 var1237 var1245 -> br (var1245 unit) (A5 var1237 var1245 I33).
+A5 var1237 var1245 var1248 -> a_lab5 (Tak var1248 (C23 var1237 var1245)).
+Tak var1269 var1270 -> f_lab1_1 (var1270 (F1_2 var1269)).
+F1_2 var1269 var1271 var1272 -> f_lab1_2 (var1272 (F1_3 var1271 var1269)).
+F1_3 var1271 var1269 var1273 var1274 -> f_lab1_3 (A30_1st var1271 var1269 var1273 var1274 unit).
+A30_1st var1271 var1269 var1273 var1274 var1275 -> a_lab30_1st (var1271 var1275 (C5 var1269 var1271 var1273 var1274)).
+C5 var1269 var1271 var1273 var1274 var1276 -> A30_2nd var1269 var1271 var1273 var1274 unit.
+A30_2nd var1269 var1271 var1273 var1274 var1277 -> a_lab30_2nd (var1269 var1277 (C6 var1269 var1271 var1273 var1274)).
+C6 var1269 var1271 var1273 var1274 var1278 -> A31_test var1269 var1271 var1273 var1274 unit.
+A31_test var1269 var1271 var1273 var1274 var1279 -> a_lab31_test (P30 var1279 (C7 var1269 var1271 var1273 var1274)).
+P30 var1326 var1327 -> p_lab30 (var1327 unit).
+C7 var1269 var1271 var1273 var1274 var1280 -> C8 var1269 var1271 var1273 var1274.
+C8 var1269 var1271 var1273 var1281 -> br (A23_1st var1269 var1271 var1273 var1281 unit) (var1281 var1273).
+A23_1st var1269 var1271 var1273 var1281 var1282 -> a_lab23_1st (var1269 var1282 (C9 var1271 var1273 var1281 var1269)).
+C9 var1271 var1273 var1281 var1269 var1283 -> A23_2nd var1271 var1273 var1281 var1269 unit.
+A23_2nd var1271 var1273 var1281 var1269 var1284 -> a_lab23_2nd (I1 var1284 (C10 var1271 var1273 var1281 var1269)).
+I1 var1324 var1325 -> i_lab1 (var1325 unit).
+C10 var1271 var1273 var1281 var1269 var1285 -> A24 var1271 var1273 var1281 var1269 P23.
+A24 var1271 var1273 var1281 var1269 var1288 -> a_lab24 (Tak var1288 (C11 var1271 var1273 var1281 var1269)).
+C11 var1271 var1273 var1281 var1269 var1289 -> A25 var1289 var1271 var1273 var1281 var1269 var1271.
+A25 var1289 var1271 var1273 var1281 var1269 var1290 -> a_lab25 (var1289 var1290 (C12 var1271 var1273 var1281 var1269)).
+C12 var1271 var1273 var1281 var1269 var1291 -> A26 var1291 var1271 var1273 var1281 var1269 var1273.
+A26 var1291 var1271 var1273 var1281 var1269 var1292 -> a_lab26 (var1291 var1292 (A27 var1271 var1273 var1281 var1269)).
+A27 var1271 var1273 var1281 var1269 var1293 -> a_lab27 (Tak var1293 (C13 var1271 var1273 var1281 var1269)).
+C13 var1271 var1273 var1281 var1269 var1294 -> A19_1st var1271 var1294 var1273 var1281 var1269 unit.
+A19_1st var1271 var1294 var1273 var1281 var1269 var1295 -> a_lab19_1st (var1271 var1295 (C14 var1294 var1273 var1281 var1271 var1269)).
+C14 var1294 var1273 var1281 var1271 var1269 var1296 -> A19_2nd var1294 var1273 var1281 var1271 var1269 unit.
+A19_2nd var1294 var1273 var1281 var1271 var1269 var1297 -> a_lab19_2nd (I1 var1297 (C15 var1294 var1273 var1281 var1271 var1269)).
+C15 var1294 var1273 var1281 var1271 var1269 var1298 -> A20 var1294 var1273 var1281 var1271 var1269 P19.
+A20 var1294 var1273 var1281 var1271 var1269 var1301 -> a_lab20 (Tak var1301 (C16 var1294 var1273 var1281 var1271 var1269)).
+C16 var1294 var1273 var1281 var1271 var1269 var1302 -> A21 var1302 var1294 var1273 var1281 var1271 var1269 var1273.
+A21 var1302 var1294 var1273 var1281 var1271 var1269 var1303 -> a_lab21 (var1302 var1303 (C17 var1294 var1273 var1281 var1271 var1269)).
+C17 var1294 var1273 var1281 var1271 var1269 var1304 -> A22 var1304 var1294 var1273 var1281 var1271 var1269 var1269.
+A22 var1304 var1294 var1273 var1281 var1271 var1269 var1305 -> a_lab22 (var1304 var1305 (A28 var1294 var1273 var1281 var1271 var1269)).
+A28 var1294 var1273 var1281 var1271 var1269 var1306 -> a_lab28 (var1294 var1306 (C18 var1273 var1281 var1271 var1269)).
+C18 var1273 var1281 var1271 var1269 var1307 -> A15_1st var1273 var1307 var1281 var1271 var1269 unit.
+A15_1st var1273 var1307 var1281 var1271 var1269 var1308 -> a_lab15_1st (var1273 var1308 (C19 var1307 var1281 var1271 var1269)).
+C19 var1307 var1281 var1271 var1269 var1309 -> A15_2nd var1307 var1281 var1271 var1269 unit.
+A15_2nd var1307 var1281 var1271 var1269 var1310 -> a_lab15_2nd (I1 var1310 (C20 var1307 var1281 var1271 var1269)).
+C20 var1307 var1281 var1271 var1269 var1311 -> A16 var1307 var1281 var1271 var1269 P15.
+A16 var1307 var1281 var1271 var1269 var1314 -> a_lab16 (Tak var1314 (C21 var1307 var1281 var1271 var1269)).
+C21 var1307 var1281 var1271 var1269 var1315 -> A17 var1315 var1307 var1281 var1271 var1269.
+A17 var1315 var1307 var1281 var1271 var1316 -> a_lab17 (var1315 var1316 (C22 var1307 var1281 var1271)).
+C22 var1307 var1281 var1271 var1317 -> A18 var1317 var1307 var1281 var1271.
+A18 var1317 var1307 var1281 var1318 -> a_lab18 (var1317 var1318 (A29 var1307 var1281)).
+A29 var1307 var1281 var1319 -> a_lab29 (var1307 var1319 var1281).
+P15 var1312 var1313 -> p_lab15 (var1313 unit).
+P19 var1299 var1300 -> p_lab19 (var1300 unit).
+P23 var1286 var1287 -> p_lab23 (var1287 unit).
+C23 var1237 var1245 var1249 -> A6 var1249 var1237 var1245 I22.
+A6 var1249 var1237 var1245 var1252 -> a_lab6 (var1249 var1252 (C24 var1237 var1245)).
+C24 var1237 var1245 var1253 -> A7 var1253 var1237 var1245 I11.
+A7 var1253 var1237 var1245 var1256 -> a_lab7 (var1253 var1256 (A11 var1237 var1245)).
+A11 var1237 var1245 var1257 -> a_lab11 (F10_1 var1237 var1257 var1245).
+F10_1 var1237 var1258 var1259 -> f_lab10_1 (A8_1st var1237 var1259 unit).
+A8_1st var1237 var1259 var1260 -> a_lab8_1st (var1237 var1260 (C25 var1259)).
+C25 var1259 var1261 -> A8_2nd var1259 unit.
+A8_2nd var1259 var1262 -> a_lab8_2nd (I1 var1262 (C26 var1259)).
+C26 var1259 var1263 -> A9 var1259 P8.
+A9 var1259 var1266 -> a_lab9 (F var1266 var1259).
+P8 var1264 var1265 -> p_lab8 (var1265 unit).
+I11 var1254 var1255 -> i_lab11 (var1255 unit).
+I22 var1250 var1251 -> i_lab22 (var1251 unit).
+I33 var1246 var1247 -> i_lab33 (var1247 unit).
+C27 m -> m.
+I5 var1231 var1232 -> i_lab5 (var1232 unit).
+%APT
+intial state: q0
+transitions:
+q0 a_lab3 -> (1, q0).
+q0 f_lab2_1 -> (1, q0).
+q0 a_lab4 -> (1, q0).
+q0 f_lab14_1 -> (1, q0).
+q0 unit -> \true.
+q0 a_lab12_1st -> (1, q0).
+q0 a_lab12_2nd -> (1, q0).
+q0 i_lab0 -> (1, q0).
+q0 a_lab13_test -> (1, q0).
+q0 p_lab12 -> (1, q0).
+q0 br -> (2, q0) \land (1, q0).
+q0 a_lab5 -> (1, q0).
+q0 f_lab1_1 -> (1, q0).
+q0 f_lab1_2 -> (1, q0).
+q0 f_lab1_3 -> (1, q0).
+q0 a_lab30_1st -> (1, q0).
+q0 a_lab30_2nd -> (1, q0).
+q0 a_lab31_test -> (1, q0).
+q0 p_lab30 -> (1, q0).
+q0 a_lab23_1st -> (1, q0).
+q0 a_lab23_2nd -> (1, q0).
+q0 i_lab1 -> (1, q0).
+q0 a_lab24 -> (1, q0).
+q0 a_lab25 -> (1, q0).
+q0 a_lab26 -> (1, q0).
+q0 a_lab27 -> (1, q0).
+q0 a_lab19_1st -> (1, q0).
+q0 a_lab19_2nd -> (1, q0).
+q0 a_lab20 -> (1, q0).
+q0 a_lab21 -> (1, q0).
+q0 a_lab22 -> (1, q0).
+q0 a_lab28 -> (1, q0).
+q0 a_lab15_1st -> (1, q1).
+q0 a_lab15_2nd -> (1, q0).
+q0 a_lab16 -> (1, q0).
+q0 a_lab17 -> (1, q0).
+q0 a_lab18 -> (1, q0).
+q0 a_lab29 -> (1, q0).
+q0 p_lab15 -> (1, q0).
+q0 p_lab19 -> (1, q0).
+q0 p_lab23 -> (1, q0).
+q0 a_lab6 -> (1, q0).
+q0 a_lab7 -> (1, q0).
+q0 a_lab11 -> (1, q0).
+q0 f_lab10_1 -> (1, q0).
+q0 a_lab8_1st -> (1, q0).
+q0 a_lab8_2nd -> (1, q0).
+q0 a_lab9 -> (1, q0).
+q0 p_lab8 -> (1, q0).
+q0 i_lab11 -> (1, q0).
+q0 i_lab22 -> (1, q0).
+q0 i_lab33 -> (1, q0).
+q0 i_lab5 -> (1, q0).
+q1 a_lab3 -> (1, q0).
+q1 f_lab2_1 -> (1, q0).
+q1 a_lab4 -> (1, q0).
+q1 f_lab14_1 -> (1, q0).
+q1 unit -> \true.
+q1 a_lab12_1st -> (1, q0).
+q1 a_lab12_2nd -> (1, q0).
+q1 i_lab0 -> (1, q0).
+q1 a_lab13_test -> (1, q0).
+q1 p_lab12 -> (1, q0).
+q1 br -> (2, q1) \land (1, q1).
+q1 a_lab5 -> (1, q0).
+q1 f_lab1_1 -> (1, q0).
+q1 f_lab1_2 -> (1, q0).
+q1 f_lab1_3 -> (1, q0).
+q1 a_lab30_1st -> (1, q0).
+q1 a_lab30_2nd -> (1, q0).
+q1 a_lab31_test -> (1, q0).
+q1 p_lab30 -> (1, q0).
+q1 a_lab23_1st -> (1, q0).
+q1 a_lab23_2nd -> (1, q0).
+q1 i_lab1 -> (1, q0).
+q1 a_lab24 -> (1, q0).
+q1 a_lab25 -> (1, q0).
+q1 a_lab26 -> (1, q0).
+q1 a_lab27 -> (1, q0).
+q1 a_lab19_1st -> (1, q0).
+q1 a_lab19_2nd -> (1, q0).
+q1 a_lab20 -> (1, q0).
+q1 a_lab21 -> (1, q0).
+q1 a_lab22 -> (1, q0).
+q1 a_lab28 -> (1, q0).
+q1 a_lab15_1st -> (1, q0).
+q1 a_lab15_2nd -> (1, q0).
+q1 a_lab16 -> (1, q0).
+q1 a_lab17 -> (1, q0).
+q1 a_lab18 -> (1, q0).
+q1 a_lab29 -> (1, q0).
+q1 p_lab15 -> (1, q0).
+q1 p_lab19 -> (1, q0).
+q1 a_lab6 -> (1, q0).
+q1 a_lab7 -> (1, q0).
+q1 a_lab11 -> (1, q0).
+q1 f_lab10_1 -> (1, q0).
+q1 a_lab8_1st -> (1, q0).
+q1 a_lab8_2nd -> (1, q0).
+q1 a_lab9 -> (1, q0).
+q1 p_lab8 -> (1, q0).
+q1 i_lab11 -> (1, q0).
+q1 i_lab22 -> (1, q0).
+q1 i_lab33 -> (1, q0).
+q1 i_lab5 -> (1, q0).
+priorities:
+q0 -> 0.
+q1 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu A3#0 I5#0;
+A3#0 =_\nu \lambda var1233#0. a_lab3 (F2_1#0 var1233#0 C27#0);
+F2_1#0 =_\nu \lambda var1234#0. \lambda var1235#0. f_lab2_1 (A4#0 var1235#0 var1234#0);
+A4#0 =_\nu \lambda var1235#0. \lambda var1236#0. a_lab4 (F#0 var1236#0 var1235#0);
+F#0 =_\nu \lambda var1237#0. \lambda var1238#0. f_lab14_1 (A12_1st#0 var1237#0 var1238#0 unit);
+A12_1st#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1239#0. a_lab12_1st (F'609#0 var1237#0 var1238#0 var1239#0);
+F'609#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1239#0. var1237#0 var1239#0 (C1#0 var1237#0 var1238#0);
+C1#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1240#0. A12_2nd#0 var1237#0 var1238#0 unit;
+A12_2nd#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1241#0. a_lab12_2nd (F'610#0 var1237#0 var1238#0 var1241#0);
+F'610#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1241#0. I0#0 var1241#0 (C2#0 var1237#0 var1238#0);
+I0#0 =_\nu \lambda var1330#0. \lambda var1331#0. i_lab0 (var1331#0 unit);
+C2#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1242#0. A13_test#0 var1237#0 var1238#0 unit;
+A13_test#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1243#0. a_lab13_test (F'611#0 var1237#0 var1238#0 var1243#0);
+F'611#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1243#0. P12#0 var1243#0 (C3#0 var1237#0 var1238#0);
+P12#0 =_\nu \lambda var1328#0. \lambda var1329#0. p_lab12 (var1329#0 unit);
+C3#0 =_\nu \lambda var1237#0. \lambda var1238#0. \lambda var1244#0. C4#0 var1237#0 var1238#0;
+C4#0 =_\nu \lambda var1237#0. \lambda var1245#0. br (var1245#0 unit) (A5#0 var1237#0 var1245#0 I33#0);
+A5#0 =_\nu \lambda var1237#0. \lambda var1245#0. \lambda var1248#0. a_lab5 (F'612#0 var1237#0 var1245#0 var1248#0);
+F'612#0 =_\nu \lambda var1237#0. \lambda var1245#0. \lambda var1248#0. Tak#0 var1248#0 (C23#0 var1237#0 var1245#0);
+Tak#0 =_\nu \lambda var1269#0. \lambda var1270#0. f_lab1_1 (F'613#0 var1269#0 var1270#0);
+F'613#0 =_\nu \lambda var1269#0. \lambda var1270#0. var1270#0 (F1_2#0 var1269#0);
+F1_2#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1272#0. f_lab1_2 (F'614#0 var1269#0 var1271#0 var1272#0);
+F'614#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1272#0. var1272#0 (F1_3#0 var1271#0 var1269#0);
+F1_3#0 =_\nu \lambda var1271#0. \lambda var1269#0. \lambda var1273#0. \lambda var1274#0. f_lab1_3 (A30_1st#0 var1271#0 var1269#0 var1273#0 var1274#0 unit);
+A30_1st#0 =_\nu \lambda var1271#0. \lambda var1269#0. \lambda var1273#0. \lambda var1274#0. \lambda var1275#0. a_lab30_1st (F'615#0 var1271#0 var1269#0 var1273#0 var1274#0 var1275#0);
+F'615#0 =_\nu \lambda var1271#0. \lambda var1269#0. \lambda var1273#0. \lambda var1274#0. \lambda var1275#0. var1271#0 var1275#0 (C5#0 var1269#0 var1271#0 var1273#0 var1274#0);
+C5#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1276#0. A30_2nd#0 var1269#0 var1271#0 var1273#0 var1274#0 unit;
+A30_2nd#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1277#0. a_lab30_2nd (F'616#0 var1269#0 var1271#0 var1273#0 var1274#0 var1277#0);
+F'616#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1277#0. var1269#0 var1277#0 (C6#0 var1269#0 var1271#0 var1273#0 var1274#0);
+C6#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1278#0. A31_test#0 var1269#0 var1271#0 var1273#0 var1274#0 unit;
+A31_test#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1279#0. a_lab31_test (F'617#0 var1269#0 var1271#0 var1273#0 var1274#0 var1279#0);
+F'617#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1279#0. P30#0 var1279#0 (C7#0 var1269#0 var1271#0 var1273#0 var1274#0);
+P30#0 =_\nu \lambda var1326#0. \lambda var1327#0. p_lab30 (var1327#0 unit);
+C7#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1274#0. \lambda var1280#0. C8#0 var1269#0 var1271#0 var1273#0 var1274#0;
+C8#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. br (A23_1st#0 var1269#0 var1271#0 var1273#0 var1281#0 unit) (var1281#0 var1273#0);
+A23_1st#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1282#0. a_lab23_1st (F'618#0 var1269#0 var1271#0 var1273#0 var1281#0 var1282#0);
+F'618#0 =_\nu \lambda var1269#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1282#0. var1269#0 var1282#0 (C9#0 var1271#0 var1273#0 var1281#0 var1269#0);
+C9#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1283#0. A23_2nd#0 var1271#0 var1273#0 var1281#0 var1269#0 unit;
+A23_2nd#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1284#0. a_lab23_2nd (F'619#0 var1271#0 var1273#0 var1281#0 var1269#0 var1284#0);
+F'619#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1284#0. I1#0 var1284#0 (C10#0 var1271#0 var1273#0 var1281#0 var1269#0);
+I1#0 =_\nu \lambda var1324#0. \lambda var1325#0. i_lab1 (var1325#0 unit);
+C10#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1285#0. A24#0 var1271#0 var1273#0 var1281#0 var1269#0 P23#0;
+A24#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1288#0. a_lab24 (F'620#0 var1271#0 var1273#0 var1281#0 var1269#0 var1288#0);
+F'620#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1288#0. Tak#0 var1288#0 (C11#0 var1271#0 var1273#0 var1281#0 var1269#0);
+C11#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1289#0. A25#0 var1289#0 var1271#0 var1273#0 var1281#0 var1269#0 var1271#0;
+A25#0 =_\nu \lambda var1289#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1290#0. a_lab25 (F'621#0 var1289#0 var1271#0 var1273#0 var1281#0 var1269#0 var1290#0);
+F'621#0 =_\nu \lambda var1289#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1290#0. var1289#0 var1290#0 (C12#0 var1271#0 var1273#0 var1281#0 var1269#0);
+C12#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1291#0. A26#0 var1291#0 var1271#0 var1273#0 var1281#0 var1269#0 var1273#0;
+A26#0 =_\nu \lambda var1291#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1292#0. a_lab26 (F'622#0 var1291#0 var1271#0 var1273#0 var1281#0 var1269#0 var1292#0);
+F'622#0 =_\nu \lambda var1291#0. \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1292#0. var1291#0 var1292#0 (A27#0 var1271#0 var1273#0 var1281#0 var1269#0);
+A27#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1293#0. a_lab27 (F'623#0 var1271#0 var1273#0 var1281#0 var1269#0 var1293#0);
+F'623#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1293#0. Tak#0 var1293#0 (C13#0 var1271#0 var1273#0 var1281#0 var1269#0);
+C13#0 =_\nu \lambda var1271#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1294#0. A19_1st#0 var1271#0 var1294#0 var1273#0 var1281#0 var1269#0 unit;
+A19_1st#0 =_\nu \lambda var1271#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1295#0. a_lab19_1st (F'624#0 var1271#0 var1294#0 var1273#0 var1281#0 var1269#0 var1295#0);
+F'624#0 =_\nu \lambda var1271#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1269#0. \lambda var1295#0. var1271#0 var1295#0 (C14#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0);
+C14#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1296#0. A19_2nd#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 unit;
+A19_2nd#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1297#0. a_lab19_2nd (F'625#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1297#0);
+F'625#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1297#0. I1#0 var1297#0 (C15#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0);
+C15#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1298#0. A20#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 P19#0;
+A20#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1301#0. a_lab20 (F'626#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1301#0);
+F'626#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1301#0. Tak#0 var1301#0 (C16#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0);
+C16#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1302#0. A21#0 var1302#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1273#0;
+A21#0 =_\nu \lambda var1302#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1303#0. a_lab21 (F'627#0 var1302#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1303#0);
+F'627#0 =_\nu \lambda var1302#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1303#0. var1302#0 var1303#0 (C17#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0);
+C17#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1304#0. A22#0 var1304#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1269#0;
+A22#0 =_\nu \lambda var1304#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1305#0. a_lab22 (F'628#0 var1304#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1305#0);
+F'628#0 =_\nu \lambda var1304#0. \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1305#0. var1304#0 var1305#0 (A28#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0);
+A28#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1306#0. a_lab28 (F'629#0 var1294#0 var1273#0 var1281#0 var1271#0 var1269#0 var1306#0);
+F'629#0 =_\nu \lambda var1294#0. \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1306#0. var1294#0 var1306#0 (C18#0 var1273#0 var1281#0 var1271#0 var1269#0);
+C18#0 =_\nu \lambda var1273#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1307#0. A15_1st#0 var1273#0 var1307#0 var1281#0 var1271#0 var1269#0 unit;
+A15_1st#0 =_\nu \lambda var1273#0. \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1308#0. a_lab15_1st (F'630#0 var1273#0 var1307#0 var1281#0 var1271#0 var1269#0 var1308#0);
+F'630#0 =_\nu \lambda var1273#0. \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1308#0. var1273#0 var1308#0 (C19#0 var1307#0 var1281#0 var1271#0 var1269#0);
+C19#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1309#0. A15_2nd#0 var1307#0 var1281#0 var1271#0 var1269#0 unit;
+A15_2nd#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1310#0. a_lab15_2nd (F'631#0 var1307#0 var1281#0 var1271#0 var1269#0 var1310#0);
+F'631#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1310#0. I1#0 var1310#0 (C20#0 var1307#0 var1281#0 var1271#0 var1269#0);
+C20#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1311#0. A16#0 var1307#0 var1281#0 var1271#0 var1269#0 P15#0;
+A16#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1314#0. a_lab16 (F'632#0 var1307#0 var1281#0 var1271#0 var1269#0 var1314#0);
+F'632#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1314#0. Tak#0 var1314#0 (C21#0 var1307#0 var1281#0 var1271#0 var1269#0);
+C21#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1269#0. \lambda var1315#0. A17#0 var1315#0 var1307#0 var1281#0 var1271#0 var1269#0;
+A17#0 =_\nu \lambda var1315#0. \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1316#0. a_lab17 (F'633#0 var1315#0 var1307#0 var1281#0 var1271#0 var1316#0);
+F'633#0 =_\nu \lambda var1315#0. \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1316#0. var1315#0 var1316#0 (C22#0 var1307#0 var1281#0 var1271#0);
+C22#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1271#0. \lambda var1317#0. A18#0 var1317#0 var1307#0 var1281#0 var1271#0;
+A18#0 =_\nu \lambda var1317#0. \lambda var1307#0. \lambda var1281#0. \lambda var1318#0. a_lab18 (F'634#0 var1317#0 var1307#0 var1281#0 var1318#0);
+F'634#0 =_\nu \lambda var1317#0. \lambda var1307#0. \lambda var1281#0. \lambda var1318#0. var1317#0 var1318#0 (A29#0 var1307#0 var1281#0);
+A29#0 =_\nu \lambda var1307#0. \lambda var1281#0. \lambda var1319#0. a_lab29 (var1307#0 var1319#0 var1281#0);
+P15#0 =_\nu \lambda var1312#0. \lambda var1313#0. p_lab15 (var1313#0 unit);
+P19#0 =_\nu \lambda var1299#0. \lambda var1300#0. p_lab19 (var1300#0 unit);
+P23#0 =_\nu \lambda var1286#0. \lambda var1287#0. p_lab23 (var1287#0 unit);
+C23#0 =_\nu \lambda var1237#0. \lambda var1245#0. \lambda var1249#0. A6#0 var1249#0 var1237#0 var1245#0 I22#0;
+A6#0 =_\nu \lambda var1249#0. \lambda var1237#0. \lambda var1245#0. \lambda var1252#0. a_lab6 (F'635#0 var1249#0 var1237#0 var1245#0 var1252#0);
+F'635#0 =_\nu \lambda var1249#0. \lambda var1237#0. \lambda var1245#0. \lambda var1252#0. var1249#0 var1252#0 (C24#0 var1237#0 var1245#0);
+C24#0 =_\nu \lambda var1237#0. \lambda var1245#0. \lambda var1253#0. A7#0 var1253#0 var1237#0 var1245#0 I11#0;
+A7#0 =_\nu \lambda var1253#0. \lambda var1237#0. \lambda var1245#0. \lambda var1256#0. a_lab7 (F'636#0 var1253#0 var1237#0 var1245#0 var1256#0);
+F'636#0 =_\nu \lambda var1253#0. \lambda var1237#0. \lambda var1245#0. \lambda var1256#0. var1253#0 var1256#0 (A11#0 var1237#0 var1245#0);
+A11#0 =_\nu \lambda var1237#0. \lambda var1245#0. \lambda var1257#0. a_lab11 (F10_1#0 var1237#0 var1257#0 var1245#0);
+F10_1#0 =_\nu \lambda var1237#0. \lambda var1258#0. \lambda var1259#0. f_lab10_1 (A8_1st#0 var1237#0 var1259#0 unit);
+A8_1st#0 =_\nu \lambda var1237#0. \lambda var1259#0. \lambda var1260#0. a_lab8_1st (F'637#0 var1237#0 var1259#0 var1260#0);
+F'637#0 =_\nu \lambda var1237#0. \lambda var1259#0. \lambda var1260#0. var1237#0 var1260#0 (C25#0 var1259#0);
+C25#0 =_\nu \lambda var1259#0. \lambda var1261#0. A8_2nd#0 var1259#0 unit;
+A8_2nd#0 =_\nu \lambda var1259#0. \lambda var1262#0. a_lab8_2nd (F'638#0 var1259#0 var1262#0);
+F'638#0 =_\nu \lambda var1259#0. \lambda var1262#0. I1#0 var1262#0 (C26#0 var1259#0);
+C26#0 =_\nu \lambda var1259#0. \lambda var1263#0. A9#0 var1259#0 P8#0;
+A9#0 =_\nu \lambda var1259#0. \lambda var1266#0. a_lab9 (F#0 var1266#0 var1259#0);
+P8#0 =_\nu \lambda var1264#0. \lambda var1265#0. p_lab8 (var1265#0 unit);
+I11#0 =_\nu \lambda var1254#0. \lambda var1255#0. i_lab11 (var1255#0 unit);
+I22#0 =_\nu \lambda var1250#0. \lambda var1251#0. i_lab22 (var1251#0 unit);
+I33#0 =_\nu \lambda var1246#0. \lambda var1247#0. i_lab33 (var1247#0 unit);
+C27#0 =_\nu \lambda m#0. m#0;
+I5#0 =_\nu \lambda var1231#0. \lambda var1232#0. i_lab5 (var1232#0 unit);
+a_lab3 =_\nu \lambda y$1#0. <a_lab3#0>[$1]y$1#0;
+f_lab2_1 =_\nu \lambda y$1#0. <f_lab2_1#0>[$1]y$1#0;
+a_lab4 =_\nu \lambda y$1#0. <a_lab4#0>[$1]y$1#0;
+f_lab14_1 =_\nu \lambda y$1#0. <f_lab14_1#0>[$1]y$1#0;
+unit =_\nu <unit#0>\true;
+a_lab12_1st =_\nu \lambda y$1#0. <a_lab12_1st#0>[$1]y$1#0;
+a_lab12_2nd =_\nu \lambda y$1#0. <a_lab12_2nd#0>[$1]y$1#0;
+i_lab0 =_\nu \lambda y$1#0. <i_lab0#0>[$1]y$1#0;
+a_lab13_test =_\nu \lambda y$1#0. <a_lab13_test#0>[$1]y$1#0;
+p_lab12 =_\nu \lambda y$1#0. <p_lab12#0>[$1]y$1#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+a_lab5 =_\nu \lambda y$1#0. <a_lab5#0>[$1]y$1#0;
+f_lab1_1 =_\nu \lambda y$1#0. <f_lab1_1#0>[$1]y$1#0;
+f_lab1_2 =_\nu \lambda y$1#0. <f_lab1_2#0>[$1]y$1#0;
+f_lab1_3 =_\nu \lambda y$1#0. <f_lab1_3#0>[$1]y$1#0;
+a_lab30_1st =_\nu \lambda y$1#0. <a_lab30_1st#0>[$1]y$1#0;
+a_lab30_2nd =_\nu \lambda y$1#0. <a_lab30_2nd#0>[$1]y$1#0;
+a_lab31_test =_\nu \lambda y$1#0. <a_lab31_test#0>[$1]y$1#0;
+p_lab30 =_\nu \lambda y$1#0. <p_lab30#0>[$1]y$1#0;
+a_lab23_1st =_\nu \lambda y$1#0. <a_lab23_1st#0>[$1]y$1#0;
+a_lab23_2nd =_\nu \lambda y$1#0. <a_lab23_2nd#0>[$1]y$1#0;
+i_lab1 =_\nu \lambda y$1#0. <i_lab1#0>[$1]y$1#0;
+a_lab24 =_\nu \lambda y$1#0. <a_lab24#0>[$1]y$1#0;
+a_lab25 =_\nu \lambda y$1#0. <a_lab25#0>[$1]y$1#0;
+a_lab26 =_\nu \lambda y$1#0. <a_lab26#0>[$1]y$1#0;
+a_lab27 =_\nu \lambda y$1#0. <a_lab27#0>[$1]y$1#0;
+a_lab19_1st =_\nu \lambda y$1#0. <a_lab19_1st#0>[$1]y$1#0;
+a_lab19_2nd =_\nu \lambda y$1#0. <a_lab19_2nd#0>[$1]y$1#0;
+a_lab20 =_\nu \lambda y$1#0. <a_lab20#0>[$1]y$1#0;
+a_lab21 =_\nu \lambda y$1#0. <a_lab21#0>[$1]y$1#0;
+a_lab22 =_\nu \lambda y$1#0. <a_lab22#0>[$1]y$1#0;
+a_lab28 =_\nu \lambda y$1#0. <a_lab28#0>[$1]y$1#0;
+a_lab15_1st =_\nu \lambda y$1#0. <a_lab15_1st#0>[$1]y$1#0;
+a_lab15_2nd =_\nu \lambda y$1#0. <a_lab15_2nd#0>[$1]y$1#0;
+a_lab16 =_\nu \lambda y$1#0. <a_lab16#0>[$1]y$1#0;
+a_lab17 =_\nu \lambda y$1#0. <a_lab17#0>[$1]y$1#0;
+a_lab18 =_\nu \lambda y$1#0. <a_lab18#0>[$1]y$1#0;
+a_lab29 =_\nu \lambda y$1#0. <a_lab29#0>[$1]y$1#0;
+p_lab15 =_\nu \lambda y$1#0. <p_lab15#0>[$1]y$1#0;
+p_lab19 =_\nu \lambda y$1#0. <p_lab19#0>[$1]y$1#0;
+p_lab23 =_\nu \lambda y$1#0. <p_lab23#0>[$1]y$1#0;
+a_lab6 =_\nu \lambda y$1#0. <a_lab6#0>[$1]y$1#0;
+a_lab7 =_\nu \lambda y$1#0. <a_lab7#0>[$1]y$1#0;
+a_lab11 =_\nu \lambda y$1#0. <a_lab11#0>[$1]y$1#0;
+f_lab10_1 =_\nu \lambda y$1#0. <f_lab10_1#0>[$1]y$1#0;
+a_lab8_1st =_\nu \lambda y$1#0. <a_lab8_1st#0>[$1]y$1#0;
+a_lab8_2nd =_\nu \lambda y$1#0. <a_lab8_2nd#0>[$1]y$1#0;
+a_lab9 =_\nu \lambda y$1#0. <a_lab9#0>[$1]y$1#0;
+p_lab8 =_\nu \lambda y$1#0. <p_lab8#0>[$1]y$1#0;
+i_lab11 =_\nu \lambda y$1#0. <i_lab11#0>[$1]y$1#0;
+i_lab22 =_\nu \lambda y$1#0. <i_lab22#0>[$1]y$1#0;
+i_lab33 =_\nu \lambda y$1#0. <i_lab33#0>[$1]y$1#0;
+i_lab5 =_\nu \lambda y$1#0. <i_lab5#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 a_lab3#0 -> $1@q0.
+@q0 f_lab2_1#0 -> $1@q0.
+@q0 a_lab4#0 -> $1@q0.
+@q0 f_lab14_1#0 -> $1@q0.
+@q0 unit#0 -> true.
+@q0 a_lab12_1st#0 -> $1@q0.
+@q0 a_lab12_2nd#0 -> $1@q0.
+@q0 i_lab0#0 -> $1@q0.
+@q0 a_lab13_test#0 -> $1@q0.
+@q0 p_lab12#0 -> $1@q0.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 a_lab5#0 -> $1@q0.
+@q0 f_lab1_1#0 -> $1@q0.
+@q0 f_lab1_2#0 -> $1@q0.
+@q0 f_lab1_3#0 -> $1@q0.
+@q0 a_lab30_1st#0 -> $1@q0.
+@q0 a_lab30_2nd#0 -> $1@q0.
+@q0 a_lab31_test#0 -> $1@q0.
+@q0 p_lab30#0 -> $1@q0.
+@q0 a_lab23_1st#0 -> $1@q0.
+@q0 a_lab23_2nd#0 -> $1@q0.
+@q0 i_lab1#0 -> $1@q0.
+@q0 a_lab24#0 -> $1@q0.
+@q0 a_lab25#0 -> $1@q0.
+@q0 a_lab26#0 -> $1@q0.
+@q0 a_lab27#0 -> $1@q0.
+@q0 a_lab19_1st#0 -> $1@q0.
+@q0 a_lab19_2nd#0 -> $1@q0.
+@q0 a_lab20#0 -> $1@q0.
+@q0 a_lab21#0 -> $1@q0.
+@q0 a_lab22#0 -> $1@q0.
+@q0 a_lab28#0 -> $1@q0.
+@q0 a_lab15_1st#0 -> $1@q1.
+@q0 a_lab15_2nd#0 -> $1@q0.
+@q0 a_lab16#0 -> $1@q0.
+@q0 a_lab17#0 -> $1@q0.
+@q0 a_lab18#0 -> $1@q0.
+@q0 a_lab29#0 -> $1@q0.
+@q0 p_lab15#0 -> $1@q0.
+@q0 p_lab19#0 -> $1@q0.
+@q0 p_lab23#0 -> $1@q0.
+@q0 a_lab6#0 -> $1@q0.
+@q0 a_lab7#0 -> $1@q0.
+@q0 a_lab11#0 -> $1@q0.
+@q0 f_lab10_1#0 -> $1@q0.
+@q0 a_lab8_1st#0 -> $1@q0.
+@q0 a_lab8_2nd#0 -> $1@q0.
+@q0 a_lab9#0 -> $1@q0.
+@q0 p_lab8#0 -> $1@q0.
+@q0 i_lab11#0 -> $1@q0.
+@q0 i_lab22#0 -> $1@q0.
+@q0 i_lab33#0 -> $1@q0.
+@q0 i_lab5#0 -> $1@q0.
+$1@q0 $1 -> @q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 a_lab3#0 -> $1@q0.
+@q1 f_lab2_1#0 -> $1@q0.
+@q1 a_lab4#0 -> $1@q0.
+@q1 f_lab14_1#0 -> $1@q0.
+@q1 unit#0 -> true.
+@q1 a_lab12_1st#0 -> $1@q0.
+@q1 a_lab12_2nd#0 -> $1@q0.
+@q1 i_lab0#0 -> $1@q0.
+@q1 a_lab13_test#0 -> $1@q0.
+@q1 p_lab12#0 -> $1@q0.
+@q1 br#0 -> $1@q1&$2@q1.
+@q1 a_lab5#0 -> $1@q0.
+@q1 f_lab1_1#0 -> $1@q0.
+@q1 f_lab1_2#0 -> $1@q0.
+@q1 f_lab1_3#0 -> $1@q0.
+@q1 a_lab30_1st#0 -> $1@q0.
+@q1 a_lab30_2nd#0 -> $1@q0.
+@q1 a_lab31_test#0 -> $1@q0.
+@q1 p_lab30#0 -> $1@q0.
+@q1 a_lab23_1st#0 -> $1@q0.
+@q1 a_lab23_2nd#0 -> $1@q0.
+@q1 i_lab1#0 -> $1@q0.
+@q1 a_lab24#0 -> $1@q0.
+@q1 a_lab25#0 -> $1@q0.
+@q1 a_lab26#0 -> $1@q0.
+@q1 a_lab27#0 -> $1@q0.
+@q1 a_lab19_1st#0 -> $1@q0.
+@q1 a_lab19_2nd#0 -> $1@q0.
+@q1 a_lab20#0 -> $1@q0.
+@q1 a_lab21#0 -> $1@q0.
+@q1 a_lab22#0 -> $1@q0.
+@q1 a_lab28#0 -> $1@q0.
+@q1 a_lab15_1st#0 -> $1@q0.
+@q1 a_lab15_2nd#0 -> $1@q0.
+@q1 a_lab16#0 -> $1@q0.
+@q1 a_lab17#0 -> $1@q0.
+@q1 a_lab18#0 -> $1@q0.
+@q1 a_lab29#0 -> $1@q0.
+@q1 p_lab15#0 -> $1@q0.
+@q1 p_lab19#0 -> $1@q0.
+@q1 a_lab6#0 -> $1@q0.
+@q1 a_lab7#0 -> $1@q0.
+@q1 a_lab11#0 -> $1@q0.
+@q1 f_lab10_1#0 -> $1@q0.
+@q1 a_lab8_1st#0 -> $1@q0.
+@q1 a_lab8_2nd#0 -> $1@q0.
+@q1 a_lab9#0 -> $1@q0.
+@q1 p_lab8#0 -> $1@q0.
+@q1 i_lab11#0 -> $1@q0.
+@q1 i_lab22#0 -> $1@q0.
+@q1 i_lab33#0 -> $1@q0.
+@q1 i_lab5#0 -> $1@q0.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.

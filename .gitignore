@@ -1,0 +1,13 @@
+.*
+!.gitignore
+homusat
+*.o
+*.cmi
+*.cmx
+lexer.ml
+parser.ml
+parser.mli
+parser.output
+test.sh
+ans.txt
+prev.txt

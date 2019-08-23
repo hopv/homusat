@@ -1,0 +1,53 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> br (F True Id) (F False Id).
+F b k -> call (b F1 F2 k).
+F1 k -> k end.
+F2 k -> br (F True k) (F False k).
+Id x -> x.
+True x y k -> x k.
+False x y k -> y k.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 call -> (1, q1).
+q0 end -> \true.
+q1 br -> (1, q0) \land (2, q0).
+q1 call -> (1, q1).
+q1 end -> \true.
+priorities:
+q0 -> 0.
+q1 -> 1.
+<< original HORS ***/
+%HES
+S#1 =_\mu S#0;
+F#1 =_\mu F#0;
+F1#1 =_\mu F1#0;
+F2#1 =_\mu F2#0;
+Id#1 =_\mu Id#0;
+True#1 =_\mu True#0;
+False#1 =_\mu False#0;
+S#0 =_\nu br (F#0 True#0 True#1 Id#0 Id#1) (F#1 True#1 True#1 Id#1 Id#1) (F#0 False#0 False#1 Id#0 Id#1) (F#1 False#1 False#1 Id#1 Id#1);
+F#0 =_\nu \lambda b#0. \lambda b#1. \lambda k#0. \lambda k#1. call (b#0 F1#0 F1#1 F2#0 F2#1 k#0 k#1) (b#1 F1#1 F1#1 F2#1 F2#1 k#1 k#1);
+F1#0 =_\nu \lambda k#0. \lambda k#1. k#0 end end;
+F2#0 =_\nu \lambda k#0. \lambda k#1. br (F#0 True#0 True#1 k#0 k#1) (F#1 True#1 True#1 k#1 k#1) (F#0 False#0 False#1 k#0 k#1) (F#1 False#1 False#1 k#1 k#1);
+Id#0 =_\nu \lambda x#0. \lambda x#1. x#0;
+True#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda k#0. \lambda k#1. x#0 k#0 k#1;
+False#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. \lambda k#0. \lambda k#1. y#0 k#0 k#1;
+br =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <br#0>([$1]y$1#0 \land [$2]y$2#0) \lor <br#1>([$1]y$1#1 \land [$2]y$2#1);
+call =_\nu \lambda y$1#0. \lambda y$1#1. <call#0>[$1]y$1#0 \lor <call#1>[$1]y$1#1;
+end =_\nu <end#0>\true \lor <end#1>\true;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 call#0 -> $1@q1.
+@q0 end#0 -> true.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 br#1 -> $1@q0&$2@q0.
+@q1 call#1 -> $1@q1.
+@q1 end#1 -> true.

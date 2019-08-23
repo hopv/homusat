@@ -1,0 +1,21 @@
+/*** original HORS >>
+%HORS
+S -> F c.
+F k -> G k.
+G k -> k.
+%APT
+intial state: q0
+transitions:
+q0 c -> \true.
+priorities:
+q0 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu F#0 c;
+F#0 =_\nu \lambda k#0. G#0 k#0;
+G#0 =_\nu \lambda k#0. k#0;
+c =_\nu <c#0>\true;
+%LTS
+initial state: @q0
+transitions:
+@q0 c#0 -> true.

@@ -1,0 +1,40 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> F fd end.
+F x k -> br (close k) (read (F x k)).
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 close -> (1, q1).
+q0 read -> (1, q0).
+q1 end -> \true.
+q1 br -> (1, q1) \land (2, q1).
+priorities:
+q0 -> 0.
+q1 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu F#0 fd end;
+F#0 =_\nu \lambda x#0. \lambda k#0. br (close k#0) (F'15#0 x#0 k#0);
+F'15#0 =_\nu \lambda x#0. \lambda k#0. read (F#0 x#0 k#0);
+fd =_\nu <fd#0>\true;
+end =_\nu <end#0>\true;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+close =_\nu \lambda y$1#0. <close#0>[$1]y$1#0;
+read =_\nu \lambda y$1#0. <read#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 close#0 -> $1@q1.
+@q0 read#0 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 end#0 -> true.
+@q1 br#0 -> $1@q1&$2@q1.
+$1@q0 $1 -> @q0.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.

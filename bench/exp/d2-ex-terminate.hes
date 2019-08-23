@@ -1,0 +1,90 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> Newr (G end).
+G k x -> br (Close x (Newr (G end))) (Read x (G k x)).
+I x y -> x y.
+K x y -> y.
+Newr k -> brnew (newr (k I)) (k K).
+Close x k -> x Close' k.
+Read x k -> x Read' k.
+Close' k -> close k.
+Read' k -> read k.
+%APT
+intial state: q0
+transitions:
+q0 end -> \true.
+q0 br -> ((1, q0) \land (2, q0)) \lor ((1, q3) \land (2, q3)).
+q0 brnew -> ((1, q0) \land (2, q0)) \lor ((1, q3) \land (2, q3)).
+q0 newr -> ((1, q0) \land (1, q1)) \lor (1, q3).
+q0 close -> (1, q0) \lor (1, q3).
+q0 read -> (1, q0) \lor (1, q3).
+q3 end -> \true.
+q1 br -> (1, q2) \lor (1, q3) \lor (2, q2) \lor (1, q3).
+q2 close -> \true.
+priorities:
+q0 -> 0.
+q3 -> 1.
+q1 -> 0.
+q2 -> 0.
+<< original HORS ***/
+%HES
+S#1 =_\mu S#0;
+G#1 =_\mu G#0;
+F'45#1 =_\mu F'45#0;
+F'44#1 =_\mu F'44#0;
+I#1 =_\mu I#0;
+K#1 =_\mu K#0;
+Newr#1 =_\mu Newr#0;
+F'46#1 =_\mu F'46#0;
+Close#1 =_\mu Close#0;
+Read#1 =_\mu Read#0;
+Close'#1 =_\mu Close'#0;
+Read'#1 =_\mu Read'#0;
+S#0 =_\nu Newr#0 (G#0 end end) (G#1 end end);
+G#0 =_\nu \lambda k#0. \lambda k#1. \lambda x#0. \lambda x#1. br (Close#0 x#0 x#1 F'44#0 F'44#1) (Close#1 x#1 x#1 F'44#1 F'44#1) (F'45#0 k#0 k#1 x#0 x#1) (F'45#1 k#1 k#1 x#1 x#1);
+F'45#0 =_\nu \lambda k#0. \lambda k#1. \lambda x#0. \lambda x#1. Read#0 x#0 x#1 (G#0 k#0 k#1 x#0 x#1) (G#1 k#1 k#1 x#1 x#1);
+F'44#0 =_\nu Newr#0 (G#0 end end) (G#1 end end);
+I#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. x#0 y#0 y#1;
+K#0 =_\nu \lambda x#0. \lambda x#1. \lambda y#0. \lambda y#1. y#0;
+Newr#0 =_\nu \lambda k#0. \lambda k#1. brnew (F'46#0 k#0 k#1) (F'46#1 k#1 k#1) (k#0 K#0 K#1) (k#1 K#1 K#1);
+F'46#0 =_\nu \lambda k#0. \lambda k#1. newr (k#0 I#0 I#1) (k#1 I#1 I#1);
+Close#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Close'#0 Close'#1 k#0 k#1;
+Read#0 =_\nu \lambda x#0. \lambda x#1. \lambda k#0. \lambda k#1. x#0 Read'#0 Read'#1 k#0 k#1;
+Close'#0 =_\nu \lambda k#0. \lambda k#1. close k#0 k#1;
+Read'#0 =_\nu \lambda k#0. \lambda k#1. read k#0 k#1;
+end =_\nu <end#0>\true \lor <end#1>\true;
+br =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <br#0>([$1]y$1#0 \land [$2]y$2#0) \lor <br#1>([$1]y$1#1 \land [$2]y$2#1);
+brnew =_\nu \lambda y$1#0. \lambda y$1#1. \lambda y$2#0. \lambda y$2#1. <brnew#0>([$1]y$1#0 \land [$2]y$2#0) \lor <brnew#1>([$1]y$1#1 \land [$2]y$2#1);
+newr =_\nu \lambda y$1#0. \lambda y$1#1. <newr#0>[$1]y$1#0 \lor <newr#1>[$1]y$1#1;
+close =_\nu \lambda y$1#0. \lambda y$1#1. <close#0>[$1]y$1#0 \lor <close#1>[$1]y$1#1;
+read =_\nu \lambda y$1#0. \lambda y$1#1. <read#0>[$1]y$1#0 \lor <read#1>[$1]y$1#1;
+%LTS
+initial state: @q0
+transitions:
+@q0 end#0 -> true.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 br#0 -> $1@q3&$2@q3.
+@q0 brnew#0 -> $1@q0&$2@q0.
+@q0 brnew#0 -> $1@q3&$2@q3.
+@q0 newr#0 -> $1@q0&$1@q1.
+@q0 newr#0 -> $1@q3.
+@q0 close#0 -> $1@q3.
+@q0 close#0 -> $1@q0.
+@q0 read#0 -> $1@q3.
+@q0 read#0 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q3&$2@q3 $1 -> @q3.
+$1@q3&$2@q3 $2 -> @q3.
+@q3 end#1 -> true.
+$1@q0&$1@q1 $1 -> @q0.
+$1@q0&$1@q1 $1 -> @q1.
+@q1 br#0 -> $1@q3.
+@q1 br#0 -> $1@q2.
+@q1 br#0 -> $2@q2.
+$1@q3 $1 -> @q3.
+$1@q0 $1 -> @q0.
+$1@q2 $1 -> @q2.
+@q2 close#0 -> true.
+$2@q2 $2 -> @q2.

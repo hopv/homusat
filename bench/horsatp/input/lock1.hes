@@ -1,0 +1,72 @@
+/*** original HORS >>
+%HORS
+S -> br (New C0) (New C1).
+C0 x -> F0 x (G0 x end).
+C1 x -> F1 x (G1 x end).
+F0 x k -> k.
+F1 x k -> Lock x k.
+G0 x k -> k.
+G1 x k -> Unlock x k.
+New k -> br (newl (k I)) (k K).
+I x y -> x y.
+K x y -> y.
+Lock x k -> x Lock' k.
+Unlock x k -> x Unlock' k.
+Lock' k -> lock k.
+Unlock' k -> unlock k.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 end -> \true.
+q0 newl -> (1, q1).
+q1 br -> (1, q1) \land (2, q1).
+q1 end -> \true.
+q1 lock -> (1, q2).
+q2 br -> (1, q2) \land (2, q2).
+q2 unlock -> (1, q1).
+priorities:
+q0 -> 0.
+q1 -> 0.
+q2 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu br (New#0 C0#0) (New#0 C1#0);
+C0#0 =_\nu \lambda x#0. F0#0 x#0 (G0#0 x#0 end);
+C1#0 =_\nu \lambda x#0. F1#0 x#0 (G1#0 x#0 end);
+F0#0 =_\nu \lambda x#0. \lambda k#0. k#0;
+F1#0 =_\nu \lambda x#0. \lambda k#0. Lock#0 x#0 k#0;
+G0#0 =_\nu \lambda x#0. \lambda k#0. k#0;
+G1#0 =_\nu \lambda x#0. \lambda k#0. Unlock#0 x#0 k#0;
+New#0 =_\nu \lambda k#0. br (F'60#0 k#0) (k#0 K#0);
+F'60#0 =_\nu \lambda k#0. newl (k#0 I#0);
+I#0 =_\nu \lambda x#0. \lambda y#0. x#0 y#0;
+K#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+Lock#0 =_\nu \lambda x#0. \lambda k#0. x#0 Lock'#0 k#0;
+Unlock#0 =_\nu \lambda x#0. \lambda k#0. x#0 Unlock'#0 k#0;
+Lock'#0 =_\nu \lambda k#0. lock k#0;
+Unlock'#0 =_\nu \lambda k#0. unlock k#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+end =_\nu <end#0>\true;
+newl =_\nu \lambda y$1#0. <newl#0>[$1]y$1#0;
+lock =_\nu \lambda y$1#0. <lock#0>[$1]y$1#0;
+unlock =_\nu \lambda y$1#0. <unlock#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 end#0 -> true.
+@q0 newl#0 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 br#0 -> $1@q1&$2@q1.
+@q1 end#0 -> true.
+@q1 lock#0 -> $1@q2.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q2 $1 -> @q2.
+@q2 br#0 -> $1@q2&$2@q2.
+@q2 unlock#0 -> $1@q1.
+$1@q2&$2@q2 $1 -> @q2.
+$1@q2&$2@q2 $2 -> @q2.

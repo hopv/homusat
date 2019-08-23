@@ -1,0 +1,126 @@
+// from travmc2/Yes
+/*** original HORS >>
+%HORS
+S -> Newr C1.
+C1 x -> Neww (C2 x).
+C2 x y -> F x y Zero end.
+F x y n k -> br (Read x (F x y (Succ n) k)) (Closer x (G y n k)).
+G y n k -> n (Write y) (Closew y k).
+I x y -> x y.
+K x y -> y.
+Newr k -> newr (k I).
+Neww k -> neww (k I).
+Closer x k -> x Closer_gen k.
+Closew x k -> x Closew_gen k.
+Read x k -> x Read_gen k.
+Write x k -> x Write_gen k.
+Zero f x -> x.
+Succ n f x -> f (n f x).
+Closer_gen gen362 -> closer gen362.
+Closew_gen gen363 -> closew gen363.
+Read_gen gen364 -> read gen364.
+Write_gen gen365 -> write gen365.
+%APT
+intial state: q0
+transitions:
+q0 end -> \true.
+q0 br -> ((1, qf) \land (2, q0)) \lor ((1, q0) \land (2, q0)).
+q0 newr -> (1, q0).
+q0 neww -> (1, q0).
+q0 closer -> (1, qf) \land (1, q0).
+q0 closew -> (1, q0).
+q0 read -> (1, q0).
+q0 write -> (1, q0).
+qf br -> (1, qf) \land (2, qf).
+qf newr -> (1, qf).
+qf neww -> (1, qf).
+qf closer -> (1, qf).
+qf closew -> \true.
+qf read -> (1, qf).
+qf write -> (1, qf).
+priorities:
+q0 -> 2.
+qf -> 1.
+<< original HORS ***/
+%HES
+S#2 =_\nu S#1;
+C1#2 =_\nu C1#1;
+C2#2 =_\nu C2#1;
+F#2 =_\nu F#1;
+F'92#2 =_\nu F'92#1;
+F'91#2 =_\nu F'91#1;
+F'90#2 =_\nu F'90#1;
+G#2 =_\nu G#1;
+I#2 =_\nu I#1;
+K#2 =_\nu K#1;
+Newr#2 =_\nu Newr#1;
+Neww#2 =_\nu Neww#1;
+Closer#2 =_\nu Closer#1;
+Closew#2 =_\nu Closew#1;
+Read#2 =_\nu Read#1;
+Write#2 =_\nu Write#1;
+Zero#2 =_\nu Zero#1;
+Succ#2 =_\nu Succ#1;
+Closer_gen#2 =_\nu Closer_gen#1;
+Closew_gen#2 =_\nu Closew_gen#1;
+Read_gen#2 =_\nu Read_gen#1;
+Write_gen#2 =_\nu Write_gen#1;
+S#1 =_\mu Newr#1 C1#1 C1#2;
+C1#1 =_\mu \lambda x#1. \lambda x#2. Neww#1 (C2#1 x#1 x#2) (C2#2 x#2 x#2);
+C2#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. F#1 x#1 x#2 y#1 y#2 Zero#1 Zero#2 end end;
+F#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. \lambda n#1. \lambda n#2. \lambda k#1. \lambda k#2. br (F'91#1 x#1 x#2 y#1 y#2 n#1 n#2 k#1 k#2) (F'91#2 x#2 x#2 y#2 y#2 n#2 n#2 k#2 k#2) (F'92#1 x#1 x#2 y#1 y#2 n#1 n#2 k#1 k#2) (F'92#2 x#2 x#2 y#2 y#2 n#2 n#2 k#2 k#2);
+F'92#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. \lambda n#1. \lambda n#2. \lambda k#1. \lambda k#2. Closer#1 x#1 x#2 (G#1 y#1 y#2 n#1 n#2 k#1 k#2) (G#2 y#2 y#2 n#2 n#2 k#2 k#2);
+F'91#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. \lambda n#1. \lambda n#2. \lambda k#1. \lambda k#2. Read#1 x#1 x#2 (F'90#1 x#1 x#2 y#1 y#2 n#1 n#2 k#1 k#2) (F'90#2 x#2 x#2 y#2 y#2 n#2 n#2 k#2 k#2);
+F'90#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. \lambda n#1. \lambda n#2. \lambda k#1. \lambda k#2. F#1 x#1 x#2 y#1 y#2 (Succ#1 n#1 n#2) (Succ#2 n#2 n#2) k#1 k#2;
+G#1 =_\mu \lambda y#1. \lambda y#2. \lambda n#1. \lambda n#2. \lambda k#1. \lambda k#2. n#1 (Write#1 y#1 y#2) (Write#2 y#2 y#2) (Closew#1 y#1 y#2 k#1 k#2) (Closew#2 y#2 y#2 k#2 k#2);
+I#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. x#1 y#1 y#2;
+K#1 =_\mu \lambda x#1. \lambda x#2. \lambda y#1. \lambda y#2. y#1;
+Newr#1 =_\mu \lambda k#1. \lambda k#2. newr (k#1 I#1 I#2) (k#2 I#2 I#2);
+Neww#1 =_\mu \lambda k#1. \lambda k#2. neww (k#1 I#1 I#2) (k#2 I#2 I#2);
+Closer#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Closer_gen#1 Closer_gen#2 k#1 k#2;
+Closew#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Closew_gen#1 Closew_gen#2 k#1 k#2;
+Read#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Read_gen#1 Read_gen#2 k#1 k#2;
+Write#1 =_\mu \lambda x#1. \lambda x#2. \lambda k#1. \lambda k#2. x#1 Write_gen#1 Write_gen#2 k#1 k#2;
+Zero#1 =_\mu \lambda f#1. \lambda f#2. \lambda x#1. \lambda x#2. x#1;
+Succ#1 =_\mu \lambda n#1. \lambda n#2. \lambda f#1. \lambda f#2. \lambda x#1. \lambda x#2. f#1 (n#1 f#1 f#2 x#1 x#2) (n#2 f#2 f#2 x#2 x#2);
+Closer_gen#1 =_\mu \lambda gen362#1. \lambda gen362#2. closer gen362#1 gen362#2;
+Closew_gen#1 =_\mu \lambda gen363#1. \lambda gen363#2. closew gen363#1 gen363#2;
+Read_gen#1 =_\mu \lambda gen364#1. \lambda gen364#2. read gen364#1 gen364#2;
+Write_gen#1 =_\mu \lambda gen365#1. \lambda gen365#2. write gen365#1 gen365#2;
+end =_\nu <end#1>\true \lor <end#2>\true;
+br =_\nu \lambda y$1#1. \lambda y$1#2. \lambda y$2#1. \lambda y$2#2. <br#1>([$1]y$1#1 \land [$2]y$2#1) \lor <br#2>([$1]y$1#2 \land [$2]y$2#2);
+newr =_\nu \lambda y$1#1. \lambda y$1#2. <newr#1>[$1]y$1#1 \lor <newr#2>[$1]y$1#2;
+neww =_\nu \lambda y$1#1. \lambda y$1#2. <neww#1>[$1]y$1#1 \lor <neww#2>[$1]y$1#2;
+closer =_\nu \lambda y$1#1. \lambda y$1#2. <closer#1>[$1]y$1#1 \lor <closer#2>[$1]y$1#2;
+closew =_\nu \lambda y$1#1. \lambda y$1#2. <closew#1>[$1]y$1#1 \lor <closew#2>[$1]y$1#2;
+read =_\nu \lambda y$1#1. \lambda y$1#2. <read#1>[$1]y$1#1 \lor <read#2>[$1]y$1#2;
+write =_\nu \lambda y$1#1. \lambda y$1#2. <write#1>[$1]y$1#1 \lor <write#2>[$1]y$1#2;
+%LTS
+initial state: @q0
+transitions:
+@q0 end#2 -> true.
+@q0 br#2 -> $1@q0&$2@q0.
+@q0 br#2 -> $1@qf&$2@q0.
+@q0 newr#2 -> $1@q0.
+@q0 neww#2 -> $1@q0.
+@q0 closer#2 -> $1@q0&$1@qf.
+@q0 closew#2 -> $1@q0.
+@q0 read#2 -> $1@q0.
+@q0 write#2 -> $1@q0.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@qf&$2@q0 $1 -> @qf.
+$1@qf&$2@q0 $2 -> @q0.
+@qf br#1 -> $1@qf&$2@qf.
+@qf newr#1 -> $1@qf.
+@qf neww#1 -> $1@qf.
+@qf closer#1 -> $1@qf.
+@qf closew#1 -> true.
+@qf read#1 -> $1@qf.
+@qf write#1 -> $1@qf.
+$1@q0 $1 -> @q0.
+$1@q0&$1@qf $1 -> @q0.
+$1@q0&$1@qf $1 -> @qf.
+$1@qf&$2@qf $1 -> @qf.
+$1@qf&$2@qf $2 -> @qf.
+$1@qf $1 -> @qf.

@@ -1,0 +1,444 @@
+/*** original HORS >>
+%HORS
+S -> Merge I.
+I x -> x.
+Merge z -> case (MergeEN z) (MergeAN z) (MergeBN z).
+Copy i z -> case (Copy1 i z) (Copy2 i z) (Copy3 i z).
+Copy1 i z -> i (endI (z end)).
+Copy2 i z -> i (aI (Copy i (Concat z a))).
+Copy3 i z -> i (bI (Copy i (Concat z b))).
+MergeEN z -> left (endI (Copy right z)).
+MergeEA z -> right (aI (MergeEN (Concat z a))).
+MergeEB z -> right (bI (MergeEN (Concat z b))).
+MergeNE z -> right (endI (Copy left z)).
+MergeNA z -> case (MergeEA z) (MergeAA z) (MergeBA z).
+MergeNB z -> case (MergeEB z) (MergeAB z) (MergeBB z).
+MergeAN z -> case (MergeAE z) (MergeAA z) (MergeAB z).
+MergeAE z -> left (aI (MergeNE (Concat z a))).
+MergeAA z -> br (left (aI (MergeNA (Concat z a)))) (right (aI (MergeAN (Concat z a)))).
+MergeAB z -> left (aI (MergeNB (Concat z a))).
+MergeBE z -> left (bI (MergeNE (Concat z b))).
+MergeBN z -> case (MergeBE z) (MergeBA z) (MergeBB z).
+MergeBA z -> right (aI (MergeAN (Concat z a))).
+MergeBB z -> br (left (bI (MergeNB (Concat z b)))) (right (bI (MergeBN (Concat z b)))).
+Concat x y z -> x (y z).
+%APT
+intial state: q00
+transitions:
+q00 case -> (3, q00) \land (2, q00) \land (1, q00).
+q00 left -> (1, qL00).
+q00 right -> (1, qR00).
+q00 br -> (2, q00) \land (1, q00).
+q01 case -> (3, q01) \land (2, q01) \land (1, q01).
+q01 left -> (1, qL01).
+q01 right -> (1, qR01).
+q01 br -> (2, q01) \land (1, q01).
+q10 case -> (3, q10) \land (2, q10) \land (1, q10).
+q10 left -> (1, qL10).
+q10 right -> (1, qR10).
+q10 br -> (2, q10) \land (1, q10).
+q11 case -> (3, q11) \land (2, q11) \land (1, q11).
+q11 left -> (1, qL11).
+q11 right -> (1, qR11).
+q11 br -> (2, q11) \land (1, q11).
+q02 case -> (3, q02) \land (2, q02) \land (1, q02).
+q02 left -> (1, qL02).
+q02 right -> (1, qR02).
+q02 br -> (2, q02) \land (1, q02).
+q20 case -> (3, q20) \land (2, q20) \land (1, q20).
+q20 left -> (1, qL20).
+q20 right -> (1, qR20).
+q20 br -> (2, q20) \land (1, q20).
+q12 case -> (3, q12) \land (2, q12) \land (1, q12).
+q12 left -> (1, qL12).
+q12 right -> (1, qR12).
+q12 br -> (2, q12) \land (1, q12).
+q21 case -> (3, q21) \land (2, q21) \land (1, q21).
+q21 left -> (1, qL21).
+q21 right -> (1, qR21).
+q21 br -> (2, q21) \land (1, q21).
+q22 case -> (3, q22) \land (2, q22) \land (1, q22).
+q22 end -> \true.
+q22 a -> (1, q22).
+q22 b -> (1, q3).
+q22 br -> (2, q22) \land (1, q22).
+qL00 endI -> (1, q20).
+qL00 aI -> (1, q00).
+qL00 bI -> (1, q10).
+qR00 endI -> (1, q02).
+qR00 aI -> (1, q00).
+qR00 bI -> (1, q01).
+qL10 endI -> (1, q20).
+qL10 aI -> (1, err).
+qL10 bI -> (1, q10).
+qR10 endI -> (1, q12).
+qR10 aI -> (1, q10).
+qR10 bI -> (1, q11).
+qL01 endI -> (1, q21).
+qL01 aI -> (1, q01).
+qL01 bI -> (1, q11).
+qR01 endI -> (1, q02).
+qR01 aI -> (1, err).
+qR01 bI -> (1, q01).
+qL11 endI -> (1, q21).
+qL11 aI -> (1, err).
+qL11 bI -> (1, q11).
+qR11 endI -> (1, q12).
+qR11 aI -> (1, err).
+qR11 bI -> (1, q11).
+qL02 endI -> (1, q22).
+qL02 aI -> (1, q02).
+qL02 bI -> (1, q12).
+qR02 case -> (3, qR02) \land (2, qR02) \land (1, qR02).
+qR02 endI -> (1, qR02).
+qR02 end -> \true.
+qR02 aI -> (1, qR02).
+qR02 a -> (1, qR02).
+qR02 bI -> (1, qR02).
+qR02 b -> (1, qR02).
+qR02 left -> (1, qR02).
+qR02 right -> (1, qR02).
+qR02 br -> (2, qR02) \land (1, qR02).
+qL20 case -> (3, qL20) \land (2, qL20) \land (1, qL20).
+qL20 endI -> (1, qL20).
+qL20 end -> \true.
+qL20 aI -> (1, qL20).
+qL20 a -> (1, qL20).
+qL20 bI -> (1, qL20).
+qL20 b -> (1, qL20).
+qL20 left -> (1, qL20).
+qL20 right -> (1, qL20).
+qL20 br -> (2, qL20) \land (1, qL20).
+qR20 endI -> (1, q22).
+qR20 aI -> (1, q20).
+qR20 bI -> (1, q21).
+qL12 endI -> (1, q22).
+qL12 aI -> (1, err).
+qL12 bI -> (1, q12).
+qR12 case -> (3, qR12) \land (2, qR12) \land (1, qR12).
+qR12 endI -> (1, qR12).
+qR12 end -> \true.
+qR12 aI -> (1, qR12).
+qR12 a -> (1, qR12).
+qR12 bI -> (1, qR12).
+qR12 b -> (1, qR12).
+qR12 left -> (1, qR12).
+qR12 right -> (1, qR12).
+qR12 br -> (2, qR12) \land (1, qR12).
+qL21 case -> (3, qL21) \land (2, qL21) \land (1, qL21).
+qL21 endI -> (1, qL21).
+qL21 end -> \true.
+qL21 aI -> (1, qL21).
+qL21 a -> (1, qL21).
+qL21 bI -> (1, qL21).
+qL21 b -> (1, qL21).
+qL21 left -> (1, qL21).
+qL21 right -> (1, qL21).
+qL21 br -> (2, qL21) \land (1, qL21).
+qR21 endI -> (1, q22).
+qR21 aI -> (1, err).
+qR21 bI -> (1, q21).
+q3 end -> \true.
+q3 b -> (1, q3).
+priorities:
+q00 -> 0.
+q01 -> 0.
+q10 -> 0.
+q11 -> 0.
+q02 -> 0.
+q20 -> 0.
+q12 -> 0.
+q21 -> 0.
+q22 -> 0.
+qL00 -> 0.
+qR00 -> 0.
+qL10 -> 0.
+qR10 -> 0.
+qL01 -> 0.
+qR01 -> 0.
+qL11 -> 0.
+qR11 -> 0.
+qL02 -> 0.
+qR02 -> 0.
+qL20 -> 0.
+qR20 -> 0.
+qL12 -> 0.
+qR12 -> 0.
+qL21 -> 0.
+qR21 -> 0.
+q3 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu Merge#0 I#0;
+I#0 =_\nu \lambda x#0. x#0;
+Merge#0 =_\nu \lambda z#0. case (MergeEN#0 z#0) (MergeAN#0 z#0) (MergeBN#0 z#0);
+Copy#0 =_\nu \lambda i#0. \lambda z#0. case (Copy1#0 i#0 z#0) (Copy2#0 i#0 z#0) (Copy3#0 i#0 z#0);
+Copy1#0 =_\nu \lambda i#0. \lambda z#0. i#0 (F'112#0 z#0);
+F'112#0 =_\nu \lambda z#0. endI (z#0 end);
+Copy2#0 =_\nu \lambda i#0. \lambda z#0. i#0 (F'114#0 i#0 z#0);
+F'114#0 =_\nu \lambda i#0. \lambda z#0. aI (F'113#0 i#0 z#0);
+F'113#0 =_\nu \lambda i#0. \lambda z#0. Copy#0 i#0 (Concat#0 z#0 a);
+Copy3#0 =_\nu \lambda i#0. \lambda z#0. i#0 (F'116#0 i#0 z#0);
+F'116#0 =_\nu \lambda i#0. \lambda z#0. bI (F'115#0 i#0 z#0);
+F'115#0 =_\nu \lambda i#0. \lambda z#0. Copy#0 i#0 (Concat#0 z#0 b);
+MergeEN#0 =_\nu \lambda z#0. left (F'117#0 z#0);
+F'117#0 =_\nu \lambda z#0. endI (Copy#0 right z#0);
+MergeEA#0 =_\nu \lambda z#0. right (F'119#0 z#0);
+F'119#0 =_\nu \lambda z#0. aI (F'118#0 z#0);
+F'118#0 =_\nu \lambda z#0. MergeEN#0 (Concat#0 z#0 a);
+MergeEB#0 =_\nu \lambda z#0. right (F'121#0 z#0);
+F'121#0 =_\nu \lambda z#0. bI (F'120#0 z#0);
+F'120#0 =_\nu \lambda z#0. MergeEN#0 (Concat#0 z#0 b);
+MergeNE#0 =_\nu \lambda z#0. right (F'122#0 z#0);
+F'122#0 =_\nu \lambda z#0. endI (Copy#0 left z#0);
+MergeNA#0 =_\nu \lambda z#0. case (MergeEA#0 z#0) (MergeAA#0 z#0) (MergeBA#0 z#0);
+MergeNB#0 =_\nu \lambda z#0. case (MergeEB#0 z#0) (MergeAB#0 z#0) (MergeBB#0 z#0);
+MergeAN#0 =_\nu \lambda z#0. case (MergeAE#0 z#0) (MergeAA#0 z#0) (MergeAB#0 z#0);
+MergeAE#0 =_\nu \lambda z#0. left (F'124#0 z#0);
+F'124#0 =_\nu \lambda z#0. aI (F'123#0 z#0);
+F'123#0 =_\nu \lambda z#0. MergeNE#0 (Concat#0 z#0 a);
+MergeAA#0 =_\nu \lambda z#0. br (F'127#0 z#0) (F'130#0 z#0);
+F'130#0 =_\nu \lambda z#0. right (F'129#0 z#0);
+F'129#0 =_\nu \lambda z#0. aI (F'128#0 z#0);
+F'128#0 =_\nu \lambda z#0. MergeAN#0 (Concat#0 z#0 a);
+F'127#0 =_\nu \lambda z#0. left (F'126#0 z#0);
+F'126#0 =_\nu \lambda z#0. aI (F'125#0 z#0);
+F'125#0 =_\nu \lambda z#0. MergeNA#0 (Concat#0 z#0 a);
+MergeAB#0 =_\nu \lambda z#0. left (F'132#0 z#0);
+F'132#0 =_\nu \lambda z#0. aI (F'131#0 z#0);
+F'131#0 =_\nu \lambda z#0. MergeNB#0 (Concat#0 z#0 a);
+MergeBE#0 =_\nu \lambda z#0. left (F'134#0 z#0);
+F'134#0 =_\nu \lambda z#0. bI (F'133#0 z#0);
+F'133#0 =_\nu \lambda z#0. MergeNE#0 (Concat#0 z#0 b);
+MergeBN#0 =_\nu \lambda z#0. case (MergeBE#0 z#0) (MergeBA#0 z#0) (MergeBB#0 z#0);
+MergeBA#0 =_\nu \lambda z#0. right (F'136#0 z#0);
+F'136#0 =_\nu \lambda z#0. aI (F'135#0 z#0);
+F'135#0 =_\nu \lambda z#0. MergeAN#0 (Concat#0 z#0 a);
+MergeBB#0 =_\nu \lambda z#0. br (F'139#0 z#0) (F'142#0 z#0);
+F'142#0 =_\nu \lambda z#0. right (F'141#0 z#0);
+F'141#0 =_\nu \lambda z#0. bI (F'140#0 z#0);
+F'140#0 =_\nu \lambda z#0. MergeBN#0 (Concat#0 z#0 b);
+F'139#0 =_\nu \lambda z#0. left (F'138#0 z#0);
+F'138#0 =_\nu \lambda z#0. bI (F'137#0 z#0);
+F'137#0 =_\nu \lambda z#0. MergeNB#0 (Concat#0 z#0 b);
+Concat#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. x#0 (y#0 z#0);
+case =_\nu \lambda y$1#0. \lambda y$2#0. \lambda y$3#0. <case#0>([$1]y$1#0 \land [$2]y$2#0 \land [$3]y$3#0);
+endI =_\nu \lambda y$1#0. <endI#0>[$1]y$1#0;
+end =_\nu <end#0>\true;
+aI =_\nu \lambda y$1#0. <aI#0>[$1]y$1#0;
+a =_\nu \lambda y$1#0. <a#0>[$1]y$1#0;
+bI =_\nu \lambda y$1#0. <bI#0>[$1]y$1#0;
+b =_\nu \lambda y$1#0. <b#0>[$1]y$1#0;
+left =_\nu \lambda y$1#0. <left#0>[$1]y$1#0;
+right =_\nu \lambda y$1#0. <right#0>[$1]y$1#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+%LTS
+initial state: @q00
+transitions:
+@q00 case#0 -> $1@q00&$2@q00&$3@q00.
+@q00 left#0 -> $1@qL00.
+@q00 right#0 -> $1@qR00.
+@q00 br#0 -> $1@q00&$2@q00.
+$1@q00&$2@q00&$3@q00 $1 -> @q00.
+$1@q00&$2@q00&$3@q00 $2 -> @q00.
+$1@q00&$2@q00&$3@q00 $3 -> @q00.
+$1@qL00 $1 -> @qL00.
+@qL00 endI#0 -> $1@q20.
+@qL00 aI#0 -> $1@q00.
+@qL00 bI#0 -> $1@q10.
+$1@qR00 $1 -> @qR00.
+@qR00 endI#0 -> $1@q02.
+@qR00 aI#0 -> $1@q00.
+@qR00 bI#0 -> $1@q01.
+$1@q00&$2@q00 $1 -> @q00.
+$1@q00&$2@q00 $2 -> @q00.
+@q01 case#0 -> $1@q01&$2@q01&$3@q01.
+@q01 left#0 -> $1@qL01.
+@q01 right#0 -> $1@qR01.
+@q01 br#0 -> $1@q01&$2@q01.
+$1@q01&$2@q01&$3@q01 $1 -> @q01.
+$1@q01&$2@q01&$3@q01 $2 -> @q01.
+$1@q01&$2@q01&$3@q01 $3 -> @q01.
+$1@qL01 $1 -> @qL01.
+@qL01 endI#0 -> $1@q21.
+@qL01 aI#0 -> $1@q01.
+@qL01 bI#0 -> $1@q11.
+$1@qR01 $1 -> @qR01.
+@qR01 endI#0 -> $1@q02.
+@qR01 aI#0 -> $1@err.
+@qR01 bI#0 -> $1@q01.
+$1@q01&$2@q01 $1 -> @q01.
+$1@q01&$2@q01 $2 -> @q01.
+@q10 case#0 -> $1@q10&$2@q10&$3@q10.
+@q10 left#0 -> $1@qL10.
+@q10 right#0 -> $1@qR10.
+@q10 br#0 -> $1@q10&$2@q10.
+$1@q10&$2@q10&$3@q10 $1 -> @q10.
+$1@q10&$2@q10&$3@q10 $2 -> @q10.
+$1@q10&$2@q10&$3@q10 $3 -> @q10.
+$1@qL10 $1 -> @qL10.
+@qL10 endI#0 -> $1@q20.
+@qL10 aI#0 -> $1@err.
+@qL10 bI#0 -> $1@q10.
+$1@qR10 $1 -> @qR10.
+@qR10 endI#0 -> $1@q12.
+@qR10 aI#0 -> $1@q10.
+@qR10 bI#0 -> $1@q11.
+$1@q10&$2@q10 $1 -> @q10.
+$1@q10&$2@q10 $2 -> @q10.
+@q11 case#0 -> $1@q11&$2@q11&$3@q11.
+@q11 left#0 -> $1@qL11.
+@q11 right#0 -> $1@qR11.
+@q11 br#0 -> $1@q11&$2@q11.
+$1@q11&$2@q11&$3@q11 $1 -> @q11.
+$1@q11&$2@q11&$3@q11 $2 -> @q11.
+$1@q11&$2@q11&$3@q11 $3 -> @q11.
+$1@qL11 $1 -> @qL11.
+@qL11 endI#0 -> $1@q21.
+@qL11 aI#0 -> $1@err.
+@qL11 bI#0 -> $1@q11.
+$1@qR11 $1 -> @qR11.
+@qR11 endI#0 -> $1@q12.
+@qR11 aI#0 -> $1@err.
+@qR11 bI#0 -> $1@q11.
+$1@q11&$2@q11 $1 -> @q11.
+$1@q11&$2@q11 $2 -> @q11.
+@q02 case#0 -> $1@q02&$2@q02&$3@q02.
+@q02 left#0 -> $1@qL02.
+@q02 right#0 -> $1@qR02.
+@q02 br#0 -> $1@q02&$2@q02.
+$1@q02&$2@q02&$3@q02 $1 -> @q02.
+$1@q02&$2@q02&$3@q02 $2 -> @q02.
+$1@q02&$2@q02&$3@q02 $3 -> @q02.
+$1@qL02 $1 -> @qL02.
+@qL02 endI#0 -> $1@q22.
+@qL02 aI#0 -> $1@q02.
+@qL02 bI#0 -> $1@q12.
+$1@qR02 $1 -> @qR02.
+@qR02 case#0 -> $1@qR02&$2@qR02&$3@qR02.
+@qR02 endI#0 -> $1@qR02.
+@qR02 end#0 -> true.
+@qR02 aI#0 -> $1@qR02.
+@qR02 a#0 -> $1@qR02.
+@qR02 bI#0 -> $1@qR02.
+@qR02 b#0 -> $1@qR02.
+@qR02 left#0 -> $1@qR02.
+@qR02 right#0 -> $1@qR02.
+@qR02 br#0 -> $1@qR02&$2@qR02.
+$1@q02&$2@q02 $1 -> @q02.
+$1@q02&$2@q02 $2 -> @q02.
+@q20 case#0 -> $1@q20&$2@q20&$3@q20.
+@q20 left#0 -> $1@qL20.
+@q20 right#0 -> $1@qR20.
+@q20 br#0 -> $1@q20&$2@q20.
+$1@q20&$2@q20&$3@q20 $1 -> @q20.
+$1@q20&$2@q20&$3@q20 $2 -> @q20.
+$1@q20&$2@q20&$3@q20 $3 -> @q20.
+$1@qL20 $1 -> @qL20.
+@qL20 case#0 -> $1@qL20&$2@qL20&$3@qL20.
+@qL20 endI#0 -> $1@qL20.
+@qL20 end#0 -> true.
+@qL20 aI#0 -> $1@qL20.
+@qL20 a#0 -> $1@qL20.
+@qL20 bI#0 -> $1@qL20.
+@qL20 b#0 -> $1@qL20.
+@qL20 left#0 -> $1@qL20.
+@qL20 right#0 -> $1@qL20.
+@qL20 br#0 -> $1@qL20&$2@qL20.
+$1@qR20 $1 -> @qR20.
+@qR20 endI#0 -> $1@q22.
+@qR20 aI#0 -> $1@q20.
+@qR20 bI#0 -> $1@q21.
+$1@q20&$2@q20 $1 -> @q20.
+$1@q20&$2@q20 $2 -> @q20.
+@q12 case#0 -> $1@q12&$2@q12&$3@q12.
+@q12 left#0 -> $1@qL12.
+@q12 right#0 -> $1@qR12.
+@q12 br#0 -> $1@q12&$2@q12.
+$1@q12&$2@q12&$3@q12 $1 -> @q12.
+$1@q12&$2@q12&$3@q12 $2 -> @q12.
+$1@q12&$2@q12&$3@q12 $3 -> @q12.
+$1@qL12 $1 -> @qL12.
+@qL12 endI#0 -> $1@q22.
+@qL12 aI#0 -> $1@err.
+@qL12 bI#0 -> $1@q12.
+$1@qR12 $1 -> @qR12.
+@qR12 case#0 -> $1@qR12&$2@qR12&$3@qR12.
+@qR12 endI#0 -> $1@qR12.
+@qR12 end#0 -> true.
+@qR12 aI#0 -> $1@qR12.
+@qR12 a#0 -> $1@qR12.
+@qR12 bI#0 -> $1@qR12.
+@qR12 b#0 -> $1@qR12.
+@qR12 left#0 -> $1@qR12.
+@qR12 right#0 -> $1@qR12.
+@qR12 br#0 -> $1@qR12&$2@qR12.
+$1@q12&$2@q12 $1 -> @q12.
+$1@q12&$2@q12 $2 -> @q12.
+@q21 case#0 -> $1@q21&$2@q21&$3@q21.
+@q21 left#0 -> $1@qL21.
+@q21 right#0 -> $1@qR21.
+@q21 br#0 -> $1@q21&$2@q21.
+$1@q21&$2@q21&$3@q21 $1 -> @q21.
+$1@q21&$2@q21&$3@q21 $2 -> @q21.
+$1@q21&$2@q21&$3@q21 $3 -> @q21.
+$1@qL21 $1 -> @qL21.
+@qL21 case#0 -> $1@qL21&$2@qL21&$3@qL21.
+@qL21 endI#0 -> $1@qL21.
+@qL21 end#0 -> true.
+@qL21 aI#0 -> $1@qL21.
+@qL21 a#0 -> $1@qL21.
+@qL21 bI#0 -> $1@qL21.
+@qL21 b#0 -> $1@qL21.
+@qL21 left#0 -> $1@qL21.
+@qL21 right#0 -> $1@qL21.
+@qL21 br#0 -> $1@qL21&$2@qL21.
+$1@qR21 $1 -> @qR21.
+@qR21 endI#0 -> $1@q22.
+@qR21 aI#0 -> $1@err.
+@qR21 bI#0 -> $1@q21.
+$1@q21&$2@q21 $1 -> @q21.
+$1@q21&$2@q21 $2 -> @q21.
+@q22 case#0 -> $1@q22&$2@q22&$3@q22.
+@q22 end#0 -> true.
+@q22 a#0 -> $1@q22.
+@q22 b#0 -> $1@q3.
+@q22 br#0 -> $1@q22&$2@q22.
+$1@q22&$2@q22&$3@q22 $1 -> @q22.
+$1@q22&$2@q22&$3@q22 $2 -> @q22.
+$1@q22&$2@q22&$3@q22 $3 -> @q22.
+$1@q22 $1 -> @q22.
+$1@q3 $1 -> @q3.
+@q3 end#0 -> true.
+@q3 b#0 -> $1@q3.
+$1@q22&$2@q22 $1 -> @q22.
+$1@q22&$2@q22 $2 -> @q22.
+$1@q20 $1 -> @q20.
+$1@q00 $1 -> @q00.
+$1@q10 $1 -> @q10.
+$1@q02 $1 -> @q02.
+$1@q01 $1 -> @q01.
+$1@err $1 -> @err.
+$1@q12 $1 -> @q12.
+$1@q11 $1 -> @q11.
+$1@q21 $1 -> @q21.
+$1@qR02&$2@qR02&$3@qR02 $1 -> @qR02.
+$1@qR02&$2@qR02&$3@qR02 $2 -> @qR02.
+$1@qR02&$2@qR02&$3@qR02 $3 -> @qR02.
+$1@qR02&$2@qR02 $1 -> @qR02.
+$1@qR02&$2@qR02 $2 -> @qR02.
+$1@qL20&$2@qL20&$3@qL20 $1 -> @qL20.
+$1@qL20&$2@qL20&$3@qL20 $2 -> @qL20.
+$1@qL20&$2@qL20&$3@qL20 $3 -> @qL20.
+$1@qL20&$2@qL20 $1 -> @qL20.
+$1@qL20&$2@qL20 $2 -> @qL20.
+$1@qR12&$2@qR12&$3@qR12 $1 -> @qR12.
+$1@qR12&$2@qR12&$3@qR12 $2 -> @qR12.
+$1@qR12&$2@qR12&$3@qR12 $3 -> @qR12.
+$1@qR12&$2@qR12 $1 -> @qR12.
+$1@qR12&$2@qR12 $2 -> @qR12.
+$1@qL21&$2@qL21&$3@qL21 $1 -> @qL21.
+$1@qL21&$2@qL21&$3@qL21 $2 -> @qL21.
+$1@qL21&$2@qL21&$3@qL21 $3 -> @qL21.
+$1@qL21&$2@qL21 $1 -> @qL21.
+$1@qL21&$2@qL21 $2 -> @qL21.

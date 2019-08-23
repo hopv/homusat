@@ -1,0 +1,110 @@
+// from horsat2/ruv
+/*** original HORS >>
+%HORS
+S -> ReadSec C1.
+C1 rstring rstruct clreader -> rstruct (rstring (Loop rstring rstruct clreader)).
+Loop rstring rstruct clreader -> br (DLLinit rstring rstruct clreader) (Loop rstring rstruct clreader).
+DLLinit rstring rstruct clreader -> rstring (rstruct (clreader end)).
+ReadSec k -> br (k Nop Nop Nop) (Newr (ReadSec2 k)).
+ReadSec2 k x -> ReadToc x (ReadSec3 x k).
+ReadSec3 x k -> k (Rsecstr x) (Rsecstruct x) (Close x).
+Nop k -> k.
+ReadToc x k -> SeekIn x (InputBinary x (ReallyInput x (SeekIn x (ReadTocLoop x k)))).
+ReadTocLoop x k -> br k (ReallyInput x (InputBinary x (ReadTocLoop x k))).
+Rsecstr x k -> SeekSec x (ReallyInput x k).
+Rsecstruct x k -> SeekSec x (InputValue x k).
+SeekSec x k -> SeekSub x k.
+SeekSub x k -> br (SeekIn x k) (SeekSub x (SeekIn x k)).
+SeekIn x k -> Read x k.
+ReallyInput x k -> Read x k.
+InputBinary x k -> Read x k.
+InputValue x k -> Read x k.
+I x y -> x y.
+K x y -> y.
+Newr k -> br (newr (k I)) (k K).
+Close x k -> x close k.
+Read x k -> x read k.
+%APT
+intial state: q0
+transitions:
+q0 br -> (2, q0) \land (1, q0).
+q0 end -> \true.
+q0 newr -> (1, qr).
+qr br -> (2, qr) \land (1, qr).
+qr newr -> (1, qany).
+qr close -> (1, qc).
+qr read -> (1, qr).
+qany br -> (2, qany) \land (1, qany).
+qany end -> \true.
+qany close -> (1, qany).
+qany read -> (1, qany).
+qc end -> \true.
+priorities:
+q0 -> 0.
+qr -> 0.
+qany -> 0.
+qc -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu ReadSec#0 C1#0;
+C1#0 =_\nu \lambda rstring#0. \lambda rstruct#0. \lambda clreader#0. rstruct#0 (F'105#0 rstring#0 rstruct#0 clreader#0);
+F'105#0 =_\nu \lambda rstring#0. \lambda rstruct#0. \lambda clreader#0. rstring#0 (Loop#0 rstring#0 rstruct#0 clreader#0);
+Loop#0 =_\nu \lambda rstring#0. \lambda rstruct#0. \lambda clreader#0. br (DLLinit#0 rstring#0 rstruct#0 clreader#0) (Loop#0 rstring#0 rstruct#0 clreader#0);
+DLLinit#0 =_\nu \lambda rstring#0. \lambda rstruct#0. \lambda clreader#0. rstring#0 (F'106#0 rstruct#0 clreader#0);
+F'106#0 =_\nu \lambda rstruct#0. \lambda clreader#0. rstruct#0 (clreader#0 end);
+ReadSec#0 =_\nu \lambda k#0. br (k#0 Nop#0 Nop#0 Nop#0) (F'107#0 k#0);
+F'107#0 =_\nu \lambda k#0. Newr#0 (ReadSec2#0 k#0);
+ReadSec2#0 =_\nu \lambda k#0. \lambda x#0. ReadToc#0 x#0 (ReadSec3#0 x#0 k#0);
+ReadSec3#0 =_\nu \lambda x#0. \lambda k#0. k#0 (Rsecstr#0 x#0) (Rsecstruct#0 x#0) (Close#0 x#0);
+Nop#0 =_\nu \lambda k#0. k#0;
+ReadToc#0 =_\nu \lambda x#0. \lambda k#0. SeekIn#0 x#0 (F'110#0 x#0 k#0);
+F'110#0 =_\nu \lambda x#0. \lambda k#0. InputBinary#0 x#0 (F'109#0 x#0 k#0);
+F'109#0 =_\nu \lambda x#0. \lambda k#0. ReallyInput#0 x#0 (F'108#0 x#0 k#0);
+F'108#0 =_\nu \lambda x#0. \lambda k#0. SeekIn#0 x#0 (ReadTocLoop#0 x#0 k#0);
+ReadTocLoop#0 =_\nu \lambda x#0. \lambda k#0. br k#0 (F'112#0 x#0 k#0);
+F'112#0 =_\nu \lambda x#0. \lambda k#0. ReallyInput#0 x#0 (F'111#0 x#0 k#0);
+F'111#0 =_\nu \lambda x#0. \lambda k#0. InputBinary#0 x#0 (ReadTocLoop#0 x#0 k#0);
+Rsecstr#0 =_\nu \lambda x#0. \lambda k#0. SeekSec#0 x#0 (ReallyInput#0 x#0 k#0);
+Rsecstruct#0 =_\nu \lambda x#0. \lambda k#0. SeekSec#0 x#0 (InputValue#0 x#0 k#0);
+SeekSec#0 =_\nu \lambda x#0. \lambda k#0. SeekSub#0 x#0 k#0;
+SeekSub#0 =_\nu \lambda x#0. \lambda k#0. br (SeekIn#0 x#0 k#0) (F'113#0 x#0 k#0);
+F'113#0 =_\nu \lambda x#0. \lambda k#0. SeekSub#0 x#0 (SeekIn#0 x#0 k#0);
+SeekIn#0 =_\nu \lambda x#0. \lambda k#0. Read#0 x#0 k#0;
+ReallyInput#0 =_\nu \lambda x#0. \lambda k#0. Read#0 x#0 k#0;
+InputBinary#0 =_\nu \lambda x#0. \lambda k#0. Read#0 x#0 k#0;
+InputValue#0 =_\nu \lambda x#0. \lambda k#0. Read#0 x#0 k#0;
+I#0 =_\nu \lambda x#0. \lambda y#0. x#0 y#0;
+K#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+Newr#0 =_\nu \lambda k#0. br (F'114#0 k#0) (k#0 K#0);
+F'114#0 =_\nu \lambda k#0. newr (k#0 I#0);
+Close#0 =_\nu \lambda x#0. \lambda k#0. x#0 close k#0;
+Read#0 =_\nu \lambda x#0. \lambda k#0. x#0 read k#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+end =_\nu <end#0>\true;
+newr =_\nu \lambda y$1#0. <newr#0>[$1]y$1#0;
+close =_\nu \lambda y$1#0. <close#0>[$1]y$1#0;
+read =_\nu \lambda y$1#0. <read#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 end#0 -> true.
+@q0 newr#0 -> $1@qr.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@qr $1 -> @qr.
+@qr br#0 -> $1@qr&$2@qr.
+@qr newr#0 -> $1@qany.
+@qr close#0 -> $1@qc.
+@qr read#0 -> $1@qr.
+$1@qr&$2@qr $1 -> @qr.
+$1@qr&$2@qr $2 -> @qr.
+$1@qany $1 -> @qany.
+@qany br#0 -> $1@qany&$2@qany.
+@qany end#0 -> true.
+@qany close#0 -> $1@qany.
+@qany read#0 -> $1@qany.
+$1@qc $1 -> @qc.
+@qc end#0 -> true.
+$1@qany&$2@qany $1 -> @qany.
+$1@qany&$2@qany $2 -> @qany.

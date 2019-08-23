@@ -1,0 +1,50 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> br (L1_2 True) (L1_2 False).
+L1_2 x -> br (L1_3 x True) (L1_3 x False).
+L1_3 x y -> br (L2 x y True) (L2 x y False).
+L2 x y z -> L3 x y True.
+L3 x y z -> L4 True y z.
+L4 x y z -> y (L5 x y z) (L7 x y z).
+L5 x y z -> L6 False y z.
+L6 x y z -> L7 x y True.
+L7 x y z -> x (L9 x y z) (L8 x y z).
+L8 x y z -> L10 x y z.
+L9 x y z -> L2 x y z.
+L10 x y z -> z end fail.
+True x y -> x.
+False x y -> y.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 end -> \true.
+priorities:
+q0 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu br (L1_2#0 True#0) (L1_2#0 False#0);
+L1_2#0 =_\nu \lambda x#0. br (L1_3#0 x#0 True#0) (L1_3#0 x#0 False#0);
+L1_3#0 =_\nu \lambda x#0. \lambda y#0. br (L2#0 x#0 y#0 True#0) (L2#0 x#0 y#0 False#0);
+L2#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L3#0 x#0 y#0 True#0;
+L3#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L4#0 True#0 y#0 z#0;
+L4#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. y#0 (L5#0 x#0 y#0 z#0) (L7#0 x#0 y#0 z#0);
+L5#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L6#0 False#0 y#0 z#0;
+L6#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L7#0 x#0 y#0 True#0;
+L7#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. x#0 (L9#0 x#0 y#0 z#0) (L8#0 x#0 y#0 z#0);
+L8#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L10#0 x#0 y#0 z#0;
+L9#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. L2#0 x#0 y#0 z#0;
+L10#0 =_\nu \lambda x#0. \lambda y#0. \lambda z#0. z#0 end fail;
+True#0 =_\nu \lambda x#0. \lambda y#0. x#0;
+False#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+end =_\nu <end#0>\true;
+fail =_\nu <fail#0>\true;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 end#0 -> true.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.

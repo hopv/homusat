@@ -1,0 +1,112 @@
+/*** original HORS >>
+%HORS
+S -> begin Main.
+Main -> br (GenConsume Newr Read Close Main) (GenConsume Neww Write Close Main).
+GenConsume gen use finish k -> gen (Loop use finish k).
+Loop use finish k x -> br (finish x k) (use x (Loop use finish k x)).
+C use k x -> use x k.
+I x y -> x y.
+K x y -> y.
+Newr k -> br (newr (k I)) (k K).
+Neww k -> br (neww (k I)) (k K).
+Close x k -> x Close' k.
+Read x k -> x Read' k.
+Write y k -> y Write' k.
+Close' k -> close k.
+Read' k -> read k.
+Write' k -> write k.
+%APT
+intial state: q0
+transitions:
+q1 br -> (1, q1) \land (2, q1).
+q1 newr -> (1, q2).
+q1 neww -> (1, q1).
+q1 close -> (1, q1).
+q1 write -> (1, q1).
+q3 br -> (1, q3) \land (2, q3).
+q3 newr -> (1, q3).
+q3 neww -> (1, q4).
+q3 close -> (1, q3).
+q3 read -> (1, q3).
+q0 begin -> (1, q1) \land (1, q3).
+q2 br -> (1, q2) \land (2, q2).
+q2 neww -> (1, q2).
+q2 close -> (1, q1).
+q2 read -> (1, q2).
+q2 write -> (1, q2).
+q4 br -> (1, q4) \land (2, q4).
+q4 newr -> (1, q4).
+q4 close -> (1, q3).
+q4 read -> (1, q4).
+q4 write -> (1, q4).
+priorities:
+q1 -> 0.
+q3 -> 0.
+q0 -> 0.
+q2 -> 0.
+q4 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu begin Main#0;
+Main#0 =_\nu br (GenConsume#0 Newr#0 Read#0 Close#0 Main#0) (GenConsume#0 Neww#0 Write#0 Close#0 Main#0);
+GenConsume#0 =_\nu \lambda gen#0. \lambda use#0. \lambda finish#0. \lambda k#0. gen#0 (Loop#0 use#0 finish#0 k#0);
+Loop#0 =_\nu \lambda use#0. \lambda finish#0. \lambda k#0. \lambda x#0. br (finish#0 x#0 k#0) (F'74#0 use#0 finish#0 k#0 x#0);
+F'74#0 =_\nu \lambda use#0. \lambda finish#0. \lambda k#0. \lambda x#0. use#0 x#0 (Loop#0 use#0 finish#0 k#0 x#0);
+C#0 =_\nu \lambda use#0. \lambda k#0. \lambda x#0. use#0 x#0 k#0;
+I#0 =_\nu \lambda x#0. \lambda y#0. x#0 y#0;
+K#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+Newr#0 =_\nu \lambda k#0. br (F'75#0 k#0) (k#0 K#0);
+F'75#0 =_\nu \lambda k#0. newr (k#0 I#0);
+Neww#0 =_\nu \lambda k#0. br (F'76#0 k#0) (k#0 K#0);
+F'76#0 =_\nu \lambda k#0. neww (k#0 I#0);
+Close#0 =_\nu \lambda x#0. \lambda k#0. x#0 Close'#0 k#0;
+Read#0 =_\nu \lambda x#0. \lambda k#0. x#0 Read'#0 k#0;
+Write#0 =_\nu \lambda y#0. \lambda k#0. y#0 Write'#0 k#0;
+Close'#0 =_\nu \lambda k#0. close k#0;
+Read'#0 =_\nu \lambda k#0. read k#0;
+Write'#0 =_\nu \lambda k#0. write k#0;
+begin =_\nu \lambda y$1#0. <begin#0>[$1]y$1#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+newr =_\nu \lambda y$1#0. <newr#0>[$1]y$1#0;
+neww =_\nu \lambda y$1#0. <neww#0>[$1]y$1#0;
+close =_\nu \lambda y$1#0. <close#0>[$1]y$1#0;
+read =_\nu \lambda y$1#0. <read#0>[$1]y$1#0;
+write =_\nu \lambda y$1#0. <write#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q1 br#0 -> $1@q1&$2@q1.
+@q1 newr#0 -> $1@q2.
+@q1 neww#0 -> $1@q1.
+@q1 close#0 -> $1@q1.
+@q1 write#0 -> $1@q1.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q2 $1 -> @q2.
+@q2 br#0 -> $1@q2&$2@q2.
+@q2 neww#0 -> $1@q2.
+@q2 close#0 -> $1@q1.
+@q2 read#0 -> $1@q2.
+@q2 write#0 -> $1@q2.
+$1@q1 $1 -> @q1.
+@q3 br#0 -> $1@q3&$2@q3.
+@q3 newr#0 -> $1@q3.
+@q3 neww#0 -> $1@q4.
+@q3 close#0 -> $1@q3.
+@q3 read#0 -> $1@q3.
+$1@q3&$2@q3 $1 -> @q3.
+$1@q3&$2@q3 $2 -> @q3.
+$1@q3 $1 -> @q3.
+$1@q4 $1 -> @q4.
+@q4 br#0 -> $1@q4&$2@q4.
+@q4 newr#0 -> $1@q4.
+@q4 close#0 -> $1@q3.
+@q4 read#0 -> $1@q4.
+@q4 write#0 -> $1@q4.
+@q0 begin#0 -> $1@q1&$1@q3.
+$1@q1&$1@q3 $1 -> @q1.
+$1@q1&$1@q3 $1 -> @q3.
+$1@q2&$2@q2 $1 -> @q2.
+$1@q2&$2@q2 $2 -> @q2.
+$1@q4&$2@q4 $1 -> @q4.
+$1@q4&$2@q4 $2 -> @q4.

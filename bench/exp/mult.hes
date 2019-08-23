@@ -1,0 +1,49 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> Mult Q0 Q1.
+Mult x y -> x (br zero (Add y (Mult Q1 y))) (Add y (Mult Q0 y)).
+Add x y -> x (br y (succ (Add Q1 y))) (succ (Add Q0 y)).
+Q0 x y -> x.
+Q1 x y -> y.
+%APT
+intial state: q0
+transitions:
+q1 br -> (1, q1) \land (2, q1).
+q1 succ -> (1, q0).
+q0 br -> (1, q0) \land (2, q0).
+q0 zero -> \true.
+q0 succ -> (1, q1).
+priorities:
+q1 -> 0.
+q0 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu Mult#0 Q0#0 Q1#0;
+Mult#0 =_\nu \lambda x#0. \lambda y#0. x#0 (F'26#0 y#0) (F'27#0 y#0);
+F'27#0 =_\nu \lambda y#0. Add#0 y#0 (Mult#0 Q0#0 y#0);
+F'26#0 =_\nu \lambda y#0. br zero (F'25#0 y#0);
+F'25#0 =_\nu \lambda y#0. Add#0 y#0 (Mult#0 Q1#0 y#0);
+Add#0 =_\nu \lambda x#0. \lambda y#0. x#0 (F'29#0 y#0) (F'30#0 y#0);
+F'30#0 =_\nu \lambda y#0. succ (Add#0 Q0#0 y#0);
+F'29#0 =_\nu \lambda y#0. br y#0 (F'28#0 y#0);
+F'28#0 =_\nu \lambda y#0. succ (Add#0 Q1#0 y#0);
+Q0#0 =_\nu \lambda x#0. \lambda y#0. x#0;
+Q1#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+zero =_\nu <zero#0>\true;
+succ =_\nu \lambda y$1#0. <succ#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q1 br#0 -> $1@q1&$2@q1.
+@q1 succ#0 -> $1@q0.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+$1@q0 $1 -> @q0.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 zero#0 -> true.
+@q0 succ#0 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.

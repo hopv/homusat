@@ -1,0 +1,18 @@
+/*** original HORS >>
+%HORS
+S -> br.
+%APT
+intial state: q0
+transitions:
+q0 br -> \true.
+priorities:
+q0 -> 0.
+q1 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu br;
+br =_\nu <br#0>\true;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> true.

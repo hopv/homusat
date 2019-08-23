@@ -1,0 +1,382 @@
+/*** original HORS >>
+%HORS
+S -> Merge I.
+I x -> x.
+Merge z -> case (Left_gen (endI (Copy Right_gen z))) (case (Left_gen (aI (Right_gen (endI (Copy Left_gen z))))) (MergeAA z) (MergeAB z)) (case (Left_gen (bI (Right_gen (endI (Copy Left_gen z))))) (MergeBA z) (MergeBB z)).
+Copy i z -> case (i (endI (z end))) (i (aI (Copy i (Concat z A_gen)))) (i (bI (Copy i (Concat z B_gen)))).
+MergeAA z -> br (Left_gen (aI (case (Left_gen (endI (Right_gen (aI (Copy Right_gen z))))) (MergeAA z) (MergeBA z)))) (Right_gen (aI (case (Right_gen (endI (Left_gen (aI (Copy Left_gen z))))) (MergeAA z) (MergeAB z)))).
+MergeAB z -> Left_gen (aI (case (Left_gen (endI (Right_gen (bI (Copy Right_gen z))))) (MergeAB z) (MergeBB z))).
+MergeBA z -> Right_gen (aI (case (Right_gen (endI (Left_gen (bI (Copy Left_gen z))))) (MergeBA z) (MergeBB z))).
+MergeBB z -> br (Left_gen (bI (case (Left_gen (endI (Right_gen (bI (Copy Right_gen z))))) (MergeAB z) (MergeBB z)))) (Right_gen (bI (case (Right_gen (endI (Left_gen (bI (Copy Left_gen z))))) (MergeBA z) (MergeBB z)))).
+Concat x y z -> x (y z).
+A_gen gen3716 -> a gen3716.
+B_gen gen3717 -> b gen3717.
+Left_gen gen3718 -> left gen3718.
+Right_gen gen3719 -> right gen3719.
+%APT
+intial state: q00
+transitions:
+q00 case -> (3, q00) \land (2, q00) \land (1, q00).
+q00 br -> (2, q00) \land (1, q00).
+q00 left -> (1, qL00).
+q00 right -> (1, qR00).
+qL00 endI -> (1, q20).
+qL00 aI -> (1, q00).
+qL00 bI -> (1, q10).
+qR00 endI -> (1, q02).
+qR00 aI -> (1, q00).
+qR00 bI -> (1, q01).
+q02 case -> (3, q02) \land (2, q02) \land (1, q02).
+q02 br -> (2, q02) \land (1, q02).
+q02 left -> (1, qL02).
+q02 right -> (1, qR02).
+q01 case -> (3, q01) \land (2, q01) \land (1, q01).
+q01 br -> ((2, q02) \land (1, q02)) \lor ((2, q01) \land (1, q01)).
+q01 left -> (1, qL01).
+q01 right -> (1, qR01).
+qL01 endI -> (1, q21).
+qL01 aI -> (1, q01).
+qL01 bI -> (1, q11).
+qR01 endI -> (1, q02).
+qR01 aI -> (1, qany).
+qR01 bI -> (1, q01).
+qL02 endI -> (1, q22).
+qL02 aI -> (1, q02).
+qL02 bI -> (1, q12).
+q10 case -> (3, q10) \land (2, q10) \land (1, q10).
+q10 br -> (2, q10) \land (1, q10).
+q10 left -> (1, qL10).
+q10 right -> (1, qR10).
+qL10 endI -> (1, q20).
+qL10 aI -> (1, qany).
+qL10 bI -> (1, q10).
+qR10 endI -> (1, q12).
+qR10 aI -> (1, q10).
+qR10 bI -> (1, q11).
+q22 case -> (3, q22) \land (2, q22) \land (1, q22).
+q22 end -> \true.
+q22 br -> (2, q22) \land (1, q22).
+q22 a -> (1, q22).
+q22 b -> (1, q3).
+q11 case -> (3, q11) \land (2, q11) \land (1, q11).
+q11 br -> ((2, q22) \land (1, q22)) \lor ((2, q11) \land (1, q11)).
+q11 left -> (1, qL11).
+q11 right -> (1, qR11).
+qL11 endI -> (1, q21).
+qL11 aI -> (1, qany).
+qL11 bI -> (1, q11).
+qR11 endI -> (1, q12).
+qR11 aI -> (1, qany).
+qR11 bI -> (1, q11).
+q12 case -> (3, q12) \land (2, q12) \land (1, q12).
+q12 br -> (2, q12) \land (1, q12).
+q12 left -> (1, qL12).
+q12 right -> (1, qR12).
+qL12 endI -> (1, q22).
+qL12 aI -> (1, qany).
+qL12 bI -> (1, q12).
+q20 case -> (3, q20) \land (2, q20) \land (1, q20).
+q20 br -> (2, q20) \land (1, q20).
+q20 left -> (1, qL20).
+q20 right -> (1, qR20).
+qR20 endI -> (1, q22).
+qR20 aI -> (1, q20).
+qR20 bI -> (1, q21).
+q21 case -> (3, q21) \land (2, q21) \land (1, q21).
+q21 br -> (2, q21) \land (1, q21).
+q21 left -> (1, qL21).
+q21 right -> (1, qR21).
+qR21 endI -> (1, q22).
+qR21 aI -> (1, qany).
+qR21 bI -> (1, q21).
+q3 end -> \true.
+q3 b -> (1, q3) \lor (1, q22).
+qany case -> (3, qany) \land (2, qany) \land (1, qany).
+qany endI -> (1, qany).
+qany aI -> (1, qany).
+qany bI -> (1, qany).
+qany end -> \true.
+qany br -> (2, qany) \land (1, qany).
+qany a -> (1, qany).
+qany b -> (1, qany).
+qany left -> (1, qany).
+qany right -> (1, qany).
+priorities:
+q00 -> 2.
+qL00 -> 2.
+qR00 -> 2.
+q02 -> 2.
+q01 -> 2.
+qL01 -> 2.
+qR01 -> 2.
+qL02 -> 2.
+qR02 -> 2.
+q10 -> 2.
+qL10 -> 2.
+qR10 -> 2.
+q22 -> 2.
+q11 -> 2.
+qL11 -> 2.
+qR11 -> 2.
+q12 -> 2.
+qL12 -> 2.
+qR12 -> 2.
+q20 -> 2.
+qL20 -> 2.
+qR20 -> 2.
+q21 -> 2.
+qL21 -> 2.
+qR21 -> 2.
+q3 -> 2.
+qany -> 2.
+<< original HORS ***/
+%HES
+S#2 =_\nu Merge#2 I#2;
+I#2 =_\nu \lambda x#2. x#2;
+Merge#2 =_\nu \lambda z#2. case (F'87#2 z#2) (F'92#2 z#2) (F'95#2 z#2);
+F'95#2 =_\nu \lambda z#2. case (F'94#2 z#2) (MergeBA#2 z#2) (MergeBB#2 z#2);
+F'94#2 =_\nu \lambda z#2. Left_gen#2 (F'93#2 z#2);
+F'93#2 =_\nu \lambda z#2. bI (F'89#2 z#2);
+F'92#2 =_\nu \lambda z#2. case (F'91#2 z#2) (MergeAA#2 z#2) (MergeAB#2 z#2);
+F'91#2 =_\nu \lambda z#2. Left_gen#2 (F'90#2 z#2);
+F'90#2 =_\nu \lambda z#2. aI (F'89#2 z#2);
+F'89#2 =_\nu \lambda z#2. Right_gen#2 (F'88#2 z#2);
+F'88#2 =_\nu \lambda z#2. endI (Copy#2 Left_gen#2 z#2);
+F'87#2 =_\nu \lambda z#2. Left_gen#2 (F'86#2 z#2);
+F'86#2 =_\nu \lambda z#2. endI (Copy#2 Right_gen#2 z#2);
+Copy#2 =_\nu \lambda i#2. \lambda z#2. case (F'97#2 i#2 z#2) (F'100#2 i#2 z#2) (F'103#2 i#2 z#2);
+F'103#2 =_\nu \lambda i#2. \lambda z#2. i#2 (F'102#2 i#2 z#2);
+F'102#2 =_\nu \lambda i#2. \lambda z#2. bI (F'101#2 i#2 z#2);
+F'101#2 =_\nu \lambda i#2. \lambda z#2. Copy#2 i#2 (Concat#2 z#2 B_gen#2);
+F'100#2 =_\nu \lambda i#2. \lambda z#2. i#2 (F'99#2 i#2 z#2);
+F'99#2 =_\nu \lambda i#2. \lambda z#2. aI (F'98#2 i#2 z#2);
+F'98#2 =_\nu \lambda i#2. \lambda z#2. Copy#2 i#2 (Concat#2 z#2 A_gen#2);
+F'97#2 =_\nu \lambda i#2. \lambda z#2. i#2 (F'96#2 z#2);
+F'96#2 =_\nu \lambda z#2. endI (z#2 end);
+MergeAA#2 =_\nu \lambda z#2. br (F'110#2 z#2) (F'117#2 z#2);
+F'117#2 =_\nu \lambda z#2. Right_gen#2 (F'116#2 z#2);
+F'116#2 =_\nu \lambda z#2. aI (F'115#2 z#2);
+F'115#2 =_\nu \lambda z#2. case (F'114#2 z#2) (MergeAA#2 z#2) (MergeAB#2 z#2);
+F'114#2 =_\nu \lambda z#2. Right_gen#2 (F'113#2 z#2);
+F'113#2 =_\nu \lambda z#2. endI (F'112#2 z#2);
+F'112#2 =_\nu \lambda z#2. Left_gen#2 (F'111#2 z#2);
+F'111#2 =_\nu \lambda z#2. aI (Copy#2 Left_gen#2 z#2);
+F'110#2 =_\nu \lambda z#2. Left_gen#2 (F'109#2 z#2);
+F'109#2 =_\nu \lambda z#2. aI (F'108#2 z#2);
+F'108#2 =_\nu \lambda z#2. case (F'107#2 z#2) (MergeAA#2 z#2) (MergeBA#2 z#2);
+F'107#2 =_\nu \lambda z#2. Left_gen#2 (F'106#2 z#2);
+F'106#2 =_\nu \lambda z#2. endI (F'105#2 z#2);
+F'105#2 =_\nu \lambda z#2. Right_gen#2 (F'104#2 z#2);
+F'104#2 =_\nu \lambda z#2. aI (Copy#2 Right_gen#2 z#2);
+MergeAB#2 =_\nu \lambda z#2. Left_gen#2 (F'123#2 z#2);
+F'123#2 =_\nu \lambda z#2. aI (F'122#2 z#2);
+F'122#2 =_\nu \lambda z#2. case (F'121#2 z#2) (MergeAB#2 z#2) (MergeBB#2 z#2);
+F'121#2 =_\nu \lambda z#2. Left_gen#2 (F'120#2 z#2);
+F'120#2 =_\nu \lambda z#2. endI (F'119#2 z#2);
+F'119#2 =_\nu \lambda z#2. Right_gen#2 (F'118#2 z#2);
+F'118#2 =_\nu \lambda z#2. bI (Copy#2 Right_gen#2 z#2);
+MergeBA#2 =_\nu \lambda z#2. Right_gen#2 (F'129#2 z#2);
+F'129#2 =_\nu \lambda z#2. aI (F'128#2 z#2);
+F'128#2 =_\nu \lambda z#2. case (F'127#2 z#2) (MergeBA#2 z#2) (MergeBB#2 z#2);
+F'127#2 =_\nu \lambda z#2. Right_gen#2 (F'126#2 z#2);
+F'126#2 =_\nu \lambda z#2. endI (F'125#2 z#2);
+F'125#2 =_\nu \lambda z#2. Left_gen#2 (F'124#2 z#2);
+F'124#2 =_\nu \lambda z#2. bI (Copy#2 Left_gen#2 z#2);
+MergeBB#2 =_\nu \lambda z#2. br (F'136#2 z#2) (F'143#2 z#2);
+F'143#2 =_\nu \lambda z#2. Right_gen#2 (F'142#2 z#2);
+F'142#2 =_\nu \lambda z#2. bI (F'141#2 z#2);
+F'141#2 =_\nu \lambda z#2. case (F'140#2 z#2) (MergeBA#2 z#2) (MergeBB#2 z#2);
+F'140#2 =_\nu \lambda z#2. Right_gen#2 (F'139#2 z#2);
+F'139#2 =_\nu \lambda z#2. endI (F'138#2 z#2);
+F'138#2 =_\nu \lambda z#2. Left_gen#2 (F'137#2 z#2);
+F'137#2 =_\nu \lambda z#2. bI (Copy#2 Left_gen#2 z#2);
+F'136#2 =_\nu \lambda z#2. Left_gen#2 (F'135#2 z#2);
+F'135#2 =_\nu \lambda z#2. bI (F'134#2 z#2);
+F'134#2 =_\nu \lambda z#2. case (F'133#2 z#2) (MergeAB#2 z#2) (MergeBB#2 z#2);
+F'133#2 =_\nu \lambda z#2. Left_gen#2 (F'132#2 z#2);
+F'132#2 =_\nu \lambda z#2. endI (F'131#2 z#2);
+F'131#2 =_\nu \lambda z#2. Right_gen#2 (F'130#2 z#2);
+F'130#2 =_\nu \lambda z#2. bI (Copy#2 Right_gen#2 z#2);
+Concat#2 =_\nu \lambda x#2. \lambda y#2. \lambda z#2. x#2 (y#2 z#2);
+A_gen#2 =_\nu \lambda gen3716#2. a gen3716#2;
+B_gen#2 =_\nu \lambda gen3717#2. b gen3717#2;
+Left_gen#2 =_\nu \lambda gen3718#2. left gen3718#2;
+Right_gen#2 =_\nu \lambda gen3719#2. right gen3719#2;
+case =_\nu \lambda y$1#2. \lambda y$2#2. \lambda y$3#2. <case#2>([$1]y$1#2 \land [$2]y$2#2 \land [$3]y$3#2);
+endI =_\nu \lambda y$1#2. <endI#2>[$1]y$1#2;
+aI =_\nu \lambda y$1#2. <aI#2>[$1]y$1#2;
+bI =_\nu \lambda y$1#2. <bI#2>[$1]y$1#2;
+end =_\nu <end#2>\true;
+br =_\nu \lambda y$1#2. \lambda y$2#2. <br#2>([$1]y$1#2 \land [$2]y$2#2);
+a =_\nu \lambda y$1#2. <a#2>[$1]y$1#2;
+b =_\nu \lambda y$1#2. <b#2>[$1]y$1#2;
+left =_\nu \lambda y$1#2. <left#2>[$1]y$1#2;
+right =_\nu \lambda y$1#2. <right#2>[$1]y$1#2;
+%LTS
+initial state: @q00
+transitions:
+@q00 case#2 -> $1@q00&$2@q00&$3@q00.
+@q00 br#2 -> $1@q00&$2@q00.
+@q00 left#2 -> $1@qL00.
+@q00 right#2 -> $1@qR00.
+$1@q00&$2@q00&$3@q00 $1 -> @q00.
+$1@q00&$2@q00&$3@q00 $2 -> @q00.
+$1@q00&$2@q00&$3@q00 $3 -> @q00.
+$1@q00&$2@q00 $1 -> @q00.
+$1@q00&$2@q00 $2 -> @q00.
+$1@qL00 $1 -> @qL00.
+@qL00 endI#2 -> $1@q20.
+@qL00 aI#2 -> $1@q00.
+@qL00 bI#2 -> $1@q10.
+$1@qR00 $1 -> @qR00.
+@qR00 endI#2 -> $1@q02.
+@qR00 aI#2 -> $1@q00.
+@qR00 bI#2 -> $1@q01.
+$1@q20 $1 -> @q20.
+@q20 case#2 -> $1@q20&$2@q20&$3@q20.
+@q20 br#2 -> $1@q20&$2@q20.
+@q20 left#2 -> $1@qL20.
+@q20 right#2 -> $1@qR20.
+$1@q00 $1 -> @q00.
+$1@q10 $1 -> @q10.
+@q10 case#2 -> $1@q10&$2@q10&$3@q10.
+@q10 br#2 -> $1@q10&$2@q10.
+@q10 left#2 -> $1@qL10.
+@q10 right#2 -> $1@qR10.
+$1@q02 $1 -> @q02.
+@q02 case#2 -> $1@q02&$2@q02&$3@q02.
+@q02 br#2 -> $1@q02&$2@q02.
+@q02 left#2 -> $1@qL02.
+@q02 right#2 -> $1@qR02.
+$1@q01 $1 -> @q01.
+@q01 case#2 -> $1@q01&$2@q01&$3@q01.
+@q01 br#2 -> $1@q02&$2@q02.
+@q01 br#2 -> $1@q01&$2@q01.
+@q01 left#2 -> $1@qL01.
+@q01 right#2 -> $1@qR01.
+$1@q02&$2@q02&$3@q02 $1 -> @q02.
+$1@q02&$2@q02&$3@q02 $2 -> @q02.
+$1@q02&$2@q02&$3@q02 $3 -> @q02.
+$1@q02&$2@q02 $1 -> @q02.
+$1@q02&$2@q02 $2 -> @q02.
+$1@qL02 $1 -> @qL02.
+@qL02 endI#2 -> $1@q22.
+@qL02 aI#2 -> $1@q02.
+@qL02 bI#2 -> $1@q12.
+$1@qR02 $1 -> @qR02.
+$1@q01&$2@q01&$3@q01 $1 -> @q01.
+$1@q01&$2@q01&$3@q01 $2 -> @q01.
+$1@q01&$2@q01&$3@q01 $3 -> @q01.
+$1@q01&$2@q01 $1 -> @q01.
+$1@q01&$2@q01 $2 -> @q01.
+$1@qL01 $1 -> @qL01.
+@qL01 endI#2 -> $1@q21.
+@qL01 aI#2 -> $1@q01.
+@qL01 bI#2 -> $1@q11.
+$1@qR01 $1 -> @qR01.
+@qR01 endI#2 -> $1@q02.
+@qR01 aI#2 -> $1@qany.
+@qR01 bI#2 -> $1@q01.
+$1@q21 $1 -> @q21.
+@q21 case#2 -> $1@q21&$2@q21&$3@q21.
+@q21 br#2 -> $1@q21&$2@q21.
+@q21 left#2 -> $1@qL21.
+@q21 right#2 -> $1@qR21.
+$1@q11 $1 -> @q11.
+@q11 case#2 -> $1@q11&$2@q11&$3@q11.
+@q11 br#2 -> $1@q22&$2@q22.
+@q11 br#2 -> $1@q11&$2@q11.
+@q11 left#2 -> $1@qL11.
+@q11 right#2 -> $1@qR11.
+$1@qany $1 -> @qany.
+@qany case#2 -> $1@qany&$2@qany&$3@qany.
+@qany endI#2 -> $1@qany.
+@qany aI#2 -> $1@qany.
+@qany bI#2 -> $1@qany.
+@qany end#2 -> true.
+@qany br#2 -> $1@qany&$2@qany.
+@qany a#2 -> $1@qany.
+@qany b#2 -> $1@qany.
+@qany left#2 -> $1@qany.
+@qany right#2 -> $1@qany.
+$1@q22 $1 -> @q22.
+@q22 case#2 -> $1@q22&$2@q22&$3@q22.
+@q22 end#2 -> true.
+@q22 br#2 -> $1@q22&$2@q22.
+@q22 a#2 -> $1@q22.
+@q22 b#2 -> $1@q3.
+$1@q12 $1 -> @q12.
+@q12 case#2 -> $1@q12&$2@q12&$3@q12.
+@q12 br#2 -> $1@q12&$2@q12.
+@q12 left#2 -> $1@qL12.
+@q12 right#2 -> $1@qR12.
+$1@q10&$2@q10&$3@q10 $1 -> @q10.
+$1@q10&$2@q10&$3@q10 $2 -> @q10.
+$1@q10&$2@q10&$3@q10 $3 -> @q10.
+$1@q10&$2@q10 $1 -> @q10.
+$1@q10&$2@q10 $2 -> @q10.
+$1@qL10 $1 -> @qL10.
+@qL10 endI#2 -> $1@q20.
+@qL10 aI#2 -> $1@qany.
+@qL10 bI#2 -> $1@q10.
+$1@qR10 $1 -> @qR10.
+@qR10 endI#2 -> $1@q12.
+@qR10 aI#2 -> $1@q10.
+@qR10 bI#2 -> $1@q11.
+$1@q22&$2@q22&$3@q22 $1 -> @q22.
+$1@q22&$2@q22&$3@q22 $2 -> @q22.
+$1@q22&$2@q22&$3@q22 $3 -> @q22.
+$1@q22&$2@q22 $1 -> @q22.
+$1@q22&$2@q22 $2 -> @q22.
+$1@q3 $1 -> @q3.
+@q3 end#2 -> true.
+@q3 b#2 -> $1@q22.
+@q3 b#2 -> $1@q3.
+$1@q11&$2@q11&$3@q11 $1 -> @q11.
+$1@q11&$2@q11&$3@q11 $2 -> @q11.
+$1@q11&$2@q11&$3@q11 $3 -> @q11.
+$1@q11&$2@q11 $1 -> @q11.
+$1@q11&$2@q11 $2 -> @q11.
+$1@qL11 $1 -> @qL11.
+@qL11 endI#2 -> $1@q21.
+@qL11 aI#2 -> $1@qany.
+@qL11 bI#2 -> $1@q11.
+$1@qR11 $1 -> @qR11.
+@qR11 endI#2 -> $1@q12.
+@qR11 aI#2 -> $1@qany.
+@qR11 bI#2 -> $1@q11.
+$1@q12&$2@q12&$3@q12 $1 -> @q12.
+$1@q12&$2@q12&$3@q12 $2 -> @q12.
+$1@q12&$2@q12&$3@q12 $3 -> @q12.
+$1@q12&$2@q12 $1 -> @q12.
+$1@q12&$2@q12 $2 -> @q12.
+$1@qL12 $1 -> @qL12.
+@qL12 endI#2 -> $1@q22.
+@qL12 aI#2 -> $1@qany.
+@qL12 bI#2 -> $1@q12.
+$1@qR12 $1 -> @qR12.
+$1@q20&$2@q20&$3@q20 $1 -> @q20.
+$1@q20&$2@q20&$3@q20 $2 -> @q20.
+$1@q20&$2@q20&$3@q20 $3 -> @q20.
+$1@q20&$2@q20 $1 -> @q20.
+$1@q20&$2@q20 $2 -> @q20.
+$1@qL20 $1 -> @qL20.
+$1@qR20 $1 -> @qR20.
+@qR20 endI#2 -> $1@q22.
+@qR20 aI#2 -> $1@q20.
+@qR20 bI#2 -> $1@q21.
+$1@q21&$2@q21&$3@q21 $1 -> @q21.
+$1@q21&$2@q21&$3@q21 $2 -> @q21.
+$1@q21&$2@q21&$3@q21 $3 -> @q21.
+$1@q21&$2@q21 $1 -> @q21.
+$1@q21&$2@q21 $2 -> @q21.
+$1@qL21 $1 -> @qL21.
+$1@qR21 $1 -> @qR21.
+@qR21 endI#2 -> $1@q22.
+@qR21 aI#2 -> $1@qany.
+@qR21 bI#2 -> $1@q21.
+$1@qany&$2@qany&$3@qany $1 -> @qany.
+$1@qany&$2@qany&$3@qany $2 -> @qany.
+$1@qany&$2@qany&$3@qany $3 -> @qany.
+$1@qany&$2@qany $1 -> @qany.
+$1@qany&$2@qany $2 -> @qany.

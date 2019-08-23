@@ -1,0 +1,44 @@
+// from horsatp/input
+/*** original HORS >>
+%HORS
+S -> br (F True Fin) (F False Fin).
+F b k -> call (b (k end) (br (F True k) (F False k))).
+Fin x -> x.
+True x y -> x.
+False x y -> y.
+%APT
+intial state: q0
+transitions:
+q0 br -> (1, q0) \land (2, q0).
+q0 call -> (1, q1).
+q0 end -> \true.
+q1 br -> (1, q0) \land (2, q0).
+q1 call -> (1, q1).
+q1 end -> \true.
+priorities:
+q0 -> 0.
+q1 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu br (F#0 True#0 Fin#0) (F#0 False#0 Fin#0);
+F#0 =_\nu \lambda b#0. \lambda k#0. call (F'27#0 b#0 k#0);
+F'27#0 =_\nu \lambda b#0. \lambda k#0. b#0 (k#0 end) (F'26#0 k#0);
+F'26#0 =_\nu \lambda k#0. br (F#0 True#0 k#0) (F#0 False#0 k#0);
+Fin#0 =_\nu \lambda x#0. x#0;
+True#0 =_\nu \lambda x#0. \lambda y#0. x#0;
+False#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+call =_\nu \lambda y$1#0. <call#0>[$1]y$1#0;
+end =_\nu <end#0>\true;
+%LTS
+initial state: @q0
+transitions:
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 call#0 -> $1@q1.
+@q0 end#0 -> true.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q1 $1 -> @q1.
+@q1 br#0 -> $1@q0&$2@q0.
+@q1 call#0 -> $1@q1.
+@q1 end#0 -> true.

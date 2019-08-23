@@ -1,0 +1,261 @@
+/*** original HORS >>
+%HORS
+Main_1 -> Exists F_277 F_279 False True F_281.
+Bottom0 -> unit.
+Exists test_1 f m1_ m2_ k_exists -> br (Exists_744 test_1 f m1_ m2_ k_exists) (Exists_743 test_1 f m1_ m2_ k_exists).
+Exists_743 test_1 f m1_ m2_ k_exists -> l0 (f (test_1 (F_302 test_1 f m1_ m2_ k_exists))).
+Exists_744 test_1 f m1_ m2_ k_exists -> l1 (k_exists F_339).
+F_277 k_main_test_255 -> br (k_main_test_255 True) (k_main_test_255 False).
+F_279 k_mult3_251 -> k_mult3_251.
+F_281 x2_122 -> x2_122 F_283 (F_286 x2_122).
+F_283 k_main_127 -> Bottom0.
+F_286 x2_285 p21_134 p22_134 p23_134 p24_134 -> F_469 x2_285 p23_134 p23_134.
+F_288 k_main_148 -> Bottom0.
+F_291 x2_290 p21_157 p22_157 p23_157 p24_157 -> F_477 x2_290 p23_157 p23_157.
+F_293 k_main_x_cons_x_54 -> br (F_500 k_main_x_cons_x_54 True) (F_500 k_main_x_cons_x_54 False).
+F_295 p21_197 p22_197 p23_197 p24_197 -> F_494 p21_197 p22_197 p24_197 p21_197.
+F_302 test_297 f_298 m1__299 m2__300 k_exists_301 b_79 -> F_545 test_297 f_298 m1__299 m2__300 k_exists_301 b_79 b_79.
+F_305 m1__304 path2_92 k_exists_93 -> br (F_587 m1__304 path2_92 k_exists_93 True) (F_587 m1__304 path2_92 k_exists_93 False).
+F_309 m1__307 k_exists_308 x_107 -> br (F_560 m1__307 k_exists_308 x_107 True) (F_560 m1__307 k_exists_308 x_107 False).
+F_313 k_exists_311 x_312 x__275 -> F_583 k_exists_311 x_312 x__275 x__275.
+F_316 k_exists_315 x__273 -> F_556 k_exists_315 x__273 x__273.
+F_319 test_318 x__270 -> test_318 (F_322 x__270).
+F_322 x__321 x__271 -> F_597 x__321 x__271.
+F_325 k_exists_324 x__257 -> k_exists_324 (F_328 x__257).
+F_328 x__327 x__259 x__263 -> x__327 (F_331 x__259) (F_337 x__263).
+F_331 x__330 x__261 -> x__330 (F_334 x__261).
+F_334 x__333 x__262 -> F_599 x__333 x__262.
+F_337 x__336 x_1_265 x_2_265 x_3_265 x_4_265 -> F_636 x__336 x_1_265 x_2_265 x_3_265 x_4_265 x_4_265.
+F_339 path2_111 k_exists_112 -> br (F_638 k_exists_112 True) (F_638 k_exists_112 False).
+F_464 x2_462 p23_463 b_342 -> b_342 (l0 unit) (l1 (F_466 x2_462 p23_463)).
+F_466 x2_465 b_344 -> b_344 Bottom0 (x2_465 F_288 (F_291 x2_465)).
+F_469 x2_467 p23_468 b_346 -> b_346 (F_464 x2_467 p23_468 True) (br (F_464 x2_467 p23_468 True) (F_464 x2_467 p23_468 False)).
+F_472 x2_470 p23_471 b_348 -> b_348 (l0 (F_474 x2_470 p23_471)) (l1 Bottom0).
+F_474 x2_473 b_350 -> b_350 Bottom0 (x2_473 F_293 F_295).
+F_477 x2_475 p23_476 b_352 -> b_352 (F_472 x2_475 p23_476 False) (br (F_472 x2_475 p23_476 True) (F_472 x2_475 p23_476 False)).
+F_481 p21_478 p22_479 p24_480 b_354 -> b_354 (l0 (br (F_484 p22_479 p24_480 True) (F_484 p22_479 p24_480 False))) (l1 (l1 (F_490 p21_478 p22_479))).
+F_484 p22_482 p24_483 b_356 -> b_356 (l0 unit) (l1 (F_487 p22_482 p24_483)).
+F_485 b_358 -> b_358 Bottom0 (Fail True unit).
+F_487 p22_486 b_360 -> b_360 (F_485 True) (F_485 p22_486).
+F_488 b_362 -> b_362 Bottom0 (Fail True unit).
+F_490 p21_489 b_364 -> b_364 (F_488 True) (F_488 p21_489).
+F_494 p21_491 p22_492 p24_493 b_366 -> b_366 (F_481 p21_491 p22_492 p24_493 True) (F_498 p21_491 p22_492 p24_493 p24_493).
+F_498 p21_495 p22_496 p24_497 b_368 -> b_368 (F_481 p21_495 p22_496 p24_497 False) (br (F_481 p21_495 p22_496 p24_497 True) (F_481 p21_495 p22_496 p24_497 False)).
+F_500 k_main_x_cons_x_499 b_370 -> b_370 (l0 (k_main_x_cons_x_499 True)) (l1 Bottom0).
+F_507 test_501 f_502 m1__503 m2__504 k_exists_505 b_506 b_372 -> b_372 (l0 (k_exists_505 (F_305 m1__503))) (l1 (F_513 test_501 f_502 m1__503 m2__504 k_exists_505 b_506)).
+F_513 test_508 f_509 m1__510 m2__511 k_exists_512 b_374 -> b_374 Bottom0 (F_538 test_508 f_509 m1__510 m2__511 m2__511 (F_325 k_exists_512)).
+F_518 test_514 f_515 m1__516 m2__517 b_376 x_653 -> F_528 test_514 f_515 m1__516 m2__517 b_376 x_653.
+F_521 test_519 f_520 b_378 x_645 x_646 -> Exists (F_319 test_519) f_520 b_378 x_645 x_646.
+F_524 test_522 f_523 b_380 x_647 x_648 -> b_380 (F_521 test_522 f_523 True x_647 x_648) (F_707 test_522 f_523 x_647 x_648).
+F_528 test_525 f_526 m1__527 b_382 x_651 x_652 -> b_382 (F_524 test_525 f_526 True x_651 x_652) (F_524 test_525 f_526 m1__527 x_651 x_652).
+F_533 test_529 f_530 m1__531 m2__532 b_384 x_643 -> b_384 (F_518 test_529 f_530 m1__531 m2__532 True x_643) (F_703 test_529 f_530 m1__531 m2__532 x_643).
+F_538 test_534 f_535 m1__536 m2__537 b_386 x_642 -> b_386 (F_533 test_534 f_535 m1__536 m2__537 True x_642) (F_533 test_534 f_535 m1__536 m2__537 m1__536 x_642).
+F_545 test_539 f_540 m1__541 m2__542 k_exists_543 b_544 b_388 -> b_388 (F_507 test_539 f_540 m1__541 m2__542 k_exists_543 b_544 True) (br (F_507 test_539 f_540 m1__541 m2__542 k_exists_543 b_544 True) (F_507 test_539 f_540 m1__541 m2__542 k_exists_543 b_544 False)).
+F_548 k_exists_546 x__547 b_390 -> F_711 k_exists_546 x__547 b_390.
+F_551 k_exists_549 x__550 b_392 x_661 -> F_553 k_exists_549 x__550 True b_392 x_661.
+F_553 k_exists_552 b_396 x_655 x_656 x_657 -> b_396 (k_exists_552 True x_655 x_656 x_657) (F_714 k_exists_552 x_655 x_656 x_657).
+F_556 k_exists_554 x__555 b_398 -> b_398 (F_548 k_exists_554 x__555 False) (br (F_548 k_exists_554 x__555 True) (F_548 k_exists_554 x__555 False)).
+F_560 m1__557 k_exists_558 x_559 b_400 -> F_566 k_exists_558 x_559 m1__557 b_400.
+F_563 k_exists_561 x_562 b_402 x_664 -> K_exists_18 True (F_313 k_exists_561 x_562) b_402 x_664.
+F_566 k_exists_564 x_565 b_404 x_662 -> b_404 (F_563 k_exists_564 x_565 True x_662) (F_718 k_exists_564 x_565 x_662).
+F_570 k_exists_567 x_568 x__569 b_406 -> F_723 k_exists_567 x_568 x__569 b_406.
+F_574 k_exists_571 x_572 x__573 b_408 x_675 -> F_579 k_exists_571 x_572 x__573 False b_408 x_675.
+F_576 k_exists_575 b_412 x_669 x_670 x_671 -> b_412 (k_exists_575 True x_669 x_670 x_671) (F_726 k_exists_575 x_669 x_670 x_671).
+F_579 k_exists_577 x_578 b_414 x_666 x_667 x_668 -> b_414 (F_576 k_exists_577 x_578 x_666 x_667 x_668) (F_576 k_exists_577 False x_666 x_667 x_668).
+F_583 k_exists_580 x_581 x__582 b_416 -> b_416 (F_570 k_exists_580 x_581 x__582 False) (br (F_570 k_exists_580 x_581 x__582 True) (F_570 k_exists_580 x_581 x__582 False)).
+F_587 m1__584 path2_585 k_exists_586 b_418 -> b_418 (l0 (k_exists_586 True True False True)) (l1 (br (F_591 m1__584 path2_585 k_exists_586 True) (F_591 m1__584 path2_585 k_exists_586 False))).
+F_591 m1__588 path2_589 k_exists_590 b_420 -> b_420 (l0 (path2_589 (F_309 m1__588 k_exists_590))) (l1 (F_595 k_exists_590 m1__588 False)).
+F_593 k_exists_592 b_422 x_678 -> K_exists_18 True (F_316 k_exists_592) b_422 x_678.
+F_595 k_exists_594 b_424 x_676 -> b_424 (F_593 k_exists_594 True x_676) (F_729 k_exists_594 x_676).
+F_597 x__596 b_428 -> b_428 (x__596 True) (br (x__596 True) (x__596 False)).
+F_599 x__598 b_432 -> b_432 (x__598 True) (br (x__598 True) (x__598 False)).
+F_605 x__600 x_1_601 x_2_602 x_3_603 x_4_604 b_434 -> F_630 x__600 x_1_601 x_2_602 x_4_604 x_3_603 b_434.
+F_610 x__606 x_1_607 x_2_608 x_4_609 b_436 x_697 -> F_622 x__606 x_1_607 x_4_609 x_2_608 b_436 x_697.
+F_613 x__611 x_1_612 b_438 x_681 x_682 -> F_615 x__611 x_1_612 b_438 x_681 x_682.
+F_615 x__614 b_442 x_683 x_684 x_685 -> b_442 (x__614 True x_683 x_684 x_685) (F_738 x__614 x_683 x_684 x_685).
+F_618 x__616 x_1_617 b_444 x_689 x_690 -> b_444 (F_613 x__616 x_1_617 True x_689 x_690) (F_742 x__616 x_1_617 x_689 x_690).
+F_622 x__619 x_1_620 x_4_621 b_446 x_693 x_694 -> b_446 (F_618 x__619 x_1_620 True x_693 x_694) (F_625 x__619 x_1_620 x_4_621 x_693 x_694).
+F_625 x__623 x_1_624 b_448 x_695 x_696 -> b_448 (F_618 x__623 x_1_624 x_1_624 x_695 x_696) (F_618 x__623 x_1_624 False x_695 x_696).
+F_630 x__626 x_1_627 x_2_628 x_4_629 b_450 x_679 -> b_450 (F_610 x__626 x_1_627 x_2_628 x_4_629 True x_679) (F_735 x__626 x_1_627 x_2_628 x_4_629 x_679).
+F_636 x__631 x_1_632 x_2_633 x_3_634 x_4_635 b_452 -> b_452 (F_605 x__631 x_1_632 x_2_633 x_3_634 x_4_635 True) (br (F_605 x__631 x_1_632 x_2_633 x_3_634 x_4_635 True) (F_605 x__631 x_1_632 x_2_633 x_3_634 x_4_635 False)).
+F_638 k_exists_637 b_454 -> b_454 (l0 (k_exists_637 True True True True)) (l1 Bottom0).
+F_640 k_exists_639 b_458 -> b_458 (k_exists_639 True) (br (k_exists_639 True) (k_exists_639 False)).
+F_641 b_460 -> b_460 Bottom0 (l1 (l1 Bottom0)).
+F_703 test_699 f_700 m1__701 m2__702 x_644 -> br (F_518 test_699 f_700 m1__701 m2__702 True x_644) (F_518 test_699 f_700 m1__701 m2__702 False x_644).
+F_707 test_705 f_706 x_649 x_650 -> br (F_521 test_705 f_706 True x_649 x_650) (F_521 test_705 f_706 False x_649 x_650).
+F_711 k_exists_709 x__710 x_654 -> br (F_551 k_exists_709 x__710 True x_654) (F_551 k_exists_709 x__710 False x_654).
+F_714 k_exists_713 x_658 x_659 x_660 -> br (k_exists_713 True x_658 x_659 x_660) (k_exists_713 False x_658 x_659 x_660).
+F_718 k_exists_716 x_717 x_663 -> br (F_563 k_exists_716 x_717 True x_663) (F_563 k_exists_716 x_717 False x_663).
+F_723 k_exists_720 x_721 x__722 x_665 -> br (F_574 k_exists_720 x_721 x__722 True x_665) (F_574 k_exists_720 x_721 x__722 False x_665).
+F_726 k_exists_725 x_672 x_673 x_674 -> br (k_exists_725 True x_672 x_673 x_674) (k_exists_725 False x_672 x_673 x_674).
+F_729 k_exists_728 x_677 -> br (F_593 k_exists_728 True x_677) (F_593 k_exists_728 False x_677).
+F_735 x__731 x_1_732 x_2_733 x_4_734 x_680 -> br (F_610 x__731 x_1_732 x_2_733 x_4_734 True x_680) (F_610 x__731 x_1_732 x_2_733 x_4_734 False x_680).
+F_738 x__737 x_686 x_687 x_688 -> br (x__737 True x_686 x_687 x_688) (x__737 False x_686 x_687 x_688).
+F_742 x__740 x_1_741 x_691 x_692 -> br (F_613 x__740 x_1_741 True x_691 x_692) (F_613 x__740 x_1_741 False x_691 x_692).
+Fail b k -> event_fail k.
+K_exists_18 b_1 k_exists b1_2 b2_2 -> br (K_exists_746 b_1 k_exists b1_2 b2_2) (K_exists_745 b_1 k_exists b1_2 b2_2).
+K_exists_745 b_1 k_exists b1_2 b2_2 -> l0 (l0 (F_640 k_exists b1_2)).
+K_exists_746 b_1 k_exists b1_2 b2_2 -> F_641 b2_2.
+True x y -> x.
+False x y -> y.
+%APT
+intial state: q0
+transitions:
+q0 unit -> \true.
+q0 br -> (2, q0) \land (1, q0).
+q0 l0 -> (1, q0).
+q0 l1 -> (1, q0).
+q0 event_fail -> (1, q1).
+priorities:
+q0 -> 0.
+<< original HORS ***/
+%HES
+Main_1#0 =_\nu Exists#0 F_277#0 F_279#0 False#0 True#0 F_281#0;
+Bottom0#0 =_\nu unit;
+Exists#0 =_\nu \lambda test_1#0. \lambda f#0. \lambda m1_#0. \lambda m2_#0. \lambda k_exists#0. br (Exists_744#0 test_1#0 f#0 m1_#0 m2_#0 k_exists#0) (Exists_743#0 test_1#0 f#0 m1_#0 m2_#0 k_exists#0);
+Exists_743#0 =_\nu \lambda test_1#0. \lambda f#0. \lambda m1_#0. \lambda m2_#0. \lambda k_exists#0. l0 (F'881#0 test_1#0 f#0 m1_#0 m2_#0 k_exists#0);
+F'881#0 =_\nu \lambda test_1#0. \lambda f#0. \lambda m1_#0. \lambda m2_#0. \lambda k_exists#0. f#0 (F'880#0 test_1#0 f#0 m1_#0 m2_#0 k_exists#0);
+F'880#0 =_\nu \lambda test_1#0. \lambda f#0. \lambda m1_#0. \lambda m2_#0. \lambda k_exists#0. test_1#0 (F_302#0 test_1#0 f#0 m1_#0 m2_#0 k_exists#0);
+Exists_744#0 =_\nu \lambda test_1#0. \lambda f#0. \lambda m1_#0. \lambda m2_#0. \lambda k_exists#0. l1 (k_exists#0 F_339#0);
+F_277#0 =_\nu \lambda k_main_test_255#0. br (k_main_test_255#0 True#0) (k_main_test_255#0 False#0);
+F_279#0 =_\nu \lambda k_mult3_251#0. k_mult3_251#0;
+F_281#0 =_\nu \lambda x2_122#0. x2_122#0 F_283#0 (F_286#0 x2_122#0);
+F_283#0 =_\nu \lambda k_main_127#0. Bottom0#0;
+F_286#0 =_\nu \lambda x2_285#0. \lambda p21_134#0. \lambda p22_134#0. \lambda p23_134#0. \lambda p24_134#0. F_469#0 x2_285#0 p23_134#0 p23_134#0;
+F_288#0 =_\nu \lambda k_main_148#0. Bottom0#0;
+F_291#0 =_\nu \lambda x2_290#0. \lambda p21_157#0. \lambda p22_157#0. \lambda p23_157#0. \lambda p24_157#0. F_477#0 x2_290#0 p23_157#0 p23_157#0;
+F_293#0 =_\nu \lambda k_main_x_cons_x_54#0. br (F_500#0 k_main_x_cons_x_54#0 True#0) (F_500#0 k_main_x_cons_x_54#0 False#0);
+F_295#0 =_\nu \lambda p21_197#0. \lambda p22_197#0. \lambda p23_197#0. \lambda p24_197#0. F_494#0 p21_197#0 p22_197#0 p24_197#0 p21_197#0;
+F_302#0 =_\nu \lambda test_297#0. \lambda f_298#0. \lambda m1__299#0. \lambda m2__300#0. \lambda k_exists_301#0. \lambda b_79#0. F_545#0 test_297#0 f_298#0 m1__299#0 m2__300#0 k_exists_301#0 b_79#0 b_79#0;
+F_305#0 =_\nu \lambda m1__304#0. \lambda path2_92#0. \lambda k_exists_93#0. br (F_587#0 m1__304#0 path2_92#0 k_exists_93#0 True#0) (F_587#0 m1__304#0 path2_92#0 k_exists_93#0 False#0);
+F_309#0 =_\nu \lambda m1__307#0. \lambda k_exists_308#0. \lambda x_107#0. br (F_560#0 m1__307#0 k_exists_308#0 x_107#0 True#0) (F_560#0 m1__307#0 k_exists_308#0 x_107#0 False#0);
+F_313#0 =_\nu \lambda k_exists_311#0. \lambda x_312#0. \lambda x__275#0. F_583#0 k_exists_311#0 x_312#0 x__275#0 x__275#0;
+F_316#0 =_\nu \lambda k_exists_315#0. \lambda x__273#0. F_556#0 k_exists_315#0 x__273#0 x__273#0;
+F_319#0 =_\nu \lambda test_318#0. \lambda x__270#0. test_318#0 (F_322#0 x__270#0);
+F_322#0 =_\nu \lambda x__321#0. \lambda x__271#0. F_597#0 x__321#0 x__271#0;
+F_325#0 =_\nu \lambda k_exists_324#0. \lambda x__257#0. k_exists_324#0 (F_328#0 x__257#0);
+F_328#0 =_\nu \lambda x__327#0. \lambda x__259#0. \lambda x__263#0. x__327#0 (F_331#0 x__259#0) (F_337#0 x__263#0);
+F_331#0 =_\nu \lambda x__330#0. \lambda x__261#0. x__330#0 (F_334#0 x__261#0);
+F_334#0 =_\nu \lambda x__333#0. \lambda x__262#0. F_599#0 x__333#0 x__262#0;
+F_337#0 =_\nu \lambda x__336#0. \lambda x_1_265#0. \lambda x_2_265#0. \lambda x_3_265#0. \lambda x_4_265#0. F_636#0 x__336#0 x_1_265#0 x_2_265#0 x_3_265#0 x_4_265#0 x_4_265#0;
+F_339#0 =_\nu \lambda path2_111#0. \lambda k_exists_112#0. br (F_638#0 k_exists_112#0 True#0) (F_638#0 k_exists_112#0 False#0);
+F_464#0 =_\nu \lambda x2_462#0. \lambda p23_463#0. \lambda b_342#0. b_342#0 (l0 unit) (F'882#0 x2_462#0 p23_463#0);
+F'882#0 =_\nu \lambda x2_462#0. \lambda p23_463#0. l1 (F_466#0 x2_462#0 p23_463#0);
+F_466#0 =_\nu \lambda x2_465#0. \lambda b_344#0. b_344#0 Bottom0#0 (F'883#0 x2_465#0);
+F'883#0 =_\nu \lambda x2_465#0. x2_465#0 F_288#0 (F_291#0 x2_465#0);
+F_469#0 =_\nu \lambda x2_467#0. \lambda p23_468#0. \lambda b_346#0. b_346#0 (F_464#0 x2_467#0 p23_468#0 True#0) (F'884#0 x2_467#0 p23_468#0);
+F'884#0 =_\nu \lambda x2_467#0. \lambda p23_468#0. br (F_464#0 x2_467#0 p23_468#0 True#0) (F_464#0 x2_467#0 p23_468#0 False#0);
+F_472#0 =_\nu \lambda x2_470#0. \lambda p23_471#0. \lambda b_348#0. b_348#0 (F'885#0 x2_470#0 p23_471#0) (l1 Bottom0#0);
+F'885#0 =_\nu \lambda x2_470#0. \lambda p23_471#0. l0 (F_474#0 x2_470#0 p23_471#0);
+F_474#0 =_\nu \lambda x2_473#0. \lambda b_350#0. b_350#0 Bottom0#0 (x2_473#0 F_293#0 F_295#0);
+F_477#0 =_\nu \lambda x2_475#0. \lambda p23_476#0. \lambda b_352#0. b_352#0 (F_472#0 x2_475#0 p23_476#0 False#0) (F'886#0 x2_475#0 p23_476#0);
+F'886#0 =_\nu \lambda x2_475#0. \lambda p23_476#0. br (F_472#0 x2_475#0 p23_476#0 True#0) (F_472#0 x2_475#0 p23_476#0 False#0);
+F_481#0 =_\nu \lambda p21_478#0. \lambda p22_479#0. \lambda p24_480#0. \lambda b_354#0. b_354#0 (F'888#0 p22_479#0 p24_480#0) (F'890#0 p21_478#0 p22_479#0);
+F'890#0 =_\nu \lambda p21_478#0. \lambda p22_479#0. l1 (F'889#0 p21_478#0 p22_479#0);
+F'889#0 =_\nu \lambda p21_478#0. \lambda p22_479#0. l1 (F_490#0 p21_478#0 p22_479#0);
+F'888#0 =_\nu \lambda p22_479#0. \lambda p24_480#0. l0 (F'887#0 p22_479#0 p24_480#0);
+F'887#0 =_\nu \lambda p22_479#0. \lambda p24_480#0. br (F_484#0 p22_479#0 p24_480#0 True#0) (F_484#0 p22_479#0 p24_480#0 False#0);
+F_484#0 =_\nu \lambda p22_482#0. \lambda p24_483#0. \lambda b_356#0. b_356#0 (l0 unit) (F'891#0 p22_482#0 p24_483#0);
+F'891#0 =_\nu \lambda p22_482#0. \lambda p24_483#0. l1 (F_487#0 p22_482#0 p24_483#0);
+F_485#0 =_\nu \lambda b_358#0. b_358#0 Bottom0#0 (Fail#0 True#0 unit);
+F_487#0 =_\nu \lambda p22_486#0. \lambda b_360#0. b_360#0 (F_485#0 True#0) (F_485#0 p22_486#0);
+F_488#0 =_\nu \lambda b_362#0. b_362#0 Bottom0#0 (Fail#0 True#0 unit);
+F_490#0 =_\nu \lambda p21_489#0. \lambda b_364#0. b_364#0 (F_488#0 True#0) (F_488#0 p21_489#0);
+F_494#0 =_\nu \lambda p21_491#0. \lambda p22_492#0. \lambda p24_493#0. \lambda b_366#0. b_366#0 (F_481#0 p21_491#0 p22_492#0 p24_493#0 True#0) (F_498#0 p21_491#0 p22_492#0 p24_493#0 p24_493#0);
+F_498#0 =_\nu \lambda p21_495#0. \lambda p22_496#0. \lambda p24_497#0. \lambda b_368#0. b_368#0 (F_481#0 p21_495#0 p22_496#0 p24_497#0 False#0) (F'892#0 p21_495#0 p22_496#0 p24_497#0);
+F'892#0 =_\nu \lambda p21_495#0. \lambda p22_496#0. \lambda p24_497#0. br (F_481#0 p21_495#0 p22_496#0 p24_497#0 True#0) (F_481#0 p21_495#0 p22_496#0 p24_497#0 False#0);
+F_500#0 =_\nu \lambda k_main_x_cons_x_499#0. \lambda b_370#0. b_370#0 (F'893#0 k_main_x_cons_x_499#0) (l1 Bottom0#0);
+F'893#0 =_\nu \lambda k_main_x_cons_x_499#0. l0 (k_main_x_cons_x_499#0 True#0);
+F_507#0 =_\nu \lambda test_501#0. \lambda f_502#0. \lambda m1__503#0. \lambda m2__504#0. \lambda k_exists_505#0. \lambda b_506#0. \lambda b_372#0. b_372#0 (F'895#0 m1__503#0 k_exists_505#0) (F'896#0 test_501#0 f_502#0 m1__503#0 m2__504#0 k_exists_505#0 b_506#0);
+F'896#0 =_\nu \lambda test_501#0. \lambda f_502#0. \lambda m1__503#0. \lambda m2__504#0. \lambda k_exists_505#0. \lambda b_506#0. l1 (F_513#0 test_501#0 f_502#0 m1__503#0 m2__504#0 k_exists_505#0 b_506#0);
+F'895#0 =_\nu \lambda m1__503#0. \lambda k_exists_505#0. l0 (F'894#0 m1__503#0 k_exists_505#0);
+F'894#0 =_\nu \lambda m1__503#0. \lambda k_exists_505#0. k_exists_505#0 (F_305#0 m1__503#0);
+F_513#0 =_\nu \lambda test_508#0. \lambda f_509#0. \lambda m1__510#0. \lambda m2__511#0. \lambda k_exists_512#0. \lambda b_374#0. b_374#0 Bottom0#0 (F'897#0 test_508#0 f_509#0 m1__510#0 m2__511#0 k_exists_512#0);
+F'897#0 =_\nu \lambda test_508#0. \lambda f_509#0. \lambda m1__510#0. \lambda m2__511#0. \lambda k_exists_512#0. F_538#0 test_508#0 f_509#0 m1__510#0 m2__511#0 m2__511#0 (F_325#0 k_exists_512#0);
+F_518#0 =_\nu \lambda test_514#0. \lambda f_515#0. \lambda m1__516#0. \lambda m2__517#0. \lambda b_376#0. \lambda x_653#0. F_528#0 test_514#0 f_515#0 m1__516#0 m2__517#0 b_376#0 x_653#0;
+F_521#0 =_\nu \lambda test_519#0. \lambda f_520#0. \lambda b_378#0. \lambda x_645#0. \lambda x_646#0. Exists#0 (F_319#0 test_519#0) f_520#0 b_378#0 x_645#0 x_646#0;
+F_524#0 =_\nu \lambda test_522#0. \lambda f_523#0. \lambda b_380#0. \lambda x_647#0. \lambda x_648#0. b_380#0 (F_521#0 test_522#0 f_523#0 True#0 x_647#0 x_648#0) (F_707#0 test_522#0 f_523#0 x_647#0 x_648#0);
+F_528#0 =_\nu \lambda test_525#0. \lambda f_526#0. \lambda m1__527#0. \lambda b_382#0. \lambda x_651#0. \lambda x_652#0. b_382#0 (F_524#0 test_525#0 f_526#0 True#0 x_651#0 x_652#0) (F_524#0 test_525#0 f_526#0 m1__527#0 x_651#0 x_652#0);
+F_533#0 =_\nu \lambda test_529#0. \lambda f_530#0. \lambda m1__531#0. \lambda m2__532#0. \lambda b_384#0. \lambda x_643#0. b_384#0 (F_518#0 test_529#0 f_530#0 m1__531#0 m2__532#0 True#0 x_643#0) (F_703#0 test_529#0 f_530#0 m1__531#0 m2__532#0 x_643#0);
+F_538#0 =_\nu \lambda test_534#0. \lambda f_535#0. \lambda m1__536#0. \lambda m2__537#0. \lambda b_386#0. \lambda x_642#0. b_386#0 (F_533#0 test_534#0 f_535#0 m1__536#0 m2__537#0 True#0 x_642#0) (F_533#0 test_534#0 f_535#0 m1__536#0 m2__537#0 m1__536#0 x_642#0);
+F_545#0 =_\nu \lambda test_539#0. \lambda f_540#0. \lambda m1__541#0. \lambda m2__542#0. \lambda k_exists_543#0. \lambda b_544#0. \lambda b_388#0. b_388#0 (F_507#0 test_539#0 f_540#0 m1__541#0 m2__542#0 k_exists_543#0 b_544#0 True#0) (F'898#0 test_539#0 f_540#0 m1__541#0 m2__542#0 k_exists_543#0 b_544#0);
+F'898#0 =_\nu \lambda test_539#0. \lambda f_540#0. \lambda m1__541#0. \lambda m2__542#0. \lambda k_exists_543#0. \lambda b_544#0. br (F_507#0 test_539#0 f_540#0 m1__541#0 m2__542#0 k_exists_543#0 b_544#0 True#0) (F_507#0 test_539#0 f_540#0 m1__541#0 m2__542#0 k_exists_543#0 b_544#0 False#0);
+F_548#0 =_\nu \lambda k_exists_546#0. \lambda x__547#0. \lambda b_390#0. F_711#0 k_exists_546#0 x__547#0 b_390#0;
+F_551#0 =_\nu \lambda k_exists_549#0. \lambda x__550#0. \lambda b_392#0. \lambda x_661#0. F_553#0 k_exists_549#0 x__550#0 True#0 b_392#0 x_661#0;
+F_553#0 =_\nu \lambda k_exists_552#0. \lambda b_396#0. \lambda x_655#0. \lambda x_656#0. \lambda x_657#0. b_396#0 (k_exists_552#0 True#0 x_655#0 x_656#0 x_657#0) (F_714#0 k_exists_552#0 x_655#0 x_656#0 x_657#0);
+F_556#0 =_\nu \lambda k_exists_554#0. \lambda x__555#0. \lambda b_398#0. b_398#0 (F_548#0 k_exists_554#0 x__555#0 False#0) (F'899#0 k_exists_554#0 x__555#0);
+F'899#0 =_\nu \lambda k_exists_554#0. \lambda x__555#0. br (F_548#0 k_exists_554#0 x__555#0 True#0) (F_548#0 k_exists_554#0 x__555#0 False#0);
+F_560#0 =_\nu \lambda m1__557#0. \lambda k_exists_558#0. \lambda x_559#0. \lambda b_400#0. F_566#0 k_exists_558#0 x_559#0 m1__557#0 b_400#0;
+F_563#0 =_\nu \lambda k_exists_561#0. \lambda x_562#0. \lambda b_402#0. \lambda x_664#0. K_exists_18#0 True#0 (F_313#0 k_exists_561#0 x_562#0) b_402#0 x_664#0;
+F_566#0 =_\nu \lambda k_exists_564#0. \lambda x_565#0. \lambda b_404#0. \lambda x_662#0. b_404#0 (F_563#0 k_exists_564#0 x_565#0 True#0 x_662#0) (F_718#0 k_exists_564#0 x_565#0 x_662#0);
+F_570#0 =_\nu \lambda k_exists_567#0. \lambda x_568#0. \lambda x__569#0. \lambda b_406#0. F_723#0 k_exists_567#0 x_568#0 x__569#0 b_406#0;
+F_574#0 =_\nu \lambda k_exists_571#0. \lambda x_572#0. \lambda x__573#0. \lambda b_408#0. \lambda x_675#0. F_579#0 k_exists_571#0 x_572#0 x__573#0 False#0 b_408#0 x_675#0;
+F_576#0 =_\nu \lambda k_exists_575#0. \lambda b_412#0. \lambda x_669#0. \lambda x_670#0. \lambda x_671#0. b_412#0 (k_exists_575#0 True#0 x_669#0 x_670#0 x_671#0) (F_726#0 k_exists_575#0 x_669#0 x_670#0 x_671#0);
+F_579#0 =_\nu \lambda k_exists_577#0. \lambda x_578#0. \lambda b_414#0. \lambda x_666#0. \lambda x_667#0. \lambda x_668#0. b_414#0 (F_576#0 k_exists_577#0 x_578#0 x_666#0 x_667#0 x_668#0) (F_576#0 k_exists_577#0 False#0 x_666#0 x_667#0 x_668#0);
+F_583#0 =_\nu \lambda k_exists_580#0. \lambda x_581#0. \lambda x__582#0. \lambda b_416#0. b_416#0 (F_570#0 k_exists_580#0 x_581#0 x__582#0 False#0) (F'900#0 k_exists_580#0 x_581#0 x__582#0);
+F'900#0 =_\nu \lambda k_exists_580#0. \lambda x_581#0. \lambda x__582#0. br (F_570#0 k_exists_580#0 x_581#0 x__582#0 True#0) (F_570#0 k_exists_580#0 x_581#0 x__582#0 False#0);
+F_587#0 =_\nu \lambda m1__584#0. \lambda path2_585#0. \lambda k_exists_586#0. \lambda b_418#0. b_418#0 (F'901#0 k_exists_586#0) (F'903#0 m1__584#0 path2_585#0 k_exists_586#0);
+F'903#0 =_\nu \lambda m1__584#0. \lambda path2_585#0. \lambda k_exists_586#0. l1 (F'902#0 m1__584#0 path2_585#0 k_exists_586#0);
+F'902#0 =_\nu \lambda m1__584#0. \lambda path2_585#0. \lambda k_exists_586#0. br (F_591#0 m1__584#0 path2_585#0 k_exists_586#0 True#0) (F_591#0 m1__584#0 path2_585#0 k_exists_586#0 False#0);
+F'901#0 =_\nu \lambda k_exists_586#0. l0 (k_exists_586#0 True#0 True#0 False#0 True#0);
+F_591#0 =_\nu \lambda m1__588#0. \lambda path2_589#0. \lambda k_exists_590#0. \lambda b_420#0. b_420#0 (F'905#0 m1__588#0 path2_589#0 k_exists_590#0) (F'906#0 m1__588#0 k_exists_590#0);
+F'906#0 =_\nu \lambda m1__588#0. \lambda k_exists_590#0. l1 (F_595#0 k_exists_590#0 m1__588#0 False#0);
+F'905#0 =_\nu \lambda m1__588#0. \lambda path2_589#0. \lambda k_exists_590#0. l0 (F'904#0 m1__588#0 path2_589#0 k_exists_590#0);
+F'904#0 =_\nu \lambda m1__588#0. \lambda path2_589#0. \lambda k_exists_590#0. path2_589#0 (F_309#0 m1__588#0 k_exists_590#0);
+F_593#0 =_\nu \lambda k_exists_592#0. \lambda b_422#0. \lambda x_678#0. K_exists_18#0 True#0 (F_316#0 k_exists_592#0) b_422#0 x_678#0;
+F_595#0 =_\nu \lambda k_exists_594#0. \lambda b_424#0. \lambda x_676#0. b_424#0 (F_593#0 k_exists_594#0 True#0 x_676#0) (F_729#0 k_exists_594#0 x_676#0);
+F_597#0 =_\nu \lambda x__596#0. \lambda b_428#0. b_428#0 (x__596#0 True#0) (F'907#0 x__596#0);
+F'907#0 =_\nu \lambda x__596#0. br (x__596#0 True#0) (x__596#0 False#0);
+F_599#0 =_\nu \lambda x__598#0. \lambda b_432#0. b_432#0 (x__598#0 True#0) (F'908#0 x__598#0);
+F'908#0 =_\nu \lambda x__598#0. br (x__598#0 True#0) (x__598#0 False#0);
+F_605#0 =_\nu \lambda x__600#0. \lambda x_1_601#0. \lambda x_2_602#0. \lambda x_3_603#0. \lambda x_4_604#0. \lambda b_434#0. F_630#0 x__600#0 x_1_601#0 x_2_602#0 x_4_604#0 x_3_603#0 b_434#0;
+F_610#0 =_\nu \lambda x__606#0. \lambda x_1_607#0. \lambda x_2_608#0. \lambda x_4_609#0. \lambda b_436#0. \lambda x_697#0. F_622#0 x__606#0 x_1_607#0 x_4_609#0 x_2_608#0 b_436#0 x_697#0;
+F_613#0 =_\nu \lambda x__611#0. \lambda x_1_612#0. \lambda b_438#0. \lambda x_681#0. \lambda x_682#0. F_615#0 x__611#0 x_1_612#0 b_438#0 x_681#0 x_682#0;
+F_615#0 =_\nu \lambda x__614#0. \lambda b_442#0. \lambda x_683#0. \lambda x_684#0. \lambda x_685#0. b_442#0 (x__614#0 True#0 x_683#0 x_684#0 x_685#0) (F_738#0 x__614#0 x_683#0 x_684#0 x_685#0);
+F_618#0 =_\nu \lambda x__616#0. \lambda x_1_617#0. \lambda b_444#0. \lambda x_689#0. \lambda x_690#0. b_444#0 (F_613#0 x__616#0 x_1_617#0 True#0 x_689#0 x_690#0) (F_742#0 x__616#0 x_1_617#0 x_689#0 x_690#0);
+F_622#0 =_\nu \lambda x__619#0. \lambda x_1_620#0. \lambda x_4_621#0. \lambda b_446#0. \lambda x_693#0. \lambda x_694#0. b_446#0 (F_618#0 x__619#0 x_1_620#0 True#0 x_693#0 x_694#0) (F_625#0 x__619#0 x_1_620#0 x_4_621#0 x_693#0 x_694#0);
+F_625#0 =_\nu \lambda x__623#0. \lambda x_1_624#0. \lambda b_448#0. \lambda x_695#0. \lambda x_696#0. b_448#0 (F_618#0 x__623#0 x_1_624#0 x_1_624#0 x_695#0 x_696#0) (F_618#0 x__623#0 x_1_624#0 False#0 x_695#0 x_696#0);
+F_630#0 =_\nu \lambda x__626#0. \lambda x_1_627#0. \lambda x_2_628#0. \lambda x_4_629#0. \lambda b_450#0. \lambda x_679#0. b_450#0 (F_610#0 x__626#0 x_1_627#0 x_2_628#0 x_4_629#0 True#0 x_679#0) (F_735#0 x__626#0 x_1_627#0 x_2_628#0 x_4_629#0 x_679#0);
+F_636#0 =_\nu \lambda x__631#0. \lambda x_1_632#0. \lambda x_2_633#0. \lambda x_3_634#0. \lambda x_4_635#0. \lambda b_452#0. b_452#0 (F_605#0 x__631#0 x_1_632#0 x_2_633#0 x_3_634#0 x_4_635#0 True#0) (F'909#0 x__631#0 x_1_632#0 x_2_633#0 x_3_634#0 x_4_635#0);
+F'909#0 =_\nu \lambda x__631#0. \lambda x_1_632#0. \lambda x_2_633#0. \lambda x_3_634#0. \lambda x_4_635#0. br (F_605#0 x__631#0 x_1_632#0 x_2_633#0 x_3_634#0 x_4_635#0 True#0) (F_605#0 x__631#0 x_1_632#0 x_2_633#0 x_3_634#0 x_4_635#0 False#0);
+F_638#0 =_\nu \lambda k_exists_637#0. \lambda b_454#0. b_454#0 (F'910#0 k_exists_637#0) (l1 Bottom0#0);
+F'910#0 =_\nu \lambda k_exists_637#0. l0 (k_exists_637#0 True#0 True#0 True#0 True#0);
+F_640#0 =_\nu \lambda k_exists_639#0. \lambda b_458#0. b_458#0 (k_exists_639#0 True#0) (F'911#0 k_exists_639#0);
+F'911#0 =_\nu \lambda k_exists_639#0. br (k_exists_639#0 True#0) (k_exists_639#0 False#0);
+F_641#0 =_\nu \lambda b_460#0. b_460#0 Bottom0#0 F'912#0;
+F'912#0 =_\nu l1 (l1 Bottom0#0);
+F_703#0 =_\nu \lambda test_699#0. \lambda f_700#0. \lambda m1__701#0. \lambda m2__702#0. \lambda x_644#0. br (F_518#0 test_699#0 f_700#0 m1__701#0 m2__702#0 True#0 x_644#0) (F_518#0 test_699#0 f_700#0 m1__701#0 m2__702#0 False#0 x_644#0);
+F_707#0 =_\nu \lambda test_705#0. \lambda f_706#0. \lambda x_649#0. \lambda x_650#0. br (F_521#0 test_705#0 f_706#0 True#0 x_649#0 x_650#0) (F_521#0 test_705#0 f_706#0 False#0 x_649#0 x_650#0);
+F_711#0 =_\nu \lambda k_exists_709#0. \lambda x__710#0. \lambda x_654#0. br (F_551#0 k_exists_709#0 x__710#0 True#0 x_654#0) (F_551#0 k_exists_709#0 x__710#0 False#0 x_654#0);
+F_714#0 =_\nu \lambda k_exists_713#0. \lambda x_658#0. \lambda x_659#0. \lambda x_660#0. br (k_exists_713#0 True#0 x_658#0 x_659#0 x_660#0) (k_exists_713#0 False#0 x_658#0 x_659#0 x_660#0);
+F_718#0 =_\nu \lambda k_exists_716#0. \lambda x_717#0. \lambda x_663#0. br (F_563#0 k_exists_716#0 x_717#0 True#0 x_663#0) (F_563#0 k_exists_716#0 x_717#0 False#0 x_663#0);
+F_723#0 =_\nu \lambda k_exists_720#0. \lambda x_721#0. \lambda x__722#0. \lambda x_665#0. br (F_574#0 k_exists_720#0 x_721#0 x__722#0 True#0 x_665#0) (F_574#0 k_exists_720#0 x_721#0 x__722#0 False#0 x_665#0);
+F_726#0 =_\nu \lambda k_exists_725#0. \lambda x_672#0. \lambda x_673#0. \lambda x_674#0. br (k_exists_725#0 True#0 x_672#0 x_673#0 x_674#0) (k_exists_725#0 False#0 x_672#0 x_673#0 x_674#0);
+F_729#0 =_\nu \lambda k_exists_728#0. \lambda x_677#0. br (F_593#0 k_exists_728#0 True#0 x_677#0) (F_593#0 k_exists_728#0 False#0 x_677#0);
+F_735#0 =_\nu \lambda x__731#0. \lambda x_1_732#0. \lambda x_2_733#0. \lambda x_4_734#0. \lambda x_680#0. br (F_610#0 x__731#0 x_1_732#0 x_2_733#0 x_4_734#0 True#0 x_680#0) (F_610#0 x__731#0 x_1_732#0 x_2_733#0 x_4_734#0 False#0 x_680#0);
+F_738#0 =_\nu \lambda x__737#0. \lambda x_686#0. \lambda x_687#0. \lambda x_688#0. br (x__737#0 True#0 x_686#0 x_687#0 x_688#0) (x__737#0 False#0 x_686#0 x_687#0 x_688#0);
+F_742#0 =_\nu \lambda x__740#0. \lambda x_1_741#0. \lambda x_691#0. \lambda x_692#0. br (F_613#0 x__740#0 x_1_741#0 True#0 x_691#0 x_692#0) (F_613#0 x__740#0 x_1_741#0 False#0 x_691#0 x_692#0);
+Fail#0 =_\nu \lambda b#0. \lambda k#0. event_fail k#0;
+K_exists_18#0 =_\nu \lambda b_1#0. \lambda k_exists#0. \lambda b1_2#0. \lambda b2_2#0. br (K_exists_746#0 b_1#0 k_exists#0 b1_2#0 b2_2#0) (K_exists_745#0 b_1#0 k_exists#0 b1_2#0 b2_2#0);
+K_exists_745#0 =_\nu \lambda b_1#0. \lambda k_exists#0. \lambda b1_2#0. \lambda b2_2#0. l0 (F'913#0 k_exists#0 b1_2#0);
+F'913#0 =_\nu \lambda k_exists#0. \lambda b1_2#0. l0 (F_640#0 k_exists#0 b1_2#0);
+K_exists_746#0 =_\nu \lambda b_1#0. \lambda k_exists#0. \lambda b1_2#0. \lambda b2_2#0. F_641#0 b2_2#0;
+True#0 =_\nu \lambda x#0. \lambda y#0. x#0;
+False#0 =_\nu \lambda x#0. \lambda y#0. y#0;
+unit =_\nu <unit#0>\true;
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+l0 =_\nu \lambda y$1#0. <l0#0>[$1]y$1#0;
+l1 =_\nu \lambda y$1#0. <l1#0>[$1]y$1#0;
+event_fail =_\nu \lambda y$1#0. <event_fail#0>[$1]y$1#0;
+%LTS
+initial state: @q0
+transitions:
+@q0 unit#0 -> true.
+@q0 br#0 -> $1@q0&$2@q0.
+@q0 l0#0 -> $1@q0.
+@q0 l1#0 -> $1@q0.
+@q0 event_fail#0 -> $1@q1.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+$1@q0 $1 -> @q0.
+$1@q1 $1 -> @q1.

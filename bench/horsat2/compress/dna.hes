@@ -1,0 +1,342 @@
+/*** original HORS >>
+%HORS
+S -> X119 (X45 (X116 (X80 (X119 (X80 (X64 (X41 (X75 a)) (a (g (X111 a (c (X75 g (X79 (t (X68 c (X20 (X19 (c (X112 (X44 (X99 c (X66 (g (X89 (g (X20 (X61 (t (X79 (a (X43 (X86 (X24 a (X78 (X105 t (X42 (X95 t (X37 (X78 (g (X112 (a (X85 (X18 (X105 a (X65 (X117 (X114 (t (X78 (X36 (X35 (X108 a (X33 (t (X30 (X64 c (X92 t (g (X60 (X15 (X102 a (X20 (g (t (X54 (X19 (X88 (g (X13 (X117 (X48 t (X95 c (X16 (X18 (X65 (X108 c (X42 (t (X77 (X12 (X83 t (g (X43 (g (X37 (X16 (g (g (X36 (c (X43 (a (X77 (X6 (X87 (X60 (X44 (X111 c (X83 c (t (t (X86 (X36 (X15 (X87 (t (X99 a (g (X102 c e))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))).
+X4 x1 x2 x3 -> x1 (x2 x3).
+X5 x y -> X4 t x y.
+X6 x -> X5 a x.
+X10 x7 x8 x9 -> x8 (x7 x9).
+X11 x y -> X10 t x y.
+X12 x -> X11 c x.
+X13 x -> X5 g x.
+X14 x y -> X10 c x y.
+X15 x -> X14 g x.
+X16 x -> X14 a x.
+X17 x y -> X4 a x y.
+X18 x -> X17 t x.
+X19 x -> X17 a x.
+X20 x -> X5 c x.
+X21 x y -> X4 c x y.
+X24 x22 x23 -> g (x22 (x22 x23)).
+X28 x25 x26 x27 -> x25 (x26 (x25 x27)).
+X29 x y -> X10 X13 x y.
+X30 x -> X28 t c x.
+X31 x y -> X28 c x y.
+X32 x -> X31 c x.
+X33 x -> X29 c x.
+X34 x y -> X4 X16 x y.
+X35 x -> X34 c x.
+X36 x -> X29 a x.
+X37 x -> X31 a x.
+X40 x38 x39 -> x38 (x38 (a x39)).
+X41 x y -> X10 X16 x y.
+X42 x -> X34 t x.
+X43 x -> X41 t x.
+X44 x -> X40 t x.
+X45 x -> X40 c x.
+X48 x46 x47 -> c (x46 (x46 (X6 x47))).
+X52 x49 x50 x51 -> x49 (x49 (a (x50 x51))).
+X53 x y -> X52 a x y.
+X54 x -> X53 t x.
+X55 x y -> X10 X45 x y.
+X56 x -> X55 a x.
+X59 x57 x58 -> x57 (c (X20 x58)).
+X60 x -> X53 c x.
+X61 x -> X52 c t x.
+X64 x62 x63 -> t (x62 (X43 (x62 x63))).
+X65 x -> X55 g x.
+X66 x -> X59 a x.
+X68 x67 y -> X24 (X5 x67) y.
+X72 x69 x70 x71 -> x69 (x70 (X16 (x69 x71))).
+X75 x73 x74 -> c (X12 (x73 (x73 (c x74)))).
+X76 x y -> X72 c x y.
+X77 x -> X68 a x.
+X78 x -> X76 c x.
+X79 x -> X76 a x.
+X80 x -> X72 a c x.
+X83 x81 x82 -> g (X18 (t (x81 (x81 (X16 x82))))).
+X85 x84 -> X44 (X32 x84).
+X86 x -> X31 X66 x.
+X87 x -> X59 X61 x.
+X88 x -> X31 X80 x.
+X89 x -> X11 X85 x.
+X92 x90 x91 -> c (X56 (x90 (a (x90 (x90 x91))))).
+X95 x93 x94 -> X43 (x93 (X56 (c (x93 x94)))).
+X99 x96 x98 -> X21 x96 (X33 (x96 (x96 (t (X21 x96 x98))))).
+X102 x100 x101 -> X6 (x100 (c (X54 (g (x100 x101))))).
+X105 x103 x104 -> X18 (X45 (x103 (X32 (x103 (X12 x104))))).
+X108 x106 x107 -> t (X66 (X35 (x106 (t (x106 x107))))).
+X111 x109 x110 -> X48 c (x109 (X30 (x109 (a x110)))).
+X112 x -> X55 X89 x.
+X114 x113 -> X89 (X56 x113).
+X116 x115 -> c (a (X92 c x115)).
+X117 x -> X21 X114 x.
+X119 x118 -> c (X116 (X88 x118)).
+%APT
+intial state: q0
+transitions:
+q1 a -> (1, q1).
+q1 g -> (1, q0).
+q1 c -> (1, q2).
+q1 t -> (1, q0).
+q1 e -> \true.
+q0 a -> (1, q1).
+q0 g -> (1, q0).
+q0 c -> (1, q0).
+q0 t -> (1, q0).
+q0 e -> \true.
+q2 a -> (1, q1).
+q2 g -> (1, q0).
+q2 c -> (1, q0).
+q2 t -> (1, q3).
+q2 e -> \true.
+q3 a -> (1, q1).
+q3 g -> (1, q4).
+q3 c -> (1, q0).
+q3 t -> (1, q0).
+q3 e -> \true.
+q4 a -> (1, q5).
+q4 g -> (1, q0).
+q4 c -> (1, q0).
+q4 t -> (1, q0).
+q4 e -> \true.
+q5 a -> (1, q1).
+q5 g -> (1, q0).
+q5 c -> (1, q6).
+q5 t -> (1, q0).
+q5 e -> \true.
+q6 a -> (1, q6).
+q6 g -> (1, q6).
+q6 c -> (1, q6).
+q6 t -> (1, q6).
+priorities:
+q1 -> 0.
+q0 -> 0.
+q2 -> 0.
+q3 -> 0.
+q4 -> 0.
+q5 -> 0.
+q6 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu X119#0 (X45#0 F'365#0);
+F'365#0 =_\nu X116#0 (X80#0 F'364#0);
+F'364#0 =_\nu X119#0 (X80#0 F'363#0);
+F'363#0 =_\nu X64#0 F'311#0 (a F'362#0);
+F'362#0 =_\nu g (X111#0 a F'361#0);
+F'361#0 =_\nu c (X75#0 g F'360#0);
+F'360#0 =_\nu X79#0 (t F'359#0);
+F'359#0 =_\nu X68#0 c (X20#0 F'358#0);
+F'358#0 =_\nu X19#0 (c F'357#0);
+F'357#0 =_\nu X112#0 (X44#0 F'356#0);
+F'356#0 =_\nu X99#0 c (X66#0 F'355#0);
+F'355#0 =_\nu g (X89#0 F'354#0);
+F'354#0 =_\nu g (X20#0 F'353#0);
+F'353#0 =_\nu X61#0 (t F'352#0);
+F'352#0 =_\nu X79#0 (a F'351#0);
+F'351#0 =_\nu X43#0 (X86#0 F'350#0);
+F'350#0 =_\nu X24#0 a (X78#0 F'349#0);
+F'349#0 =_\nu X105#0 t (X42#0 F'348#0);
+F'348#0 =_\nu X95#0 t (X37#0 F'347#0);
+F'347#0 =_\nu X78#0 (g F'346#0);
+F'346#0 =_\nu X112#0 (a F'345#0);
+F'345#0 =_\nu X85#0 (X18#0 F'344#0);
+F'344#0 =_\nu X105#0 a (X65#0 F'343#0);
+F'343#0 =_\nu X117#0 (X114#0 F'342#0);
+F'342#0 =_\nu t (X78#0 F'341#0);
+F'341#0 =_\nu X36#0 (X35#0 F'340#0);
+F'340#0 =_\nu X108#0 a (X33#0 F'339#0);
+F'339#0 =_\nu t (X30#0 F'338#0);
+F'338#0 =_\nu X64#0 c (X92#0 t F'337#0);
+F'337#0 =_\nu g (X60#0 F'336#0);
+F'336#0 =_\nu X15#0 (X102#0 a F'335#0);
+F'335#0 =_\nu X20#0 (g F'334#0);
+F'334#0 =_\nu t (X54#0 F'333#0);
+F'333#0 =_\nu X19#0 (X88#0 F'332#0);
+F'332#0 =_\nu g (X13#0 F'331#0);
+F'331#0 =_\nu X117#0 (X48#0 t F'330#0);
+F'330#0 =_\nu X95#0 c (X16#0 F'329#0);
+F'329#0 =_\nu X18#0 (X65#0 F'328#0);
+F'328#0 =_\nu X108#0 c (X42#0 F'327#0);
+F'327#0 =_\nu t (X77#0 F'326#0);
+F'326#0 =_\nu X12#0 (X83#0 t F'325#0);
+F'325#0 =_\nu g (X43#0 F'324#0);
+F'324#0 =_\nu g (X37#0 F'323#0);
+F'323#0 =_\nu X16#0 (g F'322#0);
+F'322#0 =_\nu g (X36#0 F'321#0);
+F'321#0 =_\nu c (X43#0 F'320#0);
+F'320#0 =_\nu a (X77#0 F'319#0);
+F'319#0 =_\nu X6#0 (X87#0 F'318#0);
+F'318#0 =_\nu X60#0 (X44#0 F'317#0);
+F'317#0 =_\nu X111#0 c (X83#0 c F'316#0);
+F'316#0 =_\nu t (t F'315#0);
+F'315#0 =_\nu X86#0 (X36#0 F'314#0);
+F'314#0 =_\nu X15#0 (X87#0 F'313#0);
+F'313#0 =_\nu t (X99#0 a F'312#0);
+F'312#0 =_\nu g (X102#0 c e);
+F'311#0 =_\nu X41#0 (X75#0 a);
+X4#0 =_\nu \lambda x1#0. \lambda x2#0. \lambda x3#0. x1#0 (x2#0 x3#0);
+X5#0 =_\nu \lambda x#0. \lambda y#0. X4#0 t x#0 y#0;
+X6#0 =_\nu \lambda x#0. X5#0 a x#0;
+X10#0 =_\nu \lambda x7#0. \lambda x8#0. \lambda x9#0. x8#0 (x7#0 x9#0);
+X11#0 =_\nu \lambda x#0. \lambda y#0. X10#0 t x#0 y#0;
+X12#0 =_\nu \lambda x#0. X11#0 c x#0;
+X13#0 =_\nu \lambda x#0. X5#0 g x#0;
+X14#0 =_\nu \lambda x#0. \lambda y#0. X10#0 c x#0 y#0;
+X15#0 =_\nu \lambda x#0. X14#0 g x#0;
+X16#0 =_\nu \lambda x#0. X14#0 a x#0;
+X17#0 =_\nu \lambda x#0. \lambda y#0. X4#0 a x#0 y#0;
+X18#0 =_\nu \lambda x#0. X17#0 t x#0;
+X19#0 =_\nu \lambda x#0. X17#0 a x#0;
+X20#0 =_\nu \lambda x#0. X5#0 c x#0;
+X21#0 =_\nu \lambda x#0. \lambda y#0. X4#0 c x#0 y#0;
+X24#0 =_\nu \lambda x22#0. \lambda x23#0. g (F'366#0 x22#0 x23#0);
+F'366#0 =_\nu \lambda x22#0. \lambda x23#0. x22#0 (x22#0 x23#0);
+X28#0 =_\nu \lambda x25#0. \lambda x26#0. \lambda x27#0. x25#0 (F'367#0 x25#0 x26#0 x27#0);
+F'367#0 =_\nu \lambda x25#0. \lambda x26#0. \lambda x27#0. x26#0 (x25#0 x27#0);
+X29#0 =_\nu \lambda x#0. \lambda y#0. X10#0 X13#0 x#0 y#0;
+X30#0 =_\nu \lambda x#0. X28#0 t c x#0;
+X31#0 =_\nu \lambda x#0. \lambda y#0. X28#0 c x#0 y#0;
+X32#0 =_\nu \lambda x#0. X31#0 c x#0;
+X33#0 =_\nu \lambda x#0. X29#0 c x#0;
+X34#0 =_\nu \lambda x#0. \lambda y#0. X4#0 X16#0 x#0 y#0;
+X35#0 =_\nu \lambda x#0. X34#0 c x#0;
+X36#0 =_\nu \lambda x#0. X29#0 a x#0;
+X37#0 =_\nu \lambda x#0. X31#0 a x#0;
+X40#0 =_\nu \lambda x38#0. \lambda x39#0. x38#0 (F'368#0 x38#0 x39#0);
+F'368#0 =_\nu \lambda x38#0. \lambda x39#0. x38#0 (a x39#0);
+X41#0 =_\nu \lambda x#0. \lambda y#0. X10#0 X16#0 x#0 y#0;
+X42#0 =_\nu \lambda x#0. X34#0 t x#0;
+X43#0 =_\nu \lambda x#0. X41#0 t x#0;
+X44#0 =_\nu \lambda x#0. X40#0 t x#0;
+X45#0 =_\nu \lambda x#0. X40#0 c x#0;
+X48#0 =_\nu \lambda x46#0. \lambda x47#0. c (F'370#0 x46#0 x47#0);
+F'370#0 =_\nu \lambda x46#0. \lambda x47#0. x46#0 (F'369#0 x46#0 x47#0);
+F'369#0 =_\nu \lambda x46#0. \lambda x47#0. x46#0 (X6#0 x47#0);
+X52#0 =_\nu \lambda x49#0. \lambda x50#0. \lambda x51#0. x49#0 (F'372#0 x49#0 x50#0 x51#0);
+F'372#0 =_\nu \lambda x49#0. \lambda x50#0. \lambda x51#0. x49#0 (F'371#0 x50#0 x51#0);
+F'371#0 =_\nu \lambda x50#0. \lambda x51#0. a (x50#0 x51#0);
+X53#0 =_\nu \lambda x#0. \lambda y#0. X52#0 a x#0 y#0;
+X54#0 =_\nu \lambda x#0. X53#0 t x#0;
+X55#0 =_\nu \lambda x#0. \lambda y#0. X10#0 X45#0 x#0 y#0;
+X56#0 =_\nu \lambda x#0. X55#0 a x#0;
+X59#0 =_\nu \lambda x57#0. \lambda x58#0. x57#0 (F'373#0 x58#0);
+F'373#0 =_\nu \lambda x58#0. c (X20#0 x58#0);
+X60#0 =_\nu \lambda x#0. X53#0 c x#0;
+X61#0 =_\nu \lambda x#0. X52#0 c t x#0;
+X64#0 =_\nu \lambda x62#0. \lambda x63#0. t (F'375#0 x62#0 x63#0);
+F'375#0 =_\nu \lambda x62#0. \lambda x63#0. x62#0 (F'374#0 x62#0 x63#0);
+F'374#0 =_\nu \lambda x62#0. \lambda x63#0. X43#0 (x62#0 x63#0);
+X65#0 =_\nu \lambda x#0. X55#0 g x#0;
+X66#0 =_\nu \lambda x#0. X59#0 a x#0;
+X68#0 =_\nu \lambda x67#0. \lambda y#0. X24#0 (X5#0 x67#0) y#0;
+X72#0 =_\nu \lambda x69#0. \lambda x70#0. \lambda x71#0. x69#0 (F'377#0 x69#0 x70#0 x71#0);
+F'377#0 =_\nu \lambda x69#0. \lambda x70#0. \lambda x71#0. x70#0 (F'376#0 x69#0 x71#0);
+F'376#0 =_\nu \lambda x69#0. \lambda x71#0. X16#0 (x69#0 x71#0);
+X75#0 =_\nu \lambda x73#0. \lambda x74#0. c (F'380#0 x73#0 x74#0);
+F'380#0 =_\nu \lambda x73#0. \lambda x74#0. X12#0 (F'379#0 x73#0 x74#0);
+F'379#0 =_\nu \lambda x73#0. \lambda x74#0. x73#0 (F'378#0 x73#0 x74#0);
+F'378#0 =_\nu \lambda x73#0. \lambda x74#0. x73#0 (c x74#0);
+X76#0 =_\nu \lambda x#0. \lambda y#0. X72#0 c x#0 y#0;
+X77#0 =_\nu \lambda x#0. X68#0 a x#0;
+X78#0 =_\nu \lambda x#0. X76#0 c x#0;
+X79#0 =_\nu \lambda x#0. X76#0 a x#0;
+X80#0 =_\nu \lambda x#0. X72#0 a c x#0;
+X83#0 =_\nu \lambda x81#0. \lambda x82#0. g (F'384#0 x81#0 x82#0);
+F'384#0 =_\nu \lambda x81#0. \lambda x82#0. X18#0 (F'383#0 x81#0 x82#0);
+F'383#0 =_\nu \lambda x81#0. \lambda x82#0. t (F'382#0 x81#0 x82#0);
+F'382#0 =_\nu \lambda x81#0. \lambda x82#0. x81#0 (F'381#0 x81#0 x82#0);
+F'381#0 =_\nu \lambda x81#0. \lambda x82#0. x81#0 (X16#0 x82#0);
+X85#0 =_\nu \lambda x84#0. X44#0 (X32#0 x84#0);
+X86#0 =_\nu \lambda x#0. X31#0 X66#0 x#0;
+X87#0 =_\nu \lambda x#0. X59#0 X61#0 x#0;
+X88#0 =_\nu \lambda x#0. X31#0 X80#0 x#0;
+X89#0 =_\nu \lambda x#0. X11#0 X85#0 x#0;
+X92#0 =_\nu \lambda x90#0. \lambda x91#0. c (F'388#0 x90#0 x91#0);
+F'388#0 =_\nu \lambda x90#0. \lambda x91#0. X56#0 (F'387#0 x90#0 x91#0);
+F'387#0 =_\nu \lambda x90#0. \lambda x91#0. x90#0 (F'386#0 x90#0 x91#0);
+F'386#0 =_\nu \lambda x90#0. \lambda x91#0. a (F'385#0 x90#0 x91#0);
+F'385#0 =_\nu \lambda x90#0. \lambda x91#0. x90#0 (x90#0 x91#0);
+X95#0 =_\nu \lambda x93#0. \lambda x94#0. X43#0 (F'391#0 x93#0 x94#0);
+F'391#0 =_\nu \lambda x93#0. \lambda x94#0. x93#0 (F'390#0 x93#0 x94#0);
+F'390#0 =_\nu \lambda x93#0. \lambda x94#0. X56#0 (F'389#0 x93#0 x94#0);
+F'389#0 =_\nu \lambda x93#0. \lambda x94#0. c (x93#0 x94#0);
+X99#0 =_\nu \lambda x96#0. \lambda x98#0. X21#0 x96#0 (F'395#0 x96#0 x98#0);
+F'395#0 =_\nu \lambda x96#0. \lambda x98#0. X33#0 (F'394#0 x96#0 x98#0);
+F'394#0 =_\nu \lambda x96#0. \lambda x98#0. x96#0 (F'393#0 x96#0 x98#0);
+F'393#0 =_\nu \lambda x96#0. \lambda x98#0. x96#0 (F'392#0 x96#0 x98#0);
+F'392#0 =_\nu \lambda x96#0. \lambda x98#0. t (X21#0 x96#0 x98#0);
+X102#0 =_\nu \lambda x100#0. \lambda x101#0. X6#0 (F'399#0 x100#0 x101#0);
+F'399#0 =_\nu \lambda x100#0. \lambda x101#0. x100#0 (F'398#0 x100#0 x101#0);
+F'398#0 =_\nu \lambda x100#0. \lambda x101#0. c (F'397#0 x100#0 x101#0);
+F'397#0 =_\nu \lambda x100#0. \lambda x101#0. X54#0 (F'396#0 x100#0 x101#0);
+F'396#0 =_\nu \lambda x100#0. \lambda x101#0. g (x100#0 x101#0);
+X105#0 =_\nu \lambda x103#0. \lambda x104#0. X18#0 (F'403#0 x103#0 x104#0);
+F'403#0 =_\nu \lambda x103#0. \lambda x104#0. X45#0 (F'402#0 x103#0 x104#0);
+F'402#0 =_\nu \lambda x103#0. \lambda x104#0. x103#0 (F'401#0 x103#0 x104#0);
+F'401#0 =_\nu \lambda x103#0. \lambda x104#0. X32#0 (F'400#0 x103#0 x104#0);
+F'400#0 =_\nu \lambda x103#0. \lambda x104#0. x103#0 (X12#0 x104#0);
+X108#0 =_\nu \lambda x106#0. \lambda x107#0. t (F'407#0 x106#0 x107#0);
+F'407#0 =_\nu \lambda x106#0. \lambda x107#0. X66#0 (F'406#0 x106#0 x107#0);
+F'406#0 =_\nu \lambda x106#0. \lambda x107#0. X35#0 (F'405#0 x106#0 x107#0);
+F'405#0 =_\nu \lambda x106#0. \lambda x107#0. x106#0 (F'404#0 x106#0 x107#0);
+F'404#0 =_\nu \lambda x106#0. \lambda x107#0. t (x106#0 x107#0);
+X111#0 =_\nu \lambda x109#0. \lambda x110#0. X48#0 c (F'410#0 x109#0 x110#0);
+F'410#0 =_\nu \lambda x109#0. \lambda x110#0. x109#0 (F'409#0 x109#0 x110#0);
+F'409#0 =_\nu \lambda x109#0. \lambda x110#0. X30#0 (F'408#0 x109#0 x110#0);
+F'408#0 =_\nu \lambda x109#0. \lambda x110#0. x109#0 (a x110#0);
+X112#0 =_\nu \lambda x#0. X55#0 X89#0 x#0;
+X114#0 =_\nu \lambda x113#0. X89#0 (X56#0 x113#0);
+X116#0 =_\nu \lambda x115#0. c (F'411#0 x115#0);
+F'411#0 =_\nu \lambda x115#0. a (X92#0 c x115#0);
+X117#0 =_\nu \lambda x#0. X21#0 X114#0 x#0;
+X119#0 =_\nu \lambda x118#0. c (F'412#0 x118#0);
+F'412#0 =_\nu \lambda x118#0. X116#0 (X88#0 x118#0);
+a =_\nu \lambda y$1#0. <a#0>[$1]y$1#0;
+g =_\nu \lambda y$1#0. <g#0>[$1]y$1#0;
+c =_\nu \lambda y$1#0. <c#0>[$1]y$1#0;
+t =_\nu \lambda y$1#0. <t#0>[$1]y$1#0;
+e =_\nu <e#0>\true;
+%LTS
+initial state: @q0
+transitions:
+@q1 a#0 -> $1@q1.
+@q1 g#0 -> $1@q0.
+@q1 c#0 -> $1@q2.
+@q1 t#0 -> $1@q0.
+@q1 e#0 -> true.
+$1@q1 $1 -> @q1.
+$1@q0 $1 -> @q0.
+@q0 a#0 -> $1@q1.
+@q0 g#0 -> $1@q0.
+@q0 c#0 -> $1@q0.
+@q0 t#0 -> $1@q0.
+@q0 e#0 -> true.
+$1@q2 $1 -> @q2.
+@q2 a#0 -> $1@q1.
+@q2 g#0 -> $1@q0.
+@q2 c#0 -> $1@q0.
+@q2 t#0 -> $1@q3.
+@q2 e#0 -> true.
+$1@q3 $1 -> @q3.
+@q3 a#0 -> $1@q1.
+@q3 g#0 -> $1@q4.
+@q3 c#0 -> $1@q0.
+@q3 t#0 -> $1@q0.
+@q3 e#0 -> true.
+$1@q4 $1 -> @q4.
+@q4 a#0 -> $1@q5.
+@q4 g#0 -> $1@q0.
+@q4 c#0 -> $1@q0.
+@q4 t#0 -> $1@q0.
+@q4 e#0 -> true.
+$1@q5 $1 -> @q5.
+@q5 a#0 -> $1@q1.
+@q5 g#0 -> $1@q0.
+@q5 c#0 -> $1@q6.
+@q5 t#0 -> $1@q0.
+@q5 e#0 -> true.
+$1@q6 $1 -> @q6.
+@q6 a#0 -> $1@q6.
+@q6 g#0 -> $1@q6.
+@q6 c#0 -> $1@q6.
+@q6 t#0 -> $1@q6.

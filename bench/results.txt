@@ -1,0 +1,332 @@
+input file: "bench/travmc2/No/fileocamlc-awt.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/loop-dj-2.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/map-plus-one-1.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/map-plus-one.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/pgm.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/search-e-church.hes"
+result: unsatisfied
+input file: "bench/travmc2/No/twofiles.hes"
+result: unsatisfied
+input file: "bench/travmc2/Yes/bsort.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/dna.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/file.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/fileocamlc.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/fold-right.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/gcalloc.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/homrep.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/imperative-awt.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/imperative.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/intercept-awt.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/intercept.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/lock1.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/merge.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/merge3.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/order5-variant-awt.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/reverse.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/twofilesexn.hes"
+result: satisfied
+input file: "bench/travmc2/Yes/var-dwt.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/fileocamlc.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/fileocamlc2.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/merge2.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/order5-2.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/rev.hes"
+result: satisfied
+input file: "bench/travmc2/modified-att/twofiles.hes"
+result: satisfied
+input file: "bench/horsat2/cfa/cfa-life2.hes"
+result: satisfied
+input file: "bench/horsat2/cfa/cfa-matrix-1.hes"
+result: satisfied
+input file: "bench/horsat2/cfa/cfa-psdes.hes"
+result: satisfied
+input file: "bench/horsat2/cfa/tak.hes"
+result: unsatisfied
+input file: "bench/horsat2/compress/dna.hes"
+result: satisfied
+input file: "bench/horsat2/compress/fibstring.hes"
+result: satisfied
+input file: "bench/horsat2/compress/g45.hes"
+result: satisfied
+input file: "bench/horsat2/compress/l.hes"
+result: satisfied
+input file: "bench/horsat2/examples/example3-1.hes"
+result: unsatisfied
+input file: "bench/horsat2/examples/exp4-100.hes"
+result: satisfied
+input file: "bench/horsat2/examples/fib.hes"
+result: satisfied
+input file: "bench/horsat2/examples/fibstring-wrong.hes"
+result: unsatisfied
+input file: "bench/horsat2/examples/fibstring2.hes"
+result: satisfied
+input file: "bench/horsat2/examples/filewrong.hes"
+result: unsatisfied
+input file: "bench/horsat2/examples/filter.hes"
+result: satisfied
+input file: "bench/horsat2/examples/map-head-filter.hes"
+result: unsatisfied
+input file: "bench/horsat2/examples/odd.hes"
+result: unsatisfied
+input file: "bench/horsat2/examples/oddtree.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/cfa-life2.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/cfa-psdes.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/checknz.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/checkpairs.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/exp2-1600.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/exp3-1600.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/exp4-1600.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/filepath.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/filter-nonzero-1.corrected.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/filter-nonzero.corrected.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/fold_fun_list.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/fold_right.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/gapid-2.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/jwig-cal_main.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/last.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/map-head-filter-1.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/map-head-filter.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/map-plusone.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/mc91-2.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/merge4-2.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/merge4.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/mkgroundterm.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/risers.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/safe-head.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/safe-init.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/safe-tail.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/search-e-church.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/t800.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/tails.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/xhtmlf-div-2.hes"
+result: unsatisfied
+input file: "bench/horsat2/from-aplas2014/xhtmlf-m-church.hes"
+result: satisfied
+input file: "bench/horsat2/from-aplas2014/zip.hes"
+result: satisfied
+input file: "bench/horsat2/hmtt/jwig-cal_main.hes"
+result: satisfied
+input file: "bench/horsat2/hmtt/specialize_cps_coerce1-c.hes"
+result: satisfied
+input file: "bench/horsat2/hmtt/xhtmlf-div-2.hes"
+result: unsatisfied
+input file: "bench/horsat2/hmtt/xhtmlf-m-church.hes"
+result: satisfied
+input file: "bench/horsat2/mochi/fold_fun_list.hes"
+result: satisfied
+input file: "bench/horsat2/mochi/fold_right.hes"
+result: satisfied
+input file: "bench/horsat2/mochi/search-e-church.hes"
+result: unsatisfied
+input file: "bench/horsat2/mochi/zip.hes"
+result: satisfied
+input file: "bench/horsat2/new/file-e.hes"
+result: unsatisfied
+input file: "bench/horsat2/new/file.hes"
+result: satisfied
+input file: "bench/horsat2/new/intro-e.hes"
+result: unsatisfied
+input file: "bench/horsat2/new/intro.hes"
+result: satisfied
+input file: "bench/horsat2/pmrs/filepath.hes"
+result: satisfied
+input file: "bench/horsat2/pmrs/filter-nonzero-1.hes"
+result: satisfied
+input file: "bench/horsat2/pmrs/filter-nonzero.hes"
+result: unsatisfied
+input file: "bench/horsat2/pmrs/map-plusone-2.hes"
+result: satisfied
+input file: "bench/horsat2/ruv/fileocamlc.hes"
+result: satisfied
+input file: "bench/horsat2/ruv/filewrong.hes"
+result: unsatisfied
+input file: "bench/horsat2/ruv/lock2.hes"
+result: satisfied
+input file: "bench/horsat2/ruv/order5.hes"
+result: satisfied
+input file: "bench/horsatp/input/boolean2.hes"
+result: satisfied
+input file: "bench/horsatp/input/cont.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/cont2.hes"
+result: satisfied
+input file: "bench/horsatp/input/d1-more.hes"
+result: satisfied
+input file: "bench/horsatp/input/d1.hes"
+result: satisfied
+input file: "bench/horsatp/input/d2-ex-terminate.hes"
+result: satisfied
+input file: "bench/horsatp/input/d2-ex.hes"
+result: satisfied
+input file: "bench/horsatp/input/d2.hes"
+result: satisfied
+input file: "bench/horsatp/input/defusion.hes"
+result: satisfied
+input file: "bench/horsatp/input/end_or_print.hes"
+result: satisfied
+input file: "bench/horsatp/input/end_or_print_2.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/example-2-1-edge.hes"
+result: satisfied
+input file: "bench/horsatp/input/example-2-1-multi.hes"
+result: satisfied
+input file: "bench/horsatp/input/example-2-1-multi2.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/example2-1.hes"
+result: satisfied
+input file: "bench/horsatp/input/example2-3-2.hes"
+result: satisfied
+input file: "bench/horsatp/input/example2-3-3.hes"
+result: satisfied
+input file: "bench/horsatp/input/example2-3.hes"
+result: satisfied
+input file: "bench/horsatp/input/example2-3_bug.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/example2-3_bug2.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/example3-1.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/exex.hes"
+result: satisfied
+input file: "bench/horsatp/input/exp3-5.hes"
+result: satisfied
+input file: "bench/horsatp/input/file.hes"
+result: satisfied
+input file: "bench/horsatp/input/file2.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/file2_orig.hes"
+result: satisfied
+input file: "bench/horsatp/input/fileocamlc.hes"
+result: satisfied
+input file: "bench/horsatp/input/fileocamlc_orig.hes"
+result: satisfied
+input file: "bench/horsatp/input/gc.hes"
+result: satisfied
+input file: "bench/horsatp/input/gcalloc-simple.hes"
+result: satisfied
+input file: "bench/horsatp/input/gcalloc.hes"
+result: satisfied
+input file: "bench/horsatp/input/gcalloc2.hes"
+result: satisfied
+input file: "bench/horsatp/input/homrep.hes"
+result: satisfied
+input file: "bench/horsatp/input/homrep2.hes"
+result: satisfied
+input file: "bench/horsatp/input/imperative.hes"
+result: satisfied
+input file: "bench/horsatp/input/intercept.hes"
+result: satisfied
+input file: "bench/horsatp/input/isort.hes"
+result: satisfied
+input file: "bench/horsatp/input/lock1.hes"
+result: satisfied
+input file: "bench/horsatp/input/manyparities.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/merge.hes"
+result: satisfied
+input file: "bench/horsatp/input/mult.hes"
+result: satisfied
+input file: "bench/horsatp/input/openclose_parity.hes"
+result: satisfied
+input file: "bench/horsatp/input/openclose_parity_fail.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/order3.hes"
+result: satisfied
+input file: "bench/horsatp/input/order5-forever-disjunctive-2.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/order5-forever-disjunctive.hes"
+result: satisfied
+input file: "bench/horsatp/input/order5-forever.hes"
+result: satisfied
+input file: "bench/horsatp/input/order5-variant-dwt.hes"
+result: satisfied
+input file: "bench/horsatp/input/order5.hes"
+result: satisfied
+input file: "bench/horsatp/input/possiblly_terminate.hes"
+result: satisfied
+input file: "bench/horsatp/input/pqr.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/readclose.hes"
+result: satisfied
+input file: "bench/horsatp/input/reverse.hes"
+result: satisfied
+input file: "bench/horsatp/input/server.hes"
+result: unsatisfied
+input file: "bench/horsatp/input/slide_ex.hes"
+result: satisfied
+input file: "bench/horsatp/input/temporal.hes"
+result: satisfied
+input file: "bench/horsatp/input/terminateb.hes"
+result: satisfied
+input file: "bench/horsatp/input/test.hes"
+result: satisfied
+input file: "bench/horsatp/input/twofilesexn.hes"
+result: satisfied
+input file: "bench/horsatp/input/xhtmlm-drop-a.hes"
+result: satisfied
+input file: "bench/horsatp/input3/jwig-cal_main.hes"
+result: unsatisfied
+input file: "bench/horsatp/input3/map-plusone-2.hes"
+result: satisfied
+input file: "bench/horsatp/input4/ababbabbb.hes"
+result: satisfied
+input file: "bench/horsatp/input4/map-head-filter.hes"
+result: unsatisfied
+input file: "bench/horsatp/input4/map-plusone.hes"
+result: satisfied

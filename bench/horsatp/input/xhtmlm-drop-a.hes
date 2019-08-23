@@ -1,0 +1,830 @@
+/*** original HORS >>
+%HORS
+S -> F Q0 leaf.
+F x t -> x (html (F Q19 leaf) (F Q18 t)) (body (F Q21 leaf) (F Q18 t)) (text (F Q18 leaf) (F Q18 t)) (br (br t (br (base (F Q18 leaf) (F Q3 t)) (link (F Q18 leaf) (F Q3 t)))) (br (meta (F Q18 leaf) (F Q3 t)) (br (script (F Q2 leaf) (F Q3 t)) (style (F Q2 leaf) (F Q3 t))))) (br (br (br t (br (div (F Q6 leaf) (F Q4 t)) (dl (F Q24 leaf) (F Q4 t)))) (br (br (form (F Q12 leaf) (F Q4 t)) (h1 (F Q7 leaf) (F Q4 t))) (br (h2 (F Q7 leaf) (F Q4 t)) (h3 (F Q7 leaf) (F Q4 t))))) (br (br (h4 (F Q7 leaf) (F Q4 t)) (br (h5 (F Q7 leaf) (F Q4 t)) (h6 (F Q7 leaf) (F Q4 t)))) (br (br (ol (F Q23 leaf) (F Q4 t)) (p (F Q7 leaf) (F Q4 t))) (br (table (F Q22 leaf) (F Q4 t)) (ul (F Q23 leaf) (F Q4 t)))))) (br (br t (brk (F Q18 leaf) (F Q5 t))) (br (img (F Q18 leaf) (F Q5 t)) (text (F Q18 leaf) (F Q5 t)))) (br (br (br (br t (F Q5 (F Q6 t))) (br (brk (F Q18 leaf) (F Q6 t)) (div (F Q6 leaf) (F Q6 t)))) (br (br (dl (F Q24 leaf) (F Q6 t)) (form (F Q12 leaf) (F Q6 t))) (br (h1 (F Q7 leaf) (F Q6 t)) (br (h2 (F Q7 leaf) (F Q6 t)) (h3 (F Q7 leaf) (F Q6 t)))))) (br (br (br (h4 (F Q7 leaf) (F Q6 t)) (h5 (F Q7 leaf) (F Q6 t))) (br (h6 (F Q7 leaf) (F Q6 t)) (img (F Q18 leaf) (F Q6 t)))) (br (br (ol (F Q23 leaf) (F Q6 t)) (p (F Q7 leaf) (F Q6 t))) (br (table (F Q22 leaf) (F Q6 t)) (br (text (F Q18 leaf) (F Q6 t)) (ul (F Q23 leaf) (F Q6 t))))))) (br (br t (F Q5 (F Q7 t))) (br (brk (F Q18 leaf) (F Q7 t)) (br (img (F Q18 leaf) (F Q7 t)) (text (F Q18 leaf) (F Q7 t))))) (br t (br (dd (F Q6 leaf) (F Q8 t)) (dt (F Q7 leaf) (F Q8 t)))) (br t (br (tbody (F Q25 leaf) (F Q9 t)) (tr (F Q26 leaf) (F Q9 t)))) (br t (tr (F Q26 leaf) (F Q10 t))) (br t (td (F Q6 leaf) (F Q11 t))) (br (br (br t (br (div (F Q13 leaf) (F Q12 t)) (dl (F Q29 leaf) (F Q12 t)))) (br (br (h1 (F Q7 leaf) (F Q12 t)) (h2 (F Q7 leaf) (F Q12 t))) (br (h3 (F Q7 leaf) (F Q12 t)) (h4 (F Q7 leaf) (F Q12 t))))) (br (br (h5 (F Q7 leaf) (F Q12 t)) (br (h6 (F Q7 leaf) (F Q12 t)) (ol (F Q28 leaf) (F Q12 t)))) (br (br (p (F Q7 leaf) (F Q12 t)) (script (F Q2 leaf) (F Q12 t))) (br (table (F Q27 leaf) (F Q12 t)) (ul (F Q28 leaf) (F Q12 t)))))) (br (br (br (br t (F Q5 (F Q13 t))) (br (brk (F Q18 leaf) (F Q13 t)) (div (F Q13 leaf) (F Q13 t)))) (br (br (dl (F Q29 leaf) (F Q13 t)) (h1 (F Q7 leaf) (F Q13 t))) (br (h2 (F Q7 leaf) (F Q13 t)) (h3 (F Q7 leaf) (F Q13 t))))) (br (br (br (h4 (F Q7 leaf) (F Q13 t)) (h5 (F Q7 leaf) (F Q13 t))) (br (h6 (F Q7 leaf) (F Q13 t)) (img (F Q18 leaf) (F Q13 t)))) (br (br (ol (F Q28 leaf) (F Q13 t)) (p (F Q7 leaf) (F Q13 t))) (br (table (F Q27 leaf) (F Q13 t)) (br (text (F Q18 leaf) (F Q13 t)) (ul (F Q28 leaf) (F Q13 t))))))) (br t (br (dd (F Q13 leaf) (F Q14 t)) (dt (F Q7 leaf) (F Q14 t)))) (br t (br (tbody (F Q30 leaf) (F Q15 t)) (tr (F Q31 leaf) (F Q15 t)))) (br t (tr (F Q31 leaf) (F Q16 t))) (br t (td (F Q13 leaf) (F Q17 t))) t (head (F Q20 leaf) (F Q1 t)) (br (br (base (F Q18 leaf) (F Q20 t)) (br (link (F Q18 leaf) (F Q20 t)) (meta (F Q18 leaf) (F Q20 t)))) (br (script (F Q2 leaf) (F Q20 t)) (br (style (F Q2 leaf) (F Q20 t)) (title (F Q2 leaf) (F Q3 t))))) (br (br (br (div (F Q6 leaf) (F Q4 t)) (br (dl (F Q24 leaf) (F Q4 t)) (form (F Q12 leaf) (F Q4 t)))) (br (h1 (F Q7 leaf) (F Q4 t)) (br (h2 (F Q7 leaf) (F Q4 t)) (h3 (F Q7 leaf) (F Q4 t))))) (br (br (h4 (F Q7 leaf) (F Q4 t)) (br (h5 (F Q7 leaf) (F Q4 t)) (h6 (F Q7 leaf) (F Q4 t)))) (br (br (ol (F Q23 leaf) (F Q4 t)) (p (F Q7 leaf) (F Q4 t))) (br (table (F Q22 leaf) (F Q4 t)) (ul (F Q23 leaf) (F Q4 t)))))) (br (tbody (F Q25 leaf) (F Q9 t)) (tr (F Q26 leaf) (F Q9 t))) (li (F Q6 leaf) (F Q18 t)) (br (dd (F Q6 leaf) (F Q8 t)) (dt (F Q7 leaf) (F Q8 t))) (tr (F Q26 leaf) (F Q10 t)) (td (F Q6 leaf) (F Q11 t)) (br (tbody (F Q30 leaf) (F Q15 t)) (tr (F Q31 leaf) (F Q15 t))) (li (F Q13 leaf) (F Q18 t)) (br (dd (F Q13 leaf) (F Q14 t)) (dt (F Q7 leaf) (F Q14 t))) (tr (F Q31 leaf) (F Q16 t)) (td (F Q13 leaf) (F Q17 t)).
+Q0 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x0.
+Q1 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x1.
+Q2 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x2.
+Q3 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x3.
+Q4 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x4.
+Q5 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x5.
+Q6 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x6.
+Q7 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x7.
+Q8 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x8.
+Q9 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x9.
+Q10 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x10.
+Q11 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x11.
+Q12 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x12.
+Q13 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x13.
+Q14 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x14.
+Q15 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x15.
+Q16 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x16.
+Q17 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x17.
+Q18 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x18.
+Q19 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x19.
+Q20 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x20.
+Q21 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x21.
+Q22 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x22.
+Q23 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x23.
+Q24 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x24.
+Q25 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x25.
+Q26 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x26.
+Q27 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x27.
+Q28 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x28.
+Q29 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x29.
+Q30 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x30.
+Q31 x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 x17 x18 x19 x20 x21 x22 x23 x24 x25 x26 x27 x28 x29 x30 x31 -> x31.
+%APT
+intial state: q0
+transitions:
+q19 br -> (1, q19) \land (2, q19).
+q19 head -> (1, q20) \land (2, q1).
+q18 leaf -> \true.
+q18 br -> (1, q18) \land (2, q18).
+q0 html -> (1, q19) \land (2, q18).
+q0 br -> (1, q0) \land (2, q0).
+q21 br -> (1, q21) \land (2, q21).
+q21 div -> (1, q6) \land (2, q4).
+q21 dl -> (1, q24) \land (2, q4).
+q21 form -> (1, q12) \land (2, q4).
+q21 h1 -> (1, q7) \land (2, q4).
+q21 h2 -> (1, q7) \land (2, q4).
+q21 h3 -> (1, q7) \land (2, q4).
+q21 h4 -> (1, q7) \land (2, q4).
+q21 h5 -> (1, q7) \land (2, q4).
+q21 h6 -> (1, q7) \land (2, q4).
+q21 ol -> (1, q23) \land (2, q4).
+q21 p -> (1, q7) \land (2, q4).
+q21 table -> (1, q22) \land (2, q4).
+q21 ul -> (1, q23) \land (2, q4).
+q1 body -> (1, q21) \land (2, q18).
+q1 br -> (1, q1) \land (2, q1).
+q2 text -> (1, q18) \land (2, q18).
+q2 br -> (1, q2) \land (2, q2).
+q3 leaf -> \true.
+q3 br -> (1, q3) \land (2, q3).
+q3 base -> (1, q18) \land (2, q3).
+q3 link -> (1, q18) \land (2, q3).
+q3 meta -> (1, q18) \land (2, q3).
+q3 script -> (1, q2) \land (2, q3).
+q3 style -> (1, q2) \land (2, q3).
+q4 leaf -> \true.
+q4 br -> (1, q4) \land (2, q4).
+q4 div -> (1, q6) \land (2, q4).
+q4 dl -> (1, q24) \land (2, q4).
+q4 form -> (1, q12) \land (2, q4).
+q4 h1 -> (1, q7) \land (2, q4).
+q4 h2 -> (1, q7) \land (2, q4).
+q4 h3 -> (1, q7) \land (2, q4).
+q4 h4 -> (1, q7) \land (2, q4).
+q4 h5 -> (1, q7) \land (2, q4).
+q4 h6 -> (1, q7) \land (2, q4).
+q4 ol -> (1, q23) \land (2, q4).
+q4 p -> (1, q7) \land (2, q4).
+q4 table -> (1, q22) \land (2, q4).
+q4 ul -> (1, q23) \land (2, q4).
+q6 leaf -> \true.
+q6 text -> (1, q18) \land (2, q6).
+q6 br -> (1, q6) \land (2, q6).
+q6 div -> (1, q6) \land (2, q6).
+q6 dl -> (1, q24) \land (2, q6).
+q6 form -> (1, q12) \land (2, q6).
+q6 h1 -> (1, q7) \land (2, q6).
+q6 h2 -> (1, q7) \land (2, q6).
+q6 h3 -> (1, q7) \land (2, q6).
+q6 h4 -> (1, q7) \land (2, q6).
+q6 h5 -> (1, q7) \land (2, q6).
+q6 h6 -> (1, q7) \land (2, q6).
+q6 ol -> (1, q23) \land (2, q6).
+q6 p -> (1, q7) \land (2, q6).
+q6 table -> (1, q22) \land (2, q6).
+q6 ul -> (1, q23) \land (2, q6).
+q6 brk -> (1, q18) \land (2, q6).
+q6 img -> (1, q18) \land (2, q6).
+q6 a -> (1, q5) \land (2, q6).
+q24 br -> (1, q24) \land (2, q24).
+q24 dd -> (1, q6) \land (2, q8).
+q24 dt -> (1, q7) \land (2, q8).
+q12 leaf -> \true.
+q12 br -> (1, q12) \land (2, q12).
+q12 script -> (1, q2) \land (2, q12).
+q12 div -> (1, q13) \land (2, q12).
+q12 dl -> (1, q29) \land (2, q12).
+q12 h1 -> (1, q7) \land (2, q12).
+q12 h2 -> (1, q7) \land (2, q12).
+q12 h3 -> (1, q7) \land (2, q12).
+q12 h4 -> (1, q7) \land (2, q12).
+q12 h5 -> (1, q7) \land (2, q12).
+q12 h6 -> (1, q7) \land (2, q12).
+q12 ol -> (1, q28) \land (2, q12).
+q12 p -> (1, q7) \land (2, q12).
+q12 table -> (1, q27) \land (2, q12).
+q12 ul -> (1, q28) \land (2, q12).
+q7 leaf -> \true.
+q7 text -> (1, q18) \land (2, q7).
+q7 br -> (1, q7) \land (2, q7).
+q7 brk -> (1, q18) \land (2, q7).
+q7 img -> (1, q18) \land (2, q7).
+q7 a -> (1, q5) \land (2, q7).
+q23 br -> (1, q23) \land (2, q23).
+q23 li -> (1, q6) \land (2, q18).
+q22 br -> (1, q22) \land (2, q22).
+q22 tbody -> (1, q25) \land (2, q9).
+q22 tr -> (1, q26) \land (2, q9).
+q5 leaf -> \true.
+q5 text -> (1, q18) \land (2, q5).
+q5 br -> (1, q5) \land (2, q5).
+q5 brk -> (1, q18) \land (2, q5).
+q5 img -> (1, q18) \land (2, q5).
+q8 leaf -> \true.
+q8 br -> (1, q8) \land (2, q8).
+q8 dd -> (1, q6) \land (2, q8).
+q8 dt -> (1, q7) \land (2, q8).
+q9 leaf -> \true.
+q9 br -> (1, q9) \land (2, q9).
+q9 tbody -> (1, q25) \land (2, q9).
+q9 tr -> (1, q26) \land (2, q9).
+q25 br -> (1, q25) \land (2, q25).
+q25 tr -> (1, q26) \land (2, q10).
+q26 br -> (1, q26) \land (2, q26).
+q26 td -> (1, q6) \land (2, q11).
+q10 leaf -> \true.
+q10 br -> (1, q10) \land (2, q10).
+q10 tr -> (1, q26) \land (2, q10).
+q11 leaf -> \true.
+q11 br -> (1, q11) \land (2, q11).
+q11 td -> (1, q6) \land (2, q11).
+q13 leaf -> \true.
+q13 text -> (1, q18) \land (2, q13).
+q13 br -> (1, q13) \land (2, q13).
+q13 div -> (1, q13) \land (2, q13).
+q13 dl -> (1, q29) \land (2, q13).
+q13 h1 -> (1, q7) \land (2, q13).
+q13 h2 -> (1, q7) \land (2, q13).
+q13 h3 -> (1, q7) \land (2, q13).
+q13 h4 -> (1, q7) \land (2, q13).
+q13 h5 -> (1, q7) \land (2, q13).
+q13 h6 -> (1, q7) \land (2, q13).
+q13 ol -> (1, q28) \land (2, q13).
+q13 p -> (1, q7) \land (2, q13).
+q13 table -> (1, q27) \land (2, q13).
+q13 ul -> (1, q28) \land (2, q13).
+q13 brk -> (1, q18) \land (2, q13).
+q13 img -> (1, q18) \land (2, q13).
+q13 a -> (1, q5) \land (2, q13).
+q29 br -> (1, q29) \land (2, q29).
+q29 dd -> (1, q13) \land (2, q14).
+q29 dt -> (1, q7) \land (2, q14).
+q28 br -> (1, q28) \land (2, q28).
+q28 li -> (1, q13) \land (2, q18).
+q27 br -> (1, q27) \land (2, q27).
+q27 tbody -> (1, q30) \land (2, q15).
+q27 tr -> (1, q31) \land (2, q15).
+q14 leaf -> \true.
+q14 br -> (1, q14) \land (2, q14).
+q14 dd -> (1, q13) \land (2, q14).
+q14 dt -> (1, q7) \land (2, q14).
+q15 leaf -> \true.
+q15 br -> (1, q15) \land (2, q15).
+q15 tbody -> (1, q30) \land (2, q15).
+q15 tr -> (1, q31) \land (2, q15).
+q30 br -> (1, q30) \land (2, q30).
+q30 tr -> (1, q31) \land (2, q16).
+q31 br -> (1, q31) \land (2, q31).
+q31 td -> (1, q13) \land (2, q17).
+q16 leaf -> \true.
+q16 br -> (1, q16) \land (2, q16).
+q16 tr -> (1, q31) \land (2, q16).
+q17 leaf -> \true.
+q17 br -> (1, q17) \land (2, q17).
+q17 td -> (1, q13) \land (2, q17).
+q20 br -> (1, q20) \land (2, q20).
+q20 base -> (1, q18) \land (2, q20).
+q20 link -> (1, q18) \land (2, q20).
+q20 meta -> (1, q18) \land (2, q20).
+q20 script -> (1, q2) \land (2, q20).
+q20 style -> (1, q2) \land (2, q20).
+q20 title -> (1, q2) \land (2, q3).
+priorities:
+q19 -> 0.
+q18 -> 0.
+q0 -> 0.
+q21 -> 0.
+q1 -> 0.
+q2 -> 0.
+q3 -> 0.
+q4 -> 0.
+q6 -> 0.
+q24 -> 0.
+q12 -> 0.
+q7 -> 0.
+q23 -> 0.
+q22 -> 0.
+q5 -> 0.
+q8 -> 0.
+q9 -> 0.
+q25 -> 0.
+q26 -> 0.
+q10 -> 0.
+q11 -> 0.
+q13 -> 0.
+q29 -> 0.
+q28 -> 0.
+q27 -> 0.
+q14 -> 0.
+q15 -> 0.
+q30 -> 0.
+q31 -> 0.
+q16 -> 0.
+q17 -> 0.
+q20 -> 0.
+<< original HORS ***/
+%HES
+S#0 =_\nu F#0 Q0#0 leaf;
+F#0 =_\nu \lambda x#0. \lambda t#0. x#0 (F'1194#0 t#0) (F'1195#0 t#0) (F'1196#0 t#0) (F'1206#0 t#0) (F'1232#0 t#0) (F'1238#0 t#0) (F'1272#0 t#0) (F'1280#0 t#0) (F'1284#0 t#0) (F'1288#0 t#0) (F'1290#0 t#0) (F'1292#0 t#0) (F'1318#0 t#0) (F'1350#0 t#0) (F'1354#0 t#0) (F'1358#0 t#0) (F'1360#0 t#0) (F'1362#0 t#0) t#0 (F'1363#0 t#0) (F'1374#0 t#0) (F'1379#0 t#0) (F'1287#0 t#0) (F'1380#0 t#0) (F'1283#0 t#0) (F'1289#0 t#0) (F'1291#0 t#0) (F'1357#0 t#0) (F'1381#0 t#0) (F'1353#0 t#0) (F'1359#0 t#0) (F'1361#0 t#0);
+F'1381#0 =_\nu \lambda t#0. li (F#0 Q13#0 leaf) (F#0 Q18#0 t#0);
+F'1380#0 =_\nu \lambda t#0. li (F#0 Q6#0 leaf) (F#0 Q18#0 t#0);
+F'1379#0 =_\nu \lambda t#0. br (F'1378#0 t#0) (F'1231#0 t#0);
+F'1378#0 =_\nu \lambda t#0. br (F'1376#0 t#0) (F'1377#0 t#0);
+F'1377#0 =_\nu \lambda t#0. br (F'1212#0 t#0) (F'1216#0 t#0);
+F'1376#0 =_\nu \lambda t#0. br (F'1207#0 t#0) (F'1375#0 t#0);
+F'1375#0 =_\nu \lambda t#0. br (F'1208#0 t#0) (F'1211#0 t#0);
+F'1374#0 =_\nu \lambda t#0. br (F'1368#0 t#0) (F'1373#0 t#0);
+F'1373#0 =_\nu \lambda t#0. br (F'1369#0 t#0) (F'1372#0 t#0);
+F'1372#0 =_\nu \lambda t#0. br (F'1370#0 t#0) (F'1371#0 t#0);
+F'1371#0 =_\nu \lambda t#0. title (F#0 Q2#0 leaf) (F#0 Q3#0 t#0);
+F'1370#0 =_\nu \lambda t#0. style (F#0 Q2#0 leaf) (F#0 Q20#0 t#0);
+F'1369#0 =_\nu \lambda t#0. script (F#0 Q2#0 leaf) (F#0 Q20#0 t#0);
+F'1368#0 =_\nu \lambda t#0. br (F'1364#0 t#0) (F'1367#0 t#0);
+F'1367#0 =_\nu \lambda t#0. br (F'1365#0 t#0) (F'1366#0 t#0);
+F'1366#0 =_\nu \lambda t#0. meta (F#0 Q18#0 leaf) (F#0 Q20#0 t#0);
+F'1365#0 =_\nu \lambda t#0. link (F#0 Q18#0 leaf) (F#0 Q20#0 t#0);
+F'1364#0 =_\nu \lambda t#0. base (F#0 Q18#0 leaf) (F#0 Q20#0 t#0);
+F'1363#0 =_\nu \lambda t#0. head (F#0 Q20#0 leaf) (F#0 Q1#0 t#0);
+F'1362#0 =_\nu \lambda t#0. br t#0 (F'1361#0 t#0);
+F'1361#0 =_\nu \lambda t#0. td (F#0 Q13#0 leaf) (F#0 Q17#0 t#0);
+F'1360#0 =_\nu \lambda t#0. br t#0 (F'1359#0 t#0);
+F'1359#0 =_\nu \lambda t#0. tr (F#0 Q31#0 leaf) (F#0 Q16#0 t#0);
+F'1358#0 =_\nu \lambda t#0. br t#0 (F'1357#0 t#0);
+F'1357#0 =_\nu \lambda t#0. br (F'1355#0 t#0) (F'1356#0 t#0);
+F'1356#0 =_\nu \lambda t#0. tr (F#0 Q31#0 leaf) (F#0 Q15#0 t#0);
+F'1355#0 =_\nu \lambda t#0. tbody (F#0 Q30#0 leaf) (F#0 Q15#0 t#0);
+F'1354#0 =_\nu \lambda t#0. br t#0 (F'1353#0 t#0);
+F'1353#0 =_\nu \lambda t#0. br (F'1351#0 t#0) (F'1352#0 t#0);
+F'1352#0 =_\nu \lambda t#0. dt (F#0 Q7#0 leaf) (F#0 Q14#0 t#0);
+F'1351#0 =_\nu \lambda t#0. dd (F#0 Q13#0 leaf) (F#0 Q14#0 t#0);
+F'1350#0 =_\nu \lambda t#0. br (F'1332#0 t#0) (F'1349#0 t#0);
+F'1349#0 =_\nu \lambda t#0. br (F'1339#0 t#0) (F'1348#0 t#0);
+F'1348#0 =_\nu \lambda t#0. br (F'1342#0 t#0) (F'1347#0 t#0);
+F'1347#0 =_\nu \lambda t#0. br (F'1343#0 t#0) (F'1346#0 t#0);
+F'1346#0 =_\nu \lambda t#0. br (F'1344#0 t#0) (F'1345#0 t#0);
+F'1345#0 =_\nu \lambda t#0. ul (F#0 Q28#0 leaf) (F#0 Q13#0 t#0);
+F'1344#0 =_\nu \lambda t#0. text (F#0 Q18#0 leaf) (F#0 Q13#0 t#0);
+F'1343#0 =_\nu \lambda t#0. table (F#0 Q27#0 leaf) (F#0 Q13#0 t#0);
+F'1342#0 =_\nu \lambda t#0. br (F'1340#0 t#0) (F'1341#0 t#0);
+F'1341#0 =_\nu \lambda t#0. p (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1340#0 =_\nu \lambda t#0. ol (F#0 Q28#0 leaf) (F#0 Q13#0 t#0);
+F'1339#0 =_\nu \lambda t#0. br (F'1335#0 t#0) (F'1338#0 t#0);
+F'1338#0 =_\nu \lambda t#0. br (F'1336#0 t#0) (F'1337#0 t#0);
+F'1337#0 =_\nu \lambda t#0. img (F#0 Q18#0 leaf) (F#0 Q13#0 t#0);
+F'1336#0 =_\nu \lambda t#0. h6 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1335#0 =_\nu \lambda t#0. br (F'1333#0 t#0) (F'1334#0 t#0);
+F'1334#0 =_\nu \lambda t#0. h5 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1333#0 =_\nu \lambda t#0. h4 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1332#0 =_\nu \lambda t#0. br (F'1324#0 t#0) (F'1331#0 t#0);
+F'1331#0 =_\nu \lambda t#0. br (F'1327#0 t#0) (F'1330#0 t#0);
+F'1330#0 =_\nu \lambda t#0. br (F'1328#0 t#0) (F'1329#0 t#0);
+F'1329#0 =_\nu \lambda t#0. h3 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1328#0 =_\nu \lambda t#0. h2 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1327#0 =_\nu \lambda t#0. br (F'1325#0 t#0) (F'1326#0 t#0);
+F'1326#0 =_\nu \lambda t#0. h1 (F#0 Q7#0 leaf) (F#0 Q13#0 t#0);
+F'1325#0 =_\nu \lambda t#0. dl (F#0 Q29#0 leaf) (F#0 Q13#0 t#0);
+F'1324#0 =_\nu \lambda t#0. br (F'1320#0 t#0) (F'1323#0 t#0);
+F'1323#0 =_\nu \lambda t#0. br (F'1321#0 t#0) (F'1322#0 t#0);
+F'1322#0 =_\nu \lambda t#0. div (F#0 Q13#0 leaf) (F#0 Q13#0 t#0);
+F'1321#0 =_\nu \lambda t#0. brk (F#0 Q18#0 leaf) (F#0 Q13#0 t#0);
+F'1320#0 =_\nu \lambda t#0. br t#0 (F'1319#0 t#0);
+F'1319#0 =_\nu \lambda t#0. F#0 Q5#0 (F#0 Q13#0 t#0);
+F'1318#0 =_\nu \lambda t#0. br (F'1304#0 t#0) (F'1317#0 t#0);
+F'1317#0 =_\nu \lambda t#0. br (F'1309#0 t#0) (F'1316#0 t#0);
+F'1316#0 =_\nu \lambda t#0. br (F'1312#0 t#0) (F'1315#0 t#0);
+F'1315#0 =_\nu \lambda t#0. br (F'1313#0 t#0) (F'1314#0 t#0);
+F'1314#0 =_\nu \lambda t#0. ul (F#0 Q28#0 leaf) (F#0 Q12#0 t#0);
+F'1313#0 =_\nu \lambda t#0. table (F#0 Q27#0 leaf) (F#0 Q12#0 t#0);
+F'1312#0 =_\nu \lambda t#0. br (F'1310#0 t#0) (F'1311#0 t#0);
+F'1311#0 =_\nu \lambda t#0. script (F#0 Q2#0 leaf) (F#0 Q12#0 t#0);
+F'1310#0 =_\nu \lambda t#0. p (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1309#0 =_\nu \lambda t#0. br (F'1305#0 t#0) (F'1308#0 t#0);
+F'1308#0 =_\nu \lambda t#0. br (F'1306#0 t#0) (F'1307#0 t#0);
+F'1307#0 =_\nu \lambda t#0. ol (F#0 Q28#0 leaf) (F#0 Q12#0 t#0);
+F'1306#0 =_\nu \lambda t#0. h6 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1305#0 =_\nu \lambda t#0. h5 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1304#0 =_\nu \lambda t#0. br (F'1296#0 t#0) (F'1303#0 t#0);
+F'1303#0 =_\nu \lambda t#0. br (F'1299#0 t#0) (F'1302#0 t#0);
+F'1302#0 =_\nu \lambda t#0. br (F'1300#0 t#0) (F'1301#0 t#0);
+F'1301#0 =_\nu \lambda t#0. h4 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1300#0 =_\nu \lambda t#0. h3 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1299#0 =_\nu \lambda t#0. br (F'1297#0 t#0) (F'1298#0 t#0);
+F'1298#0 =_\nu \lambda t#0. h2 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1297#0 =_\nu \lambda t#0. h1 (F#0 Q7#0 leaf) (F#0 Q12#0 t#0);
+F'1296#0 =_\nu \lambda t#0. br t#0 (F'1295#0 t#0);
+F'1295#0 =_\nu \lambda t#0. br (F'1293#0 t#0) (F'1294#0 t#0);
+F'1294#0 =_\nu \lambda t#0. dl (F#0 Q29#0 leaf) (F#0 Q12#0 t#0);
+F'1293#0 =_\nu \lambda t#0. div (F#0 Q13#0 leaf) (F#0 Q12#0 t#0);
+F'1292#0 =_\nu \lambda t#0. br t#0 (F'1291#0 t#0);
+F'1291#0 =_\nu \lambda t#0. td (F#0 Q6#0 leaf) (F#0 Q11#0 t#0);
+F'1290#0 =_\nu \lambda t#0. br t#0 (F'1289#0 t#0);
+F'1289#0 =_\nu \lambda t#0. tr (F#0 Q26#0 leaf) (F#0 Q10#0 t#0);
+F'1288#0 =_\nu \lambda t#0. br t#0 (F'1287#0 t#0);
+F'1287#0 =_\nu \lambda t#0. br (F'1285#0 t#0) (F'1286#0 t#0);
+F'1286#0 =_\nu \lambda t#0. tr (F#0 Q26#0 leaf) (F#0 Q9#0 t#0);
+F'1285#0 =_\nu \lambda t#0. tbody (F#0 Q25#0 leaf) (F#0 Q9#0 t#0);
+F'1284#0 =_\nu \lambda t#0. br t#0 (F'1283#0 t#0);
+F'1283#0 =_\nu \lambda t#0. br (F'1281#0 t#0) (F'1282#0 t#0);
+F'1282#0 =_\nu \lambda t#0. dt (F#0 Q7#0 leaf) (F#0 Q8#0 t#0);
+F'1281#0 =_\nu \lambda t#0. dd (F#0 Q6#0 leaf) (F#0 Q8#0 t#0);
+F'1280#0 =_\nu \lambda t#0. br (F'1274#0 t#0) (F'1279#0 t#0);
+F'1279#0 =_\nu \lambda t#0. br (F'1275#0 t#0) (F'1278#0 t#0);
+F'1278#0 =_\nu \lambda t#0. br (F'1276#0 t#0) (F'1277#0 t#0);
+F'1277#0 =_\nu \lambda t#0. text (F#0 Q18#0 leaf) (F#0 Q7#0 t#0);
+F'1276#0 =_\nu \lambda t#0. img (F#0 Q18#0 leaf) (F#0 Q7#0 t#0);
+F'1275#0 =_\nu \lambda t#0. brk (F#0 Q18#0 leaf) (F#0 Q7#0 t#0);
+F'1274#0 =_\nu \lambda t#0. br t#0 (F'1273#0 t#0);
+F'1273#0 =_\nu \lambda t#0. F#0 Q5#0 (F#0 Q7#0 t#0);
+F'1272#0 =_\nu \lambda t#0. br (F'1254#0 t#0) (F'1271#0 t#0);
+F'1271#0 =_\nu \lambda t#0. br (F'1261#0 t#0) (F'1270#0 t#0);
+F'1270#0 =_\nu \lambda t#0. br (F'1264#0 t#0) (F'1269#0 t#0);
+F'1269#0 =_\nu \lambda t#0. br (F'1265#0 t#0) (F'1268#0 t#0);
+F'1268#0 =_\nu \lambda t#0. br (F'1266#0 t#0) (F'1267#0 t#0);
+F'1267#0 =_\nu \lambda t#0. ul (F#0 Q23#0 leaf) (F#0 Q6#0 t#0);
+F'1266#0 =_\nu \lambda t#0. text (F#0 Q18#0 leaf) (F#0 Q6#0 t#0);
+F'1265#0 =_\nu \lambda t#0. table (F#0 Q22#0 leaf) (F#0 Q6#0 t#0);
+F'1264#0 =_\nu \lambda t#0. br (F'1262#0 t#0) (F'1263#0 t#0);
+F'1263#0 =_\nu \lambda t#0. p (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1262#0 =_\nu \lambda t#0. ol (F#0 Q23#0 leaf) (F#0 Q6#0 t#0);
+F'1261#0 =_\nu \lambda t#0. br (F'1257#0 t#0) (F'1260#0 t#0);
+F'1260#0 =_\nu \lambda t#0. br (F'1258#0 t#0) (F'1259#0 t#0);
+F'1259#0 =_\nu \lambda t#0. img (F#0 Q18#0 leaf) (F#0 Q6#0 t#0);
+F'1258#0 =_\nu \lambda t#0. h6 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1257#0 =_\nu \lambda t#0. br (F'1255#0 t#0) (F'1256#0 t#0);
+F'1256#0 =_\nu \lambda t#0. h5 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1255#0 =_\nu \lambda t#0. h4 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1254#0 =_\nu \lambda t#0. br (F'1244#0 t#0) (F'1253#0 t#0);
+F'1253#0 =_\nu \lambda t#0. br (F'1247#0 t#0) (F'1252#0 t#0);
+F'1252#0 =_\nu \lambda t#0. br (F'1248#0 t#0) (F'1251#0 t#0);
+F'1251#0 =_\nu \lambda t#0. br (F'1249#0 t#0) (F'1250#0 t#0);
+F'1250#0 =_\nu \lambda t#0. h3 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1249#0 =_\nu \lambda t#0. h2 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1248#0 =_\nu \lambda t#0. h1 (F#0 Q7#0 leaf) (F#0 Q6#0 t#0);
+F'1247#0 =_\nu \lambda t#0. br (F'1245#0 t#0) (F'1246#0 t#0);
+F'1246#0 =_\nu \lambda t#0. form (F#0 Q12#0 leaf) (F#0 Q6#0 t#0);
+F'1245#0 =_\nu \lambda t#0. dl (F#0 Q24#0 leaf) (F#0 Q6#0 t#0);
+F'1244#0 =_\nu \lambda t#0. br (F'1240#0 t#0) (F'1243#0 t#0);
+F'1243#0 =_\nu \lambda t#0. br (F'1241#0 t#0) (F'1242#0 t#0);
+F'1242#0 =_\nu \lambda t#0. div (F#0 Q6#0 leaf) (F#0 Q6#0 t#0);
+F'1241#0 =_\nu \lambda t#0. brk (F#0 Q18#0 leaf) (F#0 Q6#0 t#0);
+F'1240#0 =_\nu \lambda t#0. br t#0 (F'1239#0 t#0);
+F'1239#0 =_\nu \lambda t#0. F#0 Q5#0 (F#0 Q6#0 t#0);
+F'1238#0 =_\nu \lambda t#0. br (F'1234#0 t#0) (F'1237#0 t#0);
+F'1237#0 =_\nu \lambda t#0. br (F'1235#0 t#0) (F'1236#0 t#0);
+F'1236#0 =_\nu \lambda t#0. text (F#0 Q18#0 leaf) (F#0 Q5#0 t#0);
+F'1235#0 =_\nu \lambda t#0. img (F#0 Q18#0 leaf) (F#0 Q5#0 t#0);
+F'1234#0 =_\nu \lambda t#0. br t#0 (F'1233#0 t#0);
+F'1233#0 =_\nu \lambda t#0. brk (F#0 Q18#0 leaf) (F#0 Q5#0 t#0);
+F'1232#0 =_\nu \lambda t#0. br (F'1218#0 t#0) (F'1231#0 t#0);
+F'1231#0 =_\nu \lambda t#0. br (F'1223#0 t#0) (F'1230#0 t#0);
+F'1230#0 =_\nu \lambda t#0. br (F'1226#0 t#0) (F'1229#0 t#0);
+F'1229#0 =_\nu \lambda t#0. br (F'1227#0 t#0) (F'1228#0 t#0);
+F'1228#0 =_\nu \lambda t#0. ul (F#0 Q23#0 leaf) (F#0 Q4#0 t#0);
+F'1227#0 =_\nu \lambda t#0. table (F#0 Q22#0 leaf) (F#0 Q4#0 t#0);
+F'1226#0 =_\nu \lambda t#0. br (F'1224#0 t#0) (F'1225#0 t#0);
+F'1225#0 =_\nu \lambda t#0. p (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1224#0 =_\nu \lambda t#0. ol (F#0 Q23#0 leaf) (F#0 Q4#0 t#0);
+F'1223#0 =_\nu \lambda t#0. br (F'1219#0 t#0) (F'1222#0 t#0);
+F'1222#0 =_\nu \lambda t#0. br (F'1220#0 t#0) (F'1221#0 t#0);
+F'1221#0 =_\nu \lambda t#0. h6 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1220#0 =_\nu \lambda t#0. h5 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1219#0 =_\nu \lambda t#0. h4 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1218#0 =_\nu \lambda t#0. br (F'1210#0 t#0) (F'1217#0 t#0);
+F'1217#0 =_\nu \lambda t#0. br (F'1213#0 t#0) (F'1216#0 t#0);
+F'1216#0 =_\nu \lambda t#0. br (F'1214#0 t#0) (F'1215#0 t#0);
+F'1215#0 =_\nu \lambda t#0. h3 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1214#0 =_\nu \lambda t#0. h2 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1213#0 =_\nu \lambda t#0. br (F'1211#0 t#0) (F'1212#0 t#0);
+F'1212#0 =_\nu \lambda t#0. h1 (F#0 Q7#0 leaf) (F#0 Q4#0 t#0);
+F'1211#0 =_\nu \lambda t#0. form (F#0 Q12#0 leaf) (F#0 Q4#0 t#0);
+F'1210#0 =_\nu \lambda t#0. br t#0 (F'1209#0 t#0);
+F'1209#0 =_\nu \lambda t#0. br (F'1207#0 t#0) (F'1208#0 t#0);
+F'1208#0 =_\nu \lambda t#0. dl (F#0 Q24#0 leaf) (F#0 Q4#0 t#0);
+F'1207#0 =_\nu \lambda t#0. div (F#0 Q6#0 leaf) (F#0 Q4#0 t#0);
+F'1206#0 =_\nu \lambda t#0. br (F'1200#0 t#0) (F'1205#0 t#0);
+F'1205#0 =_\nu \lambda t#0. br (F'1201#0 t#0) (F'1204#0 t#0);
+F'1204#0 =_\nu \lambda t#0. br (F'1202#0 t#0) (F'1203#0 t#0);
+F'1203#0 =_\nu \lambda t#0. style (F#0 Q2#0 leaf) (F#0 Q3#0 t#0);
+F'1202#0 =_\nu \lambda t#0. script (F#0 Q2#0 leaf) (F#0 Q3#0 t#0);
+F'1201#0 =_\nu \lambda t#0. meta (F#0 Q18#0 leaf) (F#0 Q3#0 t#0);
+F'1200#0 =_\nu \lambda t#0. br t#0 (F'1199#0 t#0);
+F'1199#0 =_\nu \lambda t#0. br (F'1197#0 t#0) (F'1198#0 t#0);
+F'1198#0 =_\nu \lambda t#0. link (F#0 Q18#0 leaf) (F#0 Q3#0 t#0);
+F'1197#0 =_\nu \lambda t#0. base (F#0 Q18#0 leaf) (F#0 Q3#0 t#0);
+F'1196#0 =_\nu \lambda t#0. text (F#0 Q18#0 leaf) (F#0 Q18#0 t#0);
+F'1195#0 =_\nu \lambda t#0. body (F#0 Q21#0 leaf) (F#0 Q18#0 t#0);
+F'1194#0 =_\nu \lambda t#0. html (F#0 Q19#0 leaf) (F#0 Q18#0 t#0);
+Q0#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x0#0;
+Q1#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x1#0;
+Q2#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x2#0;
+Q3#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x3#0;
+Q4#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x4#0;
+Q5#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x5#0;
+Q6#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x6#0;
+Q7#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x7#0;
+Q8#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x8#0;
+Q9#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x9#0;
+Q10#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x10#0;
+Q11#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x11#0;
+Q12#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x12#0;
+Q13#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x13#0;
+Q14#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x14#0;
+Q15#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x15#0;
+Q16#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x16#0;
+Q17#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x17#0;
+Q18#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x18#0;
+Q19#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x19#0;
+Q20#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x20#0;
+Q21#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x21#0;
+Q22#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x22#0;
+Q23#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x23#0;
+Q24#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x24#0;
+Q25#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x25#0;
+Q26#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x26#0;
+Q27#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x27#0;
+Q28#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x28#0;
+Q29#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x29#0;
+Q30#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x30#0;
+Q31#0 =_\nu \lambda x0#0. \lambda x1#0. \lambda x2#0. \lambda x3#0. \lambda x4#0. \lambda x5#0. \lambda x6#0. \lambda x7#0. \lambda x8#0. \lambda x9#0. \lambda x10#0. \lambda x11#0. \lambda x12#0. \lambda x13#0. \lambda x14#0. \lambda x15#0. \lambda x16#0. \lambda x17#0. \lambda x18#0. \lambda x19#0. \lambda x20#0. \lambda x21#0. \lambda x22#0. \lambda x23#0. \lambda x24#0. \lambda x25#0. \lambda x26#0. \lambda x27#0. \lambda x28#0. \lambda x29#0. \lambda x30#0. \lambda x31#0. x31#0;
+leaf =_\nu <leaf#0>\true;
+html =_\nu \lambda y$1#0. \lambda y$2#0. <html#0>([$1]y$1#0 \land [$2]y$2#0);
+body =_\nu \lambda y$1#0. \lambda y$2#0. <body#0>([$1]y$1#0 \land [$2]y$2#0);
+text =_\nu \lambda y$1#0. \lambda y$2#0. <text#0>([$1]y$1#0 \land [$2]y$2#0);
+br =_\nu \lambda y$1#0. \lambda y$2#0. <br#0>([$1]y$1#0 \land [$2]y$2#0);
+base =_\nu \lambda y$1#0. \lambda y$2#0. <base#0>([$1]y$1#0 \land [$2]y$2#0);
+link =_\nu \lambda y$1#0. \lambda y$2#0. <link#0>([$1]y$1#0 \land [$2]y$2#0);
+meta =_\nu \lambda y$1#0. \lambda y$2#0. <meta#0>([$1]y$1#0 \land [$2]y$2#0);
+script =_\nu \lambda y$1#0. \lambda y$2#0. <script#0>([$1]y$1#0 \land [$2]y$2#0);
+style =_\nu \lambda y$1#0. \lambda y$2#0. <style#0>([$1]y$1#0 \land [$2]y$2#0);
+div =_\nu \lambda y$1#0. \lambda y$2#0. <div#0>([$1]y$1#0 \land [$2]y$2#0);
+dl =_\nu \lambda y$1#0. \lambda y$2#0. <dl#0>([$1]y$1#0 \land [$2]y$2#0);
+form =_\nu \lambda y$1#0. \lambda y$2#0. <form#0>([$1]y$1#0 \land [$2]y$2#0);
+h1 =_\nu \lambda y$1#0. \lambda y$2#0. <h1#0>([$1]y$1#0 \land [$2]y$2#0);
+h2 =_\nu \lambda y$1#0. \lambda y$2#0. <h2#0>([$1]y$1#0 \land [$2]y$2#0);
+h3 =_\nu \lambda y$1#0. \lambda y$2#0. <h3#0>([$1]y$1#0 \land [$2]y$2#0);
+h4 =_\nu \lambda y$1#0. \lambda y$2#0. <h4#0>([$1]y$1#0 \land [$2]y$2#0);
+h5 =_\nu \lambda y$1#0. \lambda y$2#0. <h5#0>([$1]y$1#0 \land [$2]y$2#0);
+h6 =_\nu \lambda y$1#0. \lambda y$2#0. <h6#0>([$1]y$1#0 \land [$2]y$2#0);
+ol =_\nu \lambda y$1#0. \lambda y$2#0. <ol#0>([$1]y$1#0 \land [$2]y$2#0);
+p =_\nu \lambda y$1#0. \lambda y$2#0. <p#0>([$1]y$1#0 \land [$2]y$2#0);
+table =_\nu \lambda y$1#0. \lambda y$2#0. <table#0>([$1]y$1#0 \land [$2]y$2#0);
+ul =_\nu \lambda y$1#0. \lambda y$2#0. <ul#0>([$1]y$1#0 \land [$2]y$2#0);
+brk =_\nu \lambda y$1#0. \lambda y$2#0. <brk#0>([$1]y$1#0 \land [$2]y$2#0);
+img =_\nu \lambda y$1#0. \lambda y$2#0. <img#0>([$1]y$1#0 \land [$2]y$2#0);
+dd =_\nu \lambda y$1#0. \lambda y$2#0. <dd#0>([$1]y$1#0 \land [$2]y$2#0);
+dt =_\nu \lambda y$1#0. \lambda y$2#0. <dt#0>([$1]y$1#0 \land [$2]y$2#0);
+tbody =_\nu \lambda y$1#0. \lambda y$2#0. <tbody#0>([$1]y$1#0 \land [$2]y$2#0);
+tr =_\nu \lambda y$1#0. \lambda y$2#0. <tr#0>([$1]y$1#0 \land [$2]y$2#0);
+td =_\nu \lambda y$1#0. \lambda y$2#0. <td#0>([$1]y$1#0 \land [$2]y$2#0);
+head =_\nu \lambda y$1#0. \lambda y$2#0. <head#0>([$1]y$1#0 \land [$2]y$2#0);
+title =_\nu \lambda y$1#0. \lambda y$2#0. <title#0>([$1]y$1#0 \land [$2]y$2#0);
+li =_\nu \lambda y$1#0. \lambda y$2#0. <li#0>([$1]y$1#0 \land [$2]y$2#0);
+%LTS
+initial state: @q0
+transitions:
+@q19 br#0 -> $1@q19&$2@q19.
+@q19 head#0 -> $1@q20&$2@q1.
+$1@q19&$2@q19 $1 -> @q19.
+$1@q19&$2@q19 $2 -> @q19.
+$1@q20&$2@q1 $1 -> @q20.
+$1@q20&$2@q1 $2 -> @q1.
+@q20 br#0 -> $1@q20&$2@q20.
+@q20 base#0 -> $1@q18&$2@q20.
+@q20 link#0 -> $1@q18&$2@q20.
+@q20 meta#0 -> $1@q18&$2@q20.
+@q20 script#0 -> $1@q2&$2@q20.
+@q20 style#0 -> $1@q2&$2@q20.
+@q20 title#0 -> $1@q2&$2@q3.
+@q1 body#0 -> $1@q21&$2@q18.
+@q1 br#0 -> $1@q1&$2@q1.
+@q18 leaf#0 -> true.
+@q18 br#0 -> $1@q18&$2@q18.
+$1@q18&$2@q18 $1 -> @q18.
+$1@q18&$2@q18 $2 -> @q18.
+@q0 html#0 -> $1@q19&$2@q18.
+@q0 br#0 -> $1@q0&$2@q0.
+$1@q19&$2@q18 $1 -> @q19.
+$1@q19&$2@q18 $2 -> @q18.
+$1@q0&$2@q0 $1 -> @q0.
+$1@q0&$2@q0 $2 -> @q0.
+@q21 br#0 -> $1@q21&$2@q21.
+@q21 div#0 -> $1@q6&$2@q4.
+@q21 dl#0 -> $1@q24&$2@q4.
+@q21 form#0 -> $1@q12&$2@q4.
+@q21 h1#0 -> $1@q7&$2@q4.
+@q21 h2#0 -> $1@q7&$2@q4.
+@q21 h3#0 -> $1@q7&$2@q4.
+@q21 h4#0 -> $1@q7&$2@q4.
+@q21 h5#0 -> $1@q7&$2@q4.
+@q21 h6#0 -> $1@q7&$2@q4.
+@q21 ol#0 -> $1@q23&$2@q4.
+@q21 p#0 -> $1@q7&$2@q4.
+@q21 table#0 -> $1@q22&$2@q4.
+@q21 ul#0 -> $1@q23&$2@q4.
+$1@q21&$2@q21 $1 -> @q21.
+$1@q21&$2@q21 $2 -> @q21.
+$1@q6&$2@q4 $1 -> @q6.
+$1@q6&$2@q4 $2 -> @q4.
+@q6 leaf#0 -> true.
+@q6 text#0 -> $1@q18&$2@q6.
+@q6 br#0 -> $1@q6&$2@q6.
+@q6 div#0 -> $1@q6&$2@q6.
+@q6 dl#0 -> $1@q24&$2@q6.
+@q6 form#0 -> $1@q12&$2@q6.
+@q6 h1#0 -> $1@q7&$2@q6.
+@q6 h2#0 -> $1@q7&$2@q6.
+@q6 h3#0 -> $1@q7&$2@q6.
+@q6 h4#0 -> $1@q7&$2@q6.
+@q6 h5#0 -> $1@q7&$2@q6.
+@q6 h6#0 -> $1@q7&$2@q6.
+@q6 ol#0 -> $1@q23&$2@q6.
+@q6 p#0 -> $1@q7&$2@q6.
+@q6 table#0 -> $1@q22&$2@q6.
+@q6 ul#0 -> $1@q23&$2@q6.
+@q6 brk#0 -> $1@q18&$2@q6.
+@q6 img#0 -> $1@q18&$2@q6.
+@q6 a#0 -> $1@q5&$2@q6.
+@q4 leaf#0 -> true.
+@q4 br#0 -> $1@q4&$2@q4.
+@q4 div#0 -> $1@q6&$2@q4.
+@q4 dl#0 -> $1@q24&$2@q4.
+@q4 form#0 -> $1@q12&$2@q4.
+@q4 h1#0 -> $1@q7&$2@q4.
+@q4 h2#0 -> $1@q7&$2@q4.
+@q4 h3#0 -> $1@q7&$2@q4.
+@q4 h4#0 -> $1@q7&$2@q4.
+@q4 h5#0 -> $1@q7&$2@q4.
+@q4 h6#0 -> $1@q7&$2@q4.
+@q4 ol#0 -> $1@q23&$2@q4.
+@q4 p#0 -> $1@q7&$2@q4.
+@q4 table#0 -> $1@q22&$2@q4.
+@q4 ul#0 -> $1@q23&$2@q4.
+$1@q24&$2@q4 $1 -> @q24.
+$1@q24&$2@q4 $2 -> @q4.
+@q24 br#0 -> $1@q24&$2@q24.
+@q24 dd#0 -> $1@q6&$2@q8.
+@q24 dt#0 -> $1@q7&$2@q8.
+$1@q12&$2@q4 $1 -> @q12.
+$1@q12&$2@q4 $2 -> @q4.
+@q12 leaf#0 -> true.
+@q12 br#0 -> $1@q12&$2@q12.
+@q12 script#0 -> $1@q2&$2@q12.
+@q12 div#0 -> $1@q13&$2@q12.
+@q12 dl#0 -> $1@q29&$2@q12.
+@q12 h1#0 -> $1@q7&$2@q12.
+@q12 h2#0 -> $1@q7&$2@q12.
+@q12 h3#0 -> $1@q7&$2@q12.
+@q12 h4#0 -> $1@q7&$2@q12.
+@q12 h5#0 -> $1@q7&$2@q12.
+@q12 h6#0 -> $1@q7&$2@q12.
+@q12 ol#0 -> $1@q28&$2@q12.
+@q12 p#0 -> $1@q7&$2@q12.
+@q12 table#0 -> $1@q27&$2@q12.
+@q12 ul#0 -> $1@q28&$2@q12.
+$1@q7&$2@q4 $1 -> @q7.
+$1@q7&$2@q4 $2 -> @q4.
+@q7 leaf#0 -> true.
+@q7 text#0 -> $1@q18&$2@q7.
+@q7 br#0 -> $1@q7&$2@q7.
+@q7 brk#0 -> $1@q18&$2@q7.
+@q7 img#0 -> $1@q18&$2@q7.
+@q7 a#0 -> $1@q5&$2@q7.
+$1@q23&$2@q4 $1 -> @q23.
+$1@q23&$2@q4 $2 -> @q4.
+@q23 br#0 -> $1@q23&$2@q23.
+@q23 li#0 -> $1@q6&$2@q18.
+$1@q22&$2@q4 $1 -> @q22.
+$1@q22&$2@q4 $2 -> @q4.
+@q22 br#0 -> $1@q22&$2@q22.
+@q22 tbody#0 -> $1@q25&$2@q9.
+@q22 tr#0 -> $1@q26&$2@q9.
+$1@q21&$2@q18 $1 -> @q21.
+$1@q21&$2@q18 $2 -> @q18.
+$1@q1&$2@q1 $1 -> @q1.
+$1@q1&$2@q1 $2 -> @q1.
+@q2 text#0 -> $1@q18&$2@q18.
+@q2 br#0 -> $1@q2&$2@q2.
+$1@q2&$2@q2 $1 -> @q2.
+$1@q2&$2@q2 $2 -> @q2.
+@q3 leaf#0 -> true.
+@q3 br#0 -> $1@q3&$2@q3.
+@q3 base#0 -> $1@q18&$2@q3.
+@q3 link#0 -> $1@q18&$2@q3.
+@q3 meta#0 -> $1@q18&$2@q3.
+@q3 script#0 -> $1@q2&$2@q3.
+@q3 style#0 -> $1@q2&$2@q3.
+$1@q3&$2@q3 $1 -> @q3.
+$1@q3&$2@q3 $2 -> @q3.
+$1@q18&$2@q3 $1 -> @q18.
+$1@q18&$2@q3 $2 -> @q3.
+$1@q2&$2@q3 $1 -> @q2.
+$1@q2&$2@q3 $2 -> @q3.
+$1@q4&$2@q4 $1 -> @q4.
+$1@q4&$2@q4 $2 -> @q4.
+$1@q18&$2@q6 $1 -> @q18.
+$1@q18&$2@q6 $2 -> @q6.
+$1@q6&$2@q6 $1 -> @q6.
+$1@q6&$2@q6 $2 -> @q6.
+$1@q24&$2@q6 $1 -> @q24.
+$1@q24&$2@q6 $2 -> @q6.
+$1@q12&$2@q6 $1 -> @q12.
+$1@q12&$2@q6 $2 -> @q6.
+$1@q7&$2@q6 $1 -> @q7.
+$1@q7&$2@q6 $2 -> @q6.
+$1@q23&$2@q6 $1 -> @q23.
+$1@q23&$2@q6 $2 -> @q6.
+$1@q22&$2@q6 $1 -> @q22.
+$1@q22&$2@q6 $2 -> @q6.
+$1@q5&$2@q6 $1 -> @q5.
+$1@q5&$2@q6 $2 -> @q6.
+@q5 leaf#0 -> true.
+@q5 text#0 -> $1@q18&$2@q5.
+@q5 br#0 -> $1@q5&$2@q5.
+@q5 brk#0 -> $1@q18&$2@q5.
+@q5 img#0 -> $1@q18&$2@q5.
+$1@q24&$2@q24 $1 -> @q24.
+$1@q24&$2@q24 $2 -> @q24.
+$1@q6&$2@q8 $1 -> @q6.
+$1@q6&$2@q8 $2 -> @q8.
+@q8 leaf#0 -> true.
+@q8 br#0 -> $1@q8&$2@q8.
+@q8 dd#0 -> $1@q6&$2@q8.
+@q8 dt#0 -> $1@q7&$2@q8.
+$1@q7&$2@q8 $1 -> @q7.
+$1@q7&$2@q8 $2 -> @q8.
+$1@q12&$2@q12 $1 -> @q12.
+$1@q12&$2@q12 $2 -> @q12.
+$1@q2&$2@q12 $1 -> @q2.
+$1@q2&$2@q12 $2 -> @q12.
+$1@q13&$2@q12 $1 -> @q13.
+$1@q13&$2@q12 $2 -> @q12.
+@q13 leaf#0 -> true.
+@q13 text#0 -> $1@q18&$2@q13.
+@q13 br#0 -> $1@q13&$2@q13.
+@q13 div#0 -> $1@q13&$2@q13.
+@q13 dl#0 -> $1@q29&$2@q13.
+@q13 h1#0 -> $1@q7&$2@q13.
+@q13 h2#0 -> $1@q7&$2@q13.
+@q13 h3#0 -> $1@q7&$2@q13.
+@q13 h4#0 -> $1@q7&$2@q13.
+@q13 h5#0 -> $1@q7&$2@q13.
+@q13 h6#0 -> $1@q7&$2@q13.
+@q13 ol#0 -> $1@q28&$2@q13.
+@q13 p#0 -> $1@q7&$2@q13.
+@q13 table#0 -> $1@q27&$2@q13.
+@q13 ul#0 -> $1@q28&$2@q13.
+@q13 brk#0 -> $1@q18&$2@q13.
+@q13 img#0 -> $1@q18&$2@q13.
+@q13 a#0 -> $1@q5&$2@q13.
+$1@q29&$2@q12 $1 -> @q29.
+$1@q29&$2@q12 $2 -> @q12.
+@q29 br#0 -> $1@q29&$2@q29.
+@q29 dd#0 -> $1@q13&$2@q14.
+@q29 dt#0 -> $1@q7&$2@q14.
+$1@q7&$2@q12 $1 -> @q7.
+$1@q7&$2@q12 $2 -> @q12.
+$1@q28&$2@q12 $1 -> @q28.
+$1@q28&$2@q12 $2 -> @q12.
+@q28 br#0 -> $1@q28&$2@q28.
+@q28 li#0 -> $1@q13&$2@q18.
+$1@q27&$2@q12 $1 -> @q27.
+$1@q27&$2@q12 $2 -> @q12.
+@q27 br#0 -> $1@q27&$2@q27.
+@q27 tbody#0 -> $1@q30&$2@q15.
+@q27 tr#0 -> $1@q31&$2@q15.
+$1@q18&$2@q7 $1 -> @q18.
+$1@q18&$2@q7 $2 -> @q7.
+$1@q7&$2@q7 $1 -> @q7.
+$1@q7&$2@q7 $2 -> @q7.
+$1@q5&$2@q7 $1 -> @q5.
+$1@q5&$2@q7 $2 -> @q7.
+$1@q23&$2@q23 $1 -> @q23.
+$1@q23&$2@q23 $2 -> @q23.
+$1@q6&$2@q18 $1 -> @q6.
+$1@q6&$2@q18 $2 -> @q18.
+$1@q22&$2@q22 $1 -> @q22.
+$1@q22&$2@q22 $2 -> @q22.
+$1@q25&$2@q9 $1 -> @q25.
+$1@q25&$2@q9 $2 -> @q9.
+@q25 br#0 -> $1@q25&$2@q25.
+@q25 tr#0 -> $1@q26&$2@q10.
+@q9 leaf#0 -> true.
+@q9 br#0 -> $1@q9&$2@q9.
+@q9 tbody#0 -> $1@q25&$2@q9.
+@q9 tr#0 -> $1@q26&$2@q9.
+$1@q26&$2@q9 $1 -> @q26.
+$1@q26&$2@q9 $2 -> @q9.
+@q26 br#0 -> $1@q26&$2@q26.
+@q26 td#0 -> $1@q6&$2@q11.
+$1@q18&$2@q5 $1 -> @q18.
+$1@q18&$2@q5 $2 -> @q5.
+$1@q5&$2@q5 $1 -> @q5.
+$1@q5&$2@q5 $2 -> @q5.
+$1@q8&$2@q8 $1 -> @q8.
+$1@q8&$2@q8 $2 -> @q8.
+$1@q9&$2@q9 $1 -> @q9.
+$1@q9&$2@q9 $2 -> @q9.
+$1@q25&$2@q25 $1 -> @q25.
+$1@q25&$2@q25 $2 -> @q25.
+$1@q26&$2@q10 $1 -> @q26.
+$1@q26&$2@q10 $2 -> @q10.
+@q10 leaf#0 -> true.
+@q10 br#0 -> $1@q10&$2@q10.
+@q10 tr#0 -> $1@q26&$2@q10.
+$1@q26&$2@q26 $1 -> @q26.
+$1@q26&$2@q26 $2 -> @q26.
+$1@q6&$2@q11 $1 -> @q6.
+$1@q6&$2@q11 $2 -> @q11.
+@q11 leaf#0 -> true.
+@q11 br#0 -> $1@q11&$2@q11.
+@q11 td#0 -> $1@q6&$2@q11.
+$1@q10&$2@q10 $1 -> @q10.
+$1@q10&$2@q10 $2 -> @q10.
+$1@q11&$2@q11 $1 -> @q11.
+$1@q11&$2@q11 $2 -> @q11.
+$1@q18&$2@q13 $1 -> @q18.
+$1@q18&$2@q13 $2 -> @q13.
+$1@q13&$2@q13 $1 -> @q13.
+$1@q13&$2@q13 $2 -> @q13.
+$1@q29&$2@q13 $1 -> @q29.
+$1@q29&$2@q13 $2 -> @q13.
+$1@q7&$2@q13 $1 -> @q7.
+$1@q7&$2@q13 $2 -> @q13.
+$1@q28&$2@q13 $1 -> @q28.
+$1@q28&$2@q13 $2 -> @q13.
+$1@q27&$2@q13 $1 -> @q27.
+$1@q27&$2@q13 $2 -> @q13.
+$1@q5&$2@q13 $1 -> @q5.
+$1@q5&$2@q13 $2 -> @q13.
+$1@q29&$2@q29 $1 -> @q29.
+$1@q29&$2@q29 $2 -> @q29.
+$1@q13&$2@q14 $1 -> @q13.
+$1@q13&$2@q14 $2 -> @q14.
+@q14 leaf#0 -> true.
+@q14 br#0 -> $1@q14&$2@q14.
+@q14 dd#0 -> $1@q13&$2@q14.
+@q14 dt#0 -> $1@q7&$2@q14.
+$1@q7&$2@q14 $1 -> @q7.
+$1@q7&$2@q14 $2 -> @q14.
+$1@q28&$2@q28 $1 -> @q28.
+$1@q28&$2@q28 $2 -> @q28.
+$1@q13&$2@q18 $1 -> @q13.
+$1@q13&$2@q18 $2 -> @q18.
+$1@q27&$2@q27 $1 -> @q27.
+$1@q27&$2@q27 $2 -> @q27.
+$1@q30&$2@q15 $1 -> @q30.
+$1@q30&$2@q15 $2 -> @q15.
+@q30 br#0 -> $1@q30&$2@q30.
+@q30 tr#0 -> $1@q31&$2@q16.
+@q15 leaf#0 -> true.
+@q15 br#0 -> $1@q15&$2@q15.
+@q15 tbody#0 -> $1@q30&$2@q15.
+@q15 tr#0 -> $1@q31&$2@q15.
+$1@q31&$2@q15 $1 -> @q31.
+$1@q31&$2@q15 $2 -> @q15.
+@q31 br#0 -> $1@q31&$2@q31.
+@q31 td#0 -> $1@q13&$2@q17.
+$1@q14&$2@q14 $1 -> @q14.
+$1@q14&$2@q14 $2 -> @q14.
+$1@q15&$2@q15 $1 -> @q15.
+$1@q15&$2@q15 $2 -> @q15.
+$1@q30&$2@q30 $1 -> @q30.
+$1@q30&$2@q30 $2 -> @q30.
+$1@q31&$2@q16 $1 -> @q31.
+$1@q31&$2@q16 $2 -> @q16.
+@q16 leaf#0 -> true.
+@q16 br#0 -> $1@q16&$2@q16.
+@q16 tr#0 -> $1@q31&$2@q16.
+$1@q31&$2@q31 $1 -> @q31.
+$1@q31&$2@q31 $2 -> @q31.
+$1@q13&$2@q17 $1 -> @q13.
+$1@q13&$2@q17 $2 -> @q17.
+@q17 leaf#0 -> true.
+@q17 br#0 -> $1@q17&$2@q17.
+@q17 td#0 -> $1@q13&$2@q17.
+$1@q16&$2@q16 $1 -> @q16.
+$1@q16&$2@q16 $2 -> @q16.
+$1@q17&$2@q17 $1 -> @q17.
+$1@q17&$2@q17 $2 -> @q17.
+$1@q20&$2@q20 $1 -> @q20.
+$1@q20&$2@q20 $2 -> @q20.
+$1@q18&$2@q20 $1 -> @q18.
+$1@q18&$2@q20 $2 -> @q20.
+$1@q2&$2@q20 $1 -> @q2.
+$1@q2&$2@q20 $2 -> @q20.
