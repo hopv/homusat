@@ -40,7 +40,7 @@ In an input file, please specify an HFL formula that expresses the property you 
 An LTS is specified under the label `%LTS` by an initial state and a (possibly empty) sequence of transitions. Transitions should be separated by periods. Each transition `p a -> q` expresses that there is an edge from the state `p` to the state `q` with the label (action) `a`.
 You can write comments in C-style (that is, in the form of either `//...` or `/*...*/`).
 
-You can find various input files under the directory [`bench`](/bench). The benchmark problems used in the experiments in our paper are found in [`bench/exp`](/bench/exp).
+You can find various input files under the directory [`bench`](/bench). The benchmark problems used in the experiments in our APLAS 2019 paper are found in [`bench/exp`](/bench/exp).
 
 ## Options
 
@@ -53,3 +53,7 @@ You can find various input files under the directory [`bench`](/bench). The benc
 - `-l [n]`: set maximum loop count to `n` (default value is `1,000,000`)
 
 - `-d`: enable debug mode (give each variable a unique display name)
+
+## Latest Version
+
+See the [main developer's fork](https://github.com/aicabod/homusat) for the latest (but possibly unstable) version.
