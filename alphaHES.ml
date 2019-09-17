@@ -1,6 +1,6 @@
-(* alpha conversion for HES *)
+(* Alpha conversion for HES *)
 
-(* substitution map *)
+(* Substitution map *)
 module Sub = Id.IdMap
 
 let exit_with_unbound_var_error = fun x pos ->
@@ -80,4 +80,4 @@ let initial_sub = fun eqs ->
 
 let rename = fun eqs ->
     let sub = initial_sub eqs in
-    List.rev (List.rev_map (convert_eq sub) eqs)
+    X.List.map (convert_eq sub) eqs

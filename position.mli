@@ -1,4 +1,4 @@
-(* positional information *)
+(* Positional information (used for pretty error printing) *)
 
 type t
 

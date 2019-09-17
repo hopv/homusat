@@ -35,7 +35,7 @@
 %token TRANSITIONS
 %token EOF
 
-/* (* priorities and associativities *) */
+/* (* Priorities and associativities *) */
 %right prec_lambda
 %right ARROW
 %left LOR
@@ -81,7 +81,7 @@ lts:
         { let q0 = LTS.state_of_string $3 in
           LTS.of_transitions (Some (q0)) [] }
 
-/* (* variable with positional information *) */
+/* (* A variable augmented with positional information *) */
 variable:
     | VAR
         { (Id.of_string $1, Position.get_parser_pos ()) }
@@ -113,8 +113,7 @@ equation:
 
 term:
     | variable
-        { let (x, pos) = $1 in
-          HES.Var (x, pos) }
+        { let (x, pos) = $1 in HES.Var (x, pos) }
     | TRUE
         { HES.True (Position.get_parser_pos ()) }
     | FALSE
@@ -171,8 +170,11 @@ base_type:
     | VAR
         { match $1 with
           | "o" -> HES.Prop
-          | _ -> exit_with_parse_error
-                    "Parse error: base type must be written as 'o'" }
+          | _ ->
+              let so = HES.string_of_simple_type HES.Prop in
+              let msg = "Parse error: base type must be written as " ^
+                        "'" ^ so ^ "'" in
+              exit_with_parse_error msg }
     | LPAREN simple_type RPAREN
         { $2 }
 ;

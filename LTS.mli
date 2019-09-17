@@ -1,14 +1,12 @@
 (* Labeled Transition System *)
 
-(* states and labels *)
 type state = int
 type label = Id.t
 
-(* transitions *)
 type transition = state * label * state
 
-module States : Set.S with type elt = state
-module Actions : Set.S with type elt = label
+module States : X.Set.S with type elt = state
+module Actions : X.Set.S with type elt = label
 module Delta : X.Map.S with type key = state * label
 
 (* LTS: (Q, A, \delta, q_{0}) *)

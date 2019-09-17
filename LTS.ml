@@ -1,17 +1,15 @@
 (* Labeled Transition System *)
 
-(* states and labels *)
 type state = int
 type label = Id.t
 
-(* transitions *)
 type transition = state * label * state
 
-module States = Set.Make (struct
+module States = X.Set.Make (struct
     type t = state
     let compare : t -> t -> int = compare
 end)
-module Actions = Set.Make (struct
+module Actions = X.Set.Make (struct
     type t = label
     let compare : t -> t -> int = compare
 end)
@@ -24,10 +22,10 @@ module Delta = X.Map.Make (struct
         else cs
 end)
 
-(* for states *)
+(* Translators for states *)
 module OfStr = X.Map.Make (String)
 module ToStr = X.Map.Make (struct
-    type t = int
+    type t = state
     let compare : t -> t -> int = compare
 end)
 
@@ -35,7 +33,7 @@ let counter = ref 0
 let of_str = ref OfStr.empty
 let to_str = ref ToStr.empty
 
-(* unique identifier for the given string *)
+(* Get the unique identifier for the given string *)
 let state_of_string = fun str ->
     if OfStr.mem str !of_str then
         OfStr.find str !of_str
@@ -55,10 +53,24 @@ let string_of_state = fun id ->
         ToStr.find id !to_str
 let string_of_label = Id.to_string
 
+let string_of_delta = fun delta ->
+    let f = fun (s, a) ts acc ->
+        let g = fun ss sa t acc ->
+            let st = string_of_state t in
+            let str = ss ^ " " ^ sa ^ " -> " ^ st in
+            str :: acc
+        in
+        let ss = string_of_state s in
+        let sa = string_of_label a in
+        States.fold (g ss sa) ts acc
+    in
+    let ls = Delta.fold f delta [] in
+    String.concat ".\n" (List.rev ls) ^ "."
+
 (* LTS: (Q, A, \delta, q_{0}) *)
 type t = States.t * Actions.t * (States.t Delta.t) * state
 
-(* empty LTS *)
+(* Empty LTS *)
 let empty = fun q0 ->
     let q0 = match q0 with Some (q0) -> q0 | _ -> state_of_string "q" in
     let states = States.singleton q0 in
@@ -85,19 +97,8 @@ let of_transitions = fun q0 ls ->
         let q0 = match q0 with Some (q0) -> q0 | None -> q in
         (states, actions, delta, q0)
 
-let to_string = fun (_, _, delta, q0) ->
-    let f = fun (s, a) ts acc ->
-        let g = fun ss sa t acc ->
-            let st = string_of_state t in
-            let str = ss ^ " " ^ sa ^ " -> " ^ st in
-            str :: acc
-        in
-        let ss = string_of_state s in
-        let sa = string_of_label a in
-        States.fold (g ss sa) ts acc
-    in
+let to_string = fun lts ->
+    let (_, _, delta, q0) = lts in
     let init = "initial state: " ^ (string_of_state q0) in
-    let ls = Delta.fold f delta [] in
-    let trans = String.concat ".\n" (List.rev ls) in
-    let trans = "transitions:\n" ^ trans ^ "." in
+    let trans = "transitions:\n" ^ (string_of_delta delta) in
     init ^ "\n" ^ trans

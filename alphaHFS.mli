@@ -1,4 +1,4 @@
-(* alpha conversion for HFS *)
+(* Alpha conversion for HFS *)
 
-(* assign a unique name to each variable *)
+(* Assign a unique name to each variable *)
 val rename : HFS.t -> HFS.t

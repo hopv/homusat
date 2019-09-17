@@ -36,8 +36,8 @@ let string_of_vs = fun vs ->
     "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
 
 let string_of_vss = fun vss ->
-    let ls = List.rev_map string_of_vs vss in
-    "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
+    let ls = X.List.map string_of_vs vss in
+    "[" ^ (String.concat "; " ls) ^ "]"
 
 let print = fun graph ->
     let f = fun v vss ->

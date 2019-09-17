@@ -2,7 +2,7 @@
 
 module States = LTS.States
 
-module Sigma = Set.Make (struct
+module Sigma = X.Set.Make (struct
     type t = int
     let compare : t -> t -> int = compare
 end)
@@ -117,7 +117,7 @@ module Tau = struct
         Sigma.fold f sigma sigma
 
     let normalize_sigmas = fun sigmas ->
-        List.rev (List.rev_map normalize_sigma sigmas)
+        X.List.map normalize_sigma sigmas
 
     (* encode tau to int after normalization *)
     let encode = fun tau ->
@@ -147,7 +147,7 @@ module Tau = struct
 end
 
 module Gamma = Id.IdMap
-module Theta = Set.Make (struct
+module Theta = X.Set.Make (struct
     type t = Sigma.t Gamma.t
     let compare = Gamma.compare Sigma.compare
 end)
@@ -226,20 +226,20 @@ let rec string_of_tau = fun i ->
         | [] -> "T"
         | [i] -> string_of_tau_aux i
         | _ ->
-            let ls = List.rev_map string_of_tau elems in
-            "{" ^ (String.concat ", " (List.rev ls)) ^ "}"
+            let ls = X.List.map string_of_tau elems in
+            "{" ^ (String.concat ", " ls) ^ "}"
     in
     let (sigmas, q) = Tau.decode i in
     let sq = LTS.string_of_state q in
     if sigmas = [] then sq
     else
-        let ls = List.rev_map string_of_sigma_aux sigmas in
-        (String.concat " -> " (List.rev ls)) ^ " -> " ^ sq
+        let ls = X.List.map string_of_sigma_aux sigmas in
+        (String.concat " -> " ls) ^ " -> " ^ sq
 
 let string_of_sigma = fun sigma ->
     let elems = Sigma.elements sigma in
-    let ls = List.rev_map string_of_tau elems in
-    "{" ^ (String.concat ", " (List.rev ls)) ^ "}"
+    let ls = X.List.map string_of_tau elems in
+    "{" ^ (String.concat ", " ls) ^ "}"
 
 let string_of_gamma = fun gamma ->
     let f = fun x sigma acc ->

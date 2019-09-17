@@ -31,17 +31,16 @@ module FmlsMap = ACG.FmlsMap
 
 type t
 
-val generate_flow_info :
-    HFS.t -> LTS.t -> t
+val generate_flow_info : Enc.t -> LTS.t -> t
 
 val get_fqmap : t -> States.t LHS.t
 val get_aqmap : t -> States.t FmlMap.t
 val get_rev_flows : t -> IdSet.t FmlsMap.t
-val get_bindings : Id.t -> t -> (HFS.formula list list * States.t) list
-val get_contexts : HFS.formula list -> t -> (HFS.formula list list) list
-val get_parent : HFS.formula list -> t -> Id.t
+val get_bindings : Id.t -> t -> (Enc.elt list list * States.t) list
+val get_contexts : Enc.elt list -> t -> (Enc.elt list list) list
+val get_parent : Enc.elt list -> t -> Id.t
 val get_children : Id.t -> t -> IdSet.t
-val get_siblings : HFS.formula list -> t -> IdSet.t
+val get_siblings : Enc.elt list -> t -> IdSet.t
 val get_dep_lhs : Id.t -> t -> IdSet.t * FmlsSet.t
 val get_dep_rhs : Id.t -> t -> IdSet.t * FmlsSet.t
 val print : t -> unit

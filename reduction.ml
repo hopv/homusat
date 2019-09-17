@@ -8,12 +8,8 @@ module IdSet = Id.IdSet
 let rec subst = fun sub fml ->
     Profile.check_time_out "model checking" !Flags.time_out;
     match fml with
-    | HFS.Or (xs) ->
-        let xs = List.rev (List.rev_map (subst sub) xs) in
-        HFS.Or (xs)
-    | HFS.And (xs) ->
-        let xs = List.rev (List.rev_map (subst sub) xs) in
-        HFS.And (xs)
+    | HFS.Or (xs) -> HFS.Or (X.List.map (subst sub) xs)
+    | HFS.And (xs) -> HFS.And (X.List.map (subst sub) xs)
     | HFS.Box (a, x) ->
         let x = subst sub x in
         HFS.Box (a, x)
@@ -21,12 +17,12 @@ let rec subst = fun sub fml ->
         let x = subst sub x in
         HFS.Diamond (a, x)
     | HFS.App (x, ys) ->
-        let ys = List.rev (List.rev_map (subst sub) ys) in
+        let ys = X.List.map (subst sub) ys in
         if LHS.mem x sub then
             let fml = LHS.find x sub in
             match fml with
             | HFS.App (x, zs) ->
-                let ys = List.rev_append (List.rev zs) ys in
+                let ys = X.List.append zs ys in
                 HFS.App (x, ys)
             | _ -> (* (assert (ys = [])); *) fml
         else HFS.App (x, ys)
@@ -35,12 +31,8 @@ let rec subst = fun sub fml ->
 let rec reduce_fml = fun nonrecs fml ->
     Profile.check_time_out "model checking" !Flags.time_out;
     match fml with
-    | HFS.Or (xs) ->
-        let xs = List.rev (List.rev_map (reduce_fml nonrecs) xs) in
-        HFS.Or (xs)
-    | HFS.And (xs) ->
-        let xs = List.rev (List.rev_map (reduce_fml nonrecs) xs) in
-        HFS.And (xs)
+    | HFS.Or (xs) -> HFS.Or (X.List.map (reduce_fml nonrecs) xs)
+    | HFS.And (xs) -> HFS.And (X.List.map (reduce_fml nonrecs) xs)
     | HFS.Box (a, x) ->
         let x = reduce_fml nonrecs x in
         HFS.Box (a, x)
@@ -56,11 +48,10 @@ let rec reduce_fml = fun nonrecs fml ->
                 let fml = subst sub fml in
                 reduce_fml nonrecs fml
             else (* partial applications are ignored *)
-                let rys = List.rev_map (reduce_fml nonrecs) ys in
-                let ys = List.rev rys in
+                let ys = X.List.map (reduce_fml nonrecs) ys in
                 HFS.App (x, ys)
         else
-            let ys = List.rev (List.rev_map (reduce_fml nonrecs) ys) in
+            let ys = X.List.map (reduce_fml nonrecs) ys in
             HFS.App (x, ys)
 
 let reduce_func = fun nonrecs func ->
@@ -82,10 +73,11 @@ let generate_nonrec_map = fun funcs ->
     let fmap = Preproc.generate_fmap funcs in
     (* let nonrecs = Preproc.generate_nonrecs funcs in *)
     let nonrecs = Preproc.generate_onces funcs in
+    (* Note that nonrecs are topologically sorted *)
     List.fold_left (f fmap) LHS.empty (List.rev nonrecs)
 
 let reduce = fun funcs ->
     let funcs = Preproc.remove_unreachables funcs in
     let nonrecs = generate_nonrec_map funcs in
-    let funcs = List.rev (List.rev_map (reduce_func nonrecs) funcs) in
+    let funcs = X.List.map (reduce_func nonrecs) funcs in
     Preproc.remove_unreachables funcs

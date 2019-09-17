@@ -222,8 +222,8 @@ let generate_dep_kernels = fun childrens kernels funcs ->
 let generate_fmap = fun funcs ->
     let f = fun acc func ->
         let (_, x, _, args, fml) = func in
-        let rargs = List.rev_map fst args in
-        LHS.add x (List.rev rargs, fml) acc
+        let args = X.List.map fst args in
+        LHS.add x (args, fml) acc
     in
     List.fold_left f LHS.empty funcs
 

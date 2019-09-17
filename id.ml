@@ -1,8 +1,8 @@
-(* identifiers *)
+(* Identifiers *)
 
 type t = int
 
-module IdSet = Set.Make (struct
+module IdSet = X.Set.Make (struct
     type t = int
     let compare : t -> t -> int = compare
 end)
@@ -21,7 +21,7 @@ let counter = ref 0
 let of_str = ref OfStr.empty
 let to_str = ref ToStr.empty
 
-(* generate a new identifier from existing one *)
+(* Generate a fresh identifier from an existing one *)
 let gen = fun id ->
     let id' = !counter in
     let str = ToStr.find id !to_str in
@@ -29,14 +29,14 @@ let gen = fun id ->
     counter := !counter + 1;
     id'
 
-(* generate a new identifier from string *)
+(* Generate a fresh identifier from a string *)
 let gen_var = fun str ->
     let id = !counter in
     to_str := ToStr.add id str !to_str;
     counter := !counter + 1;
     id
 
-(* unique identifier for the given string *)
+(* Get the common identifier of each string *)
 let of_string = fun str ->
     if OfStr.mem str !of_str then
         OfStr.find str !of_str

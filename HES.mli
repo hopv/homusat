@@ -1,12 +1,11 @@
-(* (extended) HES *)
+(* (Extended) HES *)
 
-(* symple types *)
 type simple_type =
     | Prop
     | TyVar of int
     | Arrow of simple_type * simple_type
 
-val gen_type : unit -> simple_type
+val gen_type : unit -> simple_type (* Generate a fresh type variable *)
 val string_of_simple_type : simple_type -> string
 
 (* HFL formulas *)
@@ -30,12 +29,10 @@ type fp = Mu | Nu
 
 val string_of_fp : fp -> string
 
-(* equations in HES *)
+(* Equations in HES *)
 type equation = fp * (Id.t * Position.t) * simple_type * formula
 
-val string_of_equation : equation -> string
-
-(* (extended) HES *)
+(* (Extended) HES *)
 type t = equation list
 
 val to_string : t -> string

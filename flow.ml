@@ -36,10 +36,10 @@ type flows = FmlSet.t RHS.t
 type rev_flows = IdSet.t FmlsMap.t
 type fqmap = States.t LHS.t
 type aqmap = States.t FmlMap.t
-type fbmap = (HFS.formula list list * States.t) list LHS.t
+type fbmap = (Enc.elt list list * States.t) list LHS.t
 type fvmap = IdSet.t LHS.t
 type ffmap = IdSet.t LHS.t
-type abmap = (HFS.formula list list) list FmlsMap.t
+type abmap = (Enc.elt list list) list FmlsMap.t
 type avmap = IdSet.t FmlsMap.t
 type afmap = IdSet.t FmlsMap.t
 type parents = Id.t FmlsMap.t
@@ -67,13 +67,13 @@ let generate_top_vars = fun funcs ->
 
 (* obtain the set of all variables occurring in a formula *)
 let rec get_xs = fun xs fml ->
-    match fml with
-    | HFS.Or (ys)
-    | HFS.And (ys) ->
+    match Enc.decode fml with
+    | Enc.Or (ys)
+    | Enc.And (ys) ->
         List.fold_left get_xs xs ys
-    | HFS.Box (a, x)
-    | HFS.Diamond (a, x) -> get_xs xs x
-    | HFS.App (x, ys) ->
+    | Enc.Box (a, x)
+    | Enc.Diamond (a, x) -> get_xs xs x
+    | Enc.App (x, ys) ->
         let xs = IdSet.add x xs in
         List.fold_left get_xs xs ys
 
@@ -209,13 +209,13 @@ let generate_afmap = fun top_vars acg ->
 
 (* fml is a subformula of the body of p *)
 let rec add_parent = fun p acc fml ->
-    match fml with
-    | HFS.Or (ys)
-    | HFS.And (ys) ->
+    match Enc.decode fml with
+    | Enc.Or (ys)
+    | Enc.And (ys) ->
         List.fold_left (add_parent p) acc ys
-    | HFS.Box (a, x)
-    | HFS.Diamond (a, x) -> (add_parent p) acc x
-    | HFS.App (x, ys) ->
+    | Enc.Box (a, x)
+    | Enc.Diamond (a, x) -> (add_parent p) acc x
+    | Enc.App (x, ys) ->
         let acc = FmlsMap.add ys p acc in
         List.fold_left (add_parent p) acc ys
 
@@ -243,7 +243,7 @@ let generate_abmap = fun top_vars acg fbmap parents ->
         else
             let p = FmlsMap.find ys parents in
             let bindings = LHS.find_default [] p fbmap in
-            let contexts = List.rev (List.rev_map fst bindings) in
+            let contexts = X.List.map fst bindings in
             FmlsMap.add ys contexts acc
     in
     let (_, rhs) = top_vars in
@@ -404,12 +404,12 @@ let get_dep_rhs = fun x flow_info ->
     (IdSet.singleton y, zs)
 
 let string_of_formulas = fun xs ->
-    let ls = List.rev_map HFS.string_of_formula xs in
-    "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
+    let ls = X.List.map Enc.string_of_formula xs in
+    "[" ^ (String.concat "; " ls) ^ "]"
 
 let string_of_formulass = fun xss ->
-    let ls = List.rev_map string_of_formulas xss in
-    "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
+    let ls = X.List.map string_of_formulas xss in
+    "[" ^ (String.concat "; " ls) ^ "]"
 
 let string_of_states = fun qs ->
     let f = fun q acc ->

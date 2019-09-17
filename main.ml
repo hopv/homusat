@@ -56,14 +56,15 @@ let solve = fun srcpath ->
         Log.exec 2 (fun () ->
             print_endline ("%PREPROCESSED\n" ^ (HFS.to_string hfs)));
         Profile.start_proc "flow calculation";
-        let flow_info = Flow.generate_flow_info hfs lts in
+        let enc = Enc.encode hfs in
+        let flow_info = Flow.generate_flow_info enc lts in
         Profile.end_proc "flow calculation";
         Profile.print_proc 1 "flow calculation";
         Log.exec 2 (fun () ->
             print_endline "%FLOWS"; Flow.print flow_info);
         Profile.start_proc "saturation loop";
         let tj =
-            Saturation.saturate hfs lts kernels dep_kernels flow_info
+            Saturation.saturate enc lts kernels dep_kernels flow_info
         in
         Profile.end_proc "saturation loop";
         Profile.print_proc 1 "saturation loop";

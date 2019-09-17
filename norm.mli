@@ -1,3 +1,3 @@
-(* convert (extended) HES into HFS *)
+(* Convert (extended) HES into HFS *)
 
 val normalize : HES.t -> HFS.t

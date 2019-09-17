@@ -1,7 +1,6 @@
 {
     open Parser
 
-    (* set file name *)
     let init_lexbuf = fun lexbuf filename ->
         let tmp = lexbuf.Lexing.lex_curr_p in
         lexbuf.Lexing.lex_curr_p <- { tmp with Lexing.pos_fname = filename }

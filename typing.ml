@@ -1,11 +1,12 @@
-(* type inference/reconstruction *)
+(* Type inference/reconstruction *)
 
-(* type environment *)
+(* Type environment *)
 module Env = Id.IdMap
 
 module UnionFind = struct
 
-    module S = Set.Make (struct
+    (* We can use arrays instead of sets and maps *)
+    module S = X.Set.Make (struct
         type t = HES.simple_type
         let compare : t -> t -> int = compare
     end)
@@ -14,20 +15,18 @@ module UnionFind = struct
         let compare : t -> t -> int = compare
     end)
 
-    (* no rank function *)
+    (* No rank function *)
     type t = HES.simple_type M.t
 
     exception Typing_error
     exception Unification_error of HES.simple_type
 
     let rec find = fun x uft ->
-        if M.mem x uft then
-            let px = M.find x uft in
-            if px = x then (px, uft)
-            else
-                let (px, uft) = find px uft in
-                (px, M.add x px uft)
-        else (x, M.add x x uft)
+        let px = M.find_default x x uft in
+        if px = x then (px, uft)
+        else
+            let (px, uft) = find px uft in
+            (px, M.add x px uft)
 
     let rec union = fun x y uft ->
         let (x, uft) = find x uft in
@@ -36,11 +35,10 @@ module UnionFind = struct
         | (HES.Prop, HES.Prop) -> uft
         | (HES.Arrow (x1, x2), HES.Arrow (y1, y2)) ->
             let uft = M.add x y uft in (* Corbin & Bidoit (1983) *)
-            let uft = union x1 y1 uft in
-            union x2 y2 uft
+            union x2 y2 (union x1 y1 uft)
         | (HES.TyVar (i), HES.TyVar (j)) when i = j -> uft
-        | (HES.TyVar (i), _) -> M.add x y uft (* no occurs check *)
-        | (_, HES.TyVar (i)) -> M.add y x uft (* no occurs check *)
+        | (HES.TyVar (i), _) -> M.add x y uft (* No occurs check *)
+        | (_, HES.TyVar (i)) -> M.add y x uft (* No occurs check *)
         | _ -> raise Typing_error
 
     let exit_with_typing_error = fun x y pos ->
@@ -66,7 +64,7 @@ module UnionFind = struct
         Log.println 0 msg;
         exit 1
 
-    (* reconstruction with occurs check (for error message printing) *)
+    (* Auxiliary function for pretty error printing *)
     let rec partially_reconstruct_oc = fun visited x uft ->
         if S.mem x visited then (x, uft)
         else
@@ -92,14 +90,15 @@ module UnionFind = struct
     let warn_unresolved_variable = fun x pos t ->
         let sx = Id.to_string x in
         let st = HES.string_of_simple_type t in
+        let so = HES.string_of_simple_type HES.Prop in
         let spos = Position.to_string pos in
         let msg = spos ^ ":\n" ^
                   "Warning: inferred type for the variable '" ^ sx ^ "'" ^
                   " contains an unresolved type variable " ^ st ^ "," ^
-                  " which is arbitrarily assumed to be type o" in
+                  " which is arbitrarily assumed to be type " ^ so in
         Log.prerrln 0 msg
 
-    (* reconstruction with occurs check *)
+    (* Reconstruction with occurs check *)
     let rec reconstruct_oc = fun x pos visited t uft ->
         if S.mem t visited then
             raise (Unification_error (t))
@@ -119,7 +118,7 @@ module UnionFind = struct
                 let uft = union t ret uft in
                 (ret, uft)
 
-    (* x and pos are necessary for warning *)
+    (* The id x and pos are used for warning *)
     let reconstruct = fun x pos t uft ->
         try reconstruct_oc x pos S.empty t uft
         with Unification_error (v) ->

@@ -7,14 +7,13 @@
 
 (* print int list list *)
 let print_iss = fun iss ->
-    let f = fun acc is ->
-        let g = fun acc i -> string_of_int i :: acc in
-        let ls = List.fold_left g [] is in
-        let str = String.concat "; " (List.rev ls) in
-        ("[" ^ str ^ "]") :: acc
+    let f = fun is ->
+        let ls = X.List.map string_of_int is in
+        let str = String.concat "; " ls in
+        "[" ^ str ^ "]"
     in
-    let ls = List.fold_left f [] iss in
-    let str = String.concat "; " (List.rev ls) in
+    let ls = X.List.map f iss in
+    let str = String.concat "; " ls in
     print_endline ("[" ^ str ^ "]")
 
 (* lexicographic ordering on lists of integers *)
@@ -69,7 +68,7 @@ let generate_mins = fun iss ->
 
 (* converts int list list to int array array (for binary search) *)
 let convert_to_arrays = fun iss ->
-    Array.of_list (List.rev_map Array.of_list (List.rev iss))
+    Array.of_list (X.List.map Array.of_list iss)
 
 (* returns the first i such that l < i <= r and cond i *)
 let rec lower_bound = fun l r cond ->

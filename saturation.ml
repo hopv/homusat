@@ -46,12 +46,12 @@ let print_lhste = fun lhste ->
     Gamma.iter f lhste
 
 let string_of_formulas = fun xs ->
-    let ls = List.rev_map HFS.string_of_formula xs in
-    "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
+    let ls = X.List.map Enc.string_of_formula xs in
+    "[" ^ (String.concat "; " ls) ^ "]"
 
 let string_of_sigmas = fun sigmas ->
-    let ls = List.rev_map Types.string_of_sigma sigmas in
-    "[" ^ (String.concat "; " (List.rev ls)) ^ "]"
+    let ls = X.List.map Types.string_of_sigma sigmas in
+    "[" ^ (String.concat "; " ls) ^ "]"
 
 let print_argte = fun argte ->
     let f = fun xs sigmass ->
@@ -73,13 +73,6 @@ let split_xs = fun xs ys ->
         | (x :: xs, y :: ys) -> f xs ys (x :: acc)
     in
     f xs ys []
-
-let restrict_lhste = fun lhste cs ->
-    let f = fun lhste x acc ->
-        let sigma = Gamma.find_default Sigma.empty x lhste in
-        Gamma.add x sigma acc
-    in
-    IdSet.fold (f lhste) cs Gamma.empty
 
 (* { x : sigma | x is a free variable } *)
 let generate_gamma = fun xs cs sigmas ->
@@ -161,22 +154,10 @@ let generate_epsilon_binding =
     let f = generate_epsilon_rhste qs delta winning_nodes lhste x ys body in
     Theta.fold f rhstes acc
 
-let prev_x = ref LHS.empty
-let update_prev_x = fun x body lhste ->
-    let prev_lhste = LHS.find_default Gamma.empty x !prev_x in
-    if Gamma.equal Sigma.equal lhste prev_lhste then ()
-    else begin
-        TypeJudge.reset_hoge x;
-        prev_x := LHS.add x lhste !prev_x
-    end
-
 let generate_epsilon_lhs =
-    fun fmap delta flow_info winning_nodes lhste argte x ->
+    fun fmap delta flow_info winning_nodes lhste argte x cs ->
     let (ys, body) = LHS.find x fmap in
     let bindings = Flow.get_bindings x flow_info in
-    let cs = Flow.get_children x flow_info in
-    let lhste = restrict_lhste lhste cs in
-    update_prev_x x body lhste;
     let f =
         generate_epsilon_binding delta winning_nodes
                                  lhste argte x ys body cs
@@ -311,6 +292,17 @@ let normalize_sigmass = fun ys sigmass ->
     update_subsumed ys sigmass optimized;
     optimized
 
+(* Naive implementation *)
+(* Can be improved using some sophisticated algorithm like AMS-Lex *)
+let merge_sigmass = fun sigmass1 sigmass2 ->
+    let f = fun sigmass acc sigmas ->
+        if List.exists (subsumed sigmas) sigmass then acc
+        else sigmas :: acc
+    in
+    let sigmass1 = List.fold_left (f sigmass2) [] sigmass1 in
+    let merged = List.fold_left (f sigmass1) sigmass1 sigmass2 in
+    SigmasSet.elements (SigmasSet.of_list merged)
+
 let normalize_sigmass2 = fun argte ys sigmass ->
     let sigmass = remove_subsumed ys sigmass in
     let sigmass = SigmasSet.of_list sigmass in
@@ -328,29 +320,27 @@ let normalize_sigmass2 = fun argte ys sigmass ->
             if SigmasSet.is_empty old_sigmass then new_sigmass
             else
                 (* Here we know that old_sigmass and new_sigmass both *)
-                (* consist of maximal sets. How should we merge them? *)
+                (* consist of maximal sets. Moreover, they are mutually *)
+                (* exclusive. How should we merge them? *)
                 let old_sigmass = SigmasSet.elements old_sigmass in
+                merge_sigmass old_sigmass new_sigmass
+                (*
                 let merged = List.rev_append new_sigmass old_sigmass in
                 Opt.normalize_sigmass merged
+                *)
     in
     let sigmass = SigmasSet.elements sigmass in
     update_subsumed ys sigmass optimized;
     optimized
 
-let prev_ys = ref FmlsMap.empty
-let update_prev_ys = fun ys lhste ->
-    let prev_lhste = FmlsMap.find_default Gamma.empty ys !prev_ys in
-    if Gamma.equal Sigma.equal lhste prev_lhste then ()
-    else begin
-        List.iter TypeCheck.reset_hoge ys;
-        prev_ys := FmlsMap.add ys lhste !prev_ys
-    end
+let normalize_sigmass3 = fun argte ys sigmass ->
+    let old_sigmass = FmlsMap.find_default [] ys argte in
+    let new_sigmass = List.rev_append old_sigmass sigmass in
+    let new_sigmass = SigmasSet.of_list new_sigmass in
+    SigmasSet.elements new_sigmass
 
-let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys ->
+let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys cs ->
     let aqmap = Flow.get_aqmap flow_info in
-    let cs = Flow.get_siblings ys flow_info in
-    let lhste = restrict_lhste lhste cs in
-    update_prev_ys ys lhste;
     let contexts = Flow.get_contexts ys flow_info in
     if contexts = [] then
         let rhstes = Theta.singleton Gamma.empty in
@@ -361,8 +351,9 @@ let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys ->
             generate_sigmass_context delta aqmap lhste argte xs ys cs
         in
         let sigmass = List.fold_left f [] contexts in
-        normalize_sigmass ys sigmass
-        (* normalize_sigmass2 argte ys sigmass *)
+        (* normalize_sigmass ys sigmass *)
+        normalize_sigmass2 argte ys sigmass
+        (* normalize_sigmass3 argte ys sigmass *)
         (* Opt.normalize_sigmass sigmass *)
 
 (* check if updated assuming that both lists are normalized *)
@@ -403,6 +394,13 @@ let check_loop_count = fun lhste argte ->
         raise Over_loop
     end else ()
 
+let restrict_lhste = fun cs lhste ->
+    let f = fun lhste x acc ->
+        let sigma = Gamma.find_default Sigma.empty x lhste in
+        Gamma.add x sigma acc
+    in
+    IdSet.fold (f lhste) cs Gamma.empty
+
 let add_axioms = fun axioms dep_kernels x lhste ->
     let f = fun axioms kernel acc ->
         let axiom = Gamma.find kernel axioms in
@@ -413,14 +411,26 @@ let add_axioms = fun axioms dep_kernels x lhste ->
     let kernels = LHS.find_default IdSet.empty x dep_kernels in
     IdSet.fold (f axioms) kernels lhste
 
+let prev_x = ref LHS.empty
+let update_prev_x = fun x lhste ->
+    let prev_lhste = LHS.find_default Gamma.empty x !prev_x in
+    if Gamma.equal Sigma.equal lhste prev_lhste then ()
+    else begin
+        TypeJudge.reset_hoge x;
+        prev_x := LHS.add x lhste !prev_x
+    end
+
 let propagate_lhs =
     fun fmap delta flow_info winning_nodes axioms dep_kernels tj lhste argte queue x ->
     Log.exec 3 (fun () ->
         print_endline ("propagating " ^ (Id.to_string x)));
-    let lhste' = add_axioms axioms dep_kernels x lhste in
+    let cs = Flow.get_children x flow_info in
+    let lhste' = restrict_lhste cs lhste in
+    let lhste' = add_axioms axioms dep_kernels x lhste' in
+    update_prev_x x lhste';
     let epsilon =
         generate_epsilon_lhs fmap delta flow_info
-                             winning_nodes lhste' argte x
+                             winning_nodes lhste' argte x cs
     in
     let (epsilon, winning_nodes, tj) =
         Imm.optimize x epsilon winning_nodes tj
@@ -433,14 +443,26 @@ let propagate_lhs =
         (winning_nodes, axioms, tj, lhste, argte, queue)
     else (winning_nodes, axioms, tj, lhste, argte, queue)
 
+let prev_ys = ref FmlsMap.empty
+let update_prev_ys = fun ys lhste ->
+    let prev_lhste = FmlsMap.find_default Gamma.empty ys !prev_ys in
+    if Gamma.equal Sigma.equal lhste prev_lhste then ()
+    else begin
+        List.iter TypeCheck.reset_hoge ys;
+        prev_ys := FmlsMap.add ys lhste !prev_ys
+    end
+
 let propagate_rhs =
     fun fmap delta flow_info winning_nodes axioms dep_kernels tj lhste argte queue ys ->
     Log.exec 3 (fun () ->
         print_endline ("propagating " ^ (string_of_formulas ys)));
     let x = Flow.get_parent ys flow_info in
-    let lhste' = add_axioms axioms dep_kernels x lhste in
+    let cs = Flow.get_siblings ys flow_info in
+    let lhste' = restrict_lhste cs lhste in
+    let lhste' = add_axioms axioms dep_kernels x lhste' in
+    update_prev_ys ys lhste';
     let sigmass =
-        generate_sigmass_rhs fmap delta flow_info lhste' argte x ys
+        generate_sigmass_rhs fmap delta flow_info lhste' argte x ys cs
     in
     let (argte, updated) = update_argte ys sigmass argte in
     if updated then
@@ -501,9 +523,17 @@ let generate_axioms = fun funcs flow_info kernels ->
     let fqmap = Flow.get_fqmap flow_info in
     List.fold_left (f fqmap kernels) Gamma.empty funcs
 
+let generate_fmap = fun funcs ->
+    let f = fun acc func ->
+        let (_, x, _, args, fml) = func in
+        let args = X.List.map fst args in
+        LHS.add x (args, fml) acc
+    in
+    List.fold_left f LHS.empty funcs
+
 let saturate = fun funcs lts kernels dep_kernels flow_info ->
     Types.register_states lts;
-    let fmap = Preproc.generate_fmap funcs in
+    let fmap = generate_fmap funcs in
     let (_, _, delta, _) = lts in
     let tj = LHS.empty in
     let winning_nodes = Gamma.empty in

@@ -1,4 +1,4 @@
-(* alpha conversion for HES *)
+(* Alpha conversion for HES *)
 
-(* assign a unique name to each variable *)
+(* Assign a unique name to each variable *)
 val rename : HES.t -> HES.t

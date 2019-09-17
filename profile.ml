@@ -1,8 +1,8 @@
-(* profiling *)
+(* Profiling *)
 
 exception Time_out
 
-module Timer = Map.Make (String)
+module Timer = X.Map.Make (String)
 let timer = ref Timer.empty
 
 let start_proc = fun key ->

@@ -15,5 +15,5 @@ module Epsilon = Types.Epsilon
 
 exception Over_loop
 
-val saturate : HFS.t -> LTS.t -> IdSet.t -> IdSet.t LHS.t -> Flow.t ->
+val saturate : Enc.t -> LTS.t -> IdSet.t -> IdSet.t LHS.t -> Flow.t ->
                Theta.t Epsilon.t IdMap.t

@@ -25,14 +25,14 @@ module States = LTS.States
 module Delta = LTS.Delta
 
 type formula =
-    | Or of HFS.formula list
-    | And of HFS.formula list
-    | Box of Id.t * HFS.formula
-    | Diamond of Id.t * HFS.formula
-    | App of Id.t * ((HFS.formula list) list)
+    | Or of Enc.elt list
+    | And of Enc.elt list
+    | Box of Id.t * Enc.elt
+    | Diamond of Id.t * Enc.elt
+    | App of Id.t * ((Enc.elt list) list)
 
 module FmlSet = Set.Make (struct
-    type t = HFS.formula
+    type t = Enc.elt
     let compare : t -> t -> int = compare
 end)
 
@@ -42,12 +42,12 @@ module FmlSet2 = Set.Make (struct
 end)
 
 module FmlsSet = Set.Make (struct
-    type t = HFS.formula list
+    type t = Enc.elt list
     let compare : t -> t -> int = compare
 end)
 
 module FmlMap = X.Map.Make (struct
-    type t = HFS.formula
+    type t = Enc.elt
     let compare : t -> t -> int = compare
 end)
 
@@ -57,7 +57,7 @@ module FmlMap2 = X.Map.Make (struct
 end)
 
 module FmlsMap = X.Map.Make (struct
-    type t = HFS.formula list
+    type t = Enc.elt list
     let compare : t -> t -> int = compare
 end)
 
@@ -65,12 +65,12 @@ end)
 type t = States.t FmlMap2.t * FmlSet.t RHS.t * Id.t list list FmlsMap.t
 
 let convert = fun fml ->
-    match fml with
-    | HFS.Or (xs) -> Or (xs)
-    | HFS.And (xs) -> And (xs)
-    | HFS.Box (a, x) -> Box (a, x)
-    | HFS.Diamond (a, x) -> Diamond (a, x)
-    | HFS.App (x, ys) ->
+    match Enc.decode fml with
+    | Enc.Or (xs) -> Or (xs)
+    | Enc.And (xs) -> And (xs)
+    | Enc.Box (a, x) -> Box (a, x)
+    | Enc.Diamond (a, x) -> Diamond (a, x)
+    | Enc.App (x, ys) ->
         if ys = [] then App (x, [])
         else App (x, [ys])
 
@@ -94,8 +94,8 @@ let next_states = fun delta qs a ->
 
 (* append zss as additional arguments to the formula fml *)
 let append_args = fun fml zss ->
-    match fml with
-    | HFS.App (x, ys) ->
+    match Enc.decode fml with
+    | Enc.App (x, ys) ->
         if ys = [] then App (x, zss)
         else App (x, ys :: zss)
     | _ -> (* assert (zss = []); *) convert fml
@@ -243,7 +243,7 @@ let initial_set = fun funcs lts ->
 let generate_fmap = fun funcs ->
     let f = fun acc func ->
         let (_, x, _, args, fml) = func in
-        let args = List.rev (List.rev_map fst args) in
+        let args = X.List.map fst args in
         let fml = convert fml in
         LHS.add x (args, fml) acc
     in

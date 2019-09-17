@@ -12,28 +12,29 @@ module Epsilon = Types.Epsilon
 
 exception Empty
 
-let memo = ref Epsilon.empty
-let reset_memo = fun () -> memo := Epsilon.empty
+let memo = ref FmlMap.empty
+let reset_memo = fun () -> memo := FmlMap.empty
 
 (* return the set of type environments under which fml has type tau *)
 let rec type_envs = fun delta winning_nodes te fml tau ->
     Profile.check_time_out "model checking" !Flags.time_out;
-    let tbl = Epsilon.find_default FmlMap.empty tau !memo in
-    if FmlMap.mem fml tbl then FmlMap.find fml tbl
+    let tbl = FmlMap.find_default Epsilon.empty fml !memo in
+    if Epsilon.mem tau tbl then Epsilon.find tau tbl
     else
         let ret = type_envs_without_memo delta winning_nodes te fml tau in
-        let tbl = FmlMap.add fml ret tbl in
-        memo := Epsilon.add tau tbl !memo;
+        (* let tbl = FmlMap.find_default Epsilon.empty fml !memo in *)
+        let tbl = Epsilon.add tau ret tbl in
+        memo := FmlMap.add fml tbl !memo;
         ret
 and type_envs_without_memo = fun delta winning_nodes te fml tau ->
-    match fml with
-    | HFS.Or (xs) ->
+    match Enc.decode fml with
+    | Enc.Or (xs) ->
         let f = fun delta winning_nodes te tau acc x ->
             let theta = type_envs delta winning_nodes te x tau in
             Theta.union theta acc
         in
         List.fold_left (f delta winning_nodes te tau) Theta.empty xs
-    | HFS.And (xs) ->
+    | Enc.And (xs) ->
         let f = fun delta winning_nodes te tau acc x ->
             if Theta.is_empty acc then acc
             else
@@ -42,7 +43,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
         in
         let f = f delta winning_nodes te tau in
         List.fold_left f (Theta.singleton Gamma.empty) xs
-    | HFS.Box (a, x) ->
+    | Enc.Box (a, x) ->
         let q = Types.codom tau in
         let f = fun delta winning_nodes te x p acc ->
             let tau = Tau.encode ([], p) in
@@ -55,7 +56,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
             let seed = Theta.singleton Gamma.empty in
             States.fold (f delta winning_nodes te x) ps seed
         with Empty -> Theta.empty end
-    | HFS.Diamond (a, x) ->
+    | Enc.Diamond (a, x) ->
         let q = Types.codom tau in
         let f = fun delta winning_nodes te x p acc ->
             let tau = Tau.encode ([], p) in
@@ -65,7 +66,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
         in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.fold (f delta winning_nodes te x) ps Theta.empty
-    | HFS.App (x, ys) ->
+    | Enc.App (x, ys) ->
         let f = fun tau n tc -> tau = (Types.drop tc n) in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
@@ -103,6 +104,8 @@ end)
 let hoge = ref Env.empty
 let reset_hoge = fun x -> hoge := Env.remove x !hoge
 
+let cnt = ref 0
+
 let type_envs = fun delta winning_nodes lhste rhste x fml tau ->
 (*
     let te = Types.merge_gammas lhste rhste in
@@ -111,6 +114,7 @@ let type_envs = fun delta winning_nodes lhste rhste x fml tau ->
     let fuga = Env.find_default EnvMap.empty x !hoge in
     let piyo = EnvMap.find_default Epsilon.empty rhste fuga in
     if Epsilon.mem tau piyo then
+        (* let _ = cnt := !cnt + 1; print_endline (string_of_int !cnt) in *)
         Epsilon.find tau piyo
     else
         let te = Types.merge_gammas lhste rhste in

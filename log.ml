@@ -1,4 +1,4 @@
-(* log output *)
+(* Log output *)
 
 let println = fun level str ->
     if level <= !Flags.verbosity then print_endline str else ()

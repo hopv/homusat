@@ -9,10 +9,10 @@ x.ml \
 flags.ml \
 log.mli log.ml \
 profile.mli profile.ml \
+position.mli position.ml \
 id.mli id.ml \
 LTS.mli LTS.ml \
 HES.mli HES.ml \
-position.mli position.ml \
 parser.mly lexer.mll \
 alphaHES.mli alphaHES.ml \
 typing.mli typing.ml \
@@ -21,10 +21,11 @@ alphaHFS.mli alphaHFS.ml \
 norm.mli norm.ml \
 preproc.mli preproc.ml \
 reduction.mli reduction.ml \
+analysis.mli analysis.ml \
+enc.mli enc.ml \
 ACG.mli ACG.ml \
 flow.mli flow.ml \
 types.mli types.ml \
-analysis.mli analysis.ml \
 AMS.mli AMS.ml \
 opt.mli opt.ml \
 typeJudge.mli typeJudge.ml \

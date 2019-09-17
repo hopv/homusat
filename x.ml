@@ -1,4 +1,4 @@
-(* extended standard modules *)
+(* Extended standard modules *)
 
 module Set = struct
     module type S = sig
@@ -31,4 +31,11 @@ module Map = struct
             if mem key map then find key map
             else default
     end
+end
+
+module List = struct
+    (* List.map with forced tail-recursion *)
+    let map = fun f ls -> List.rev (List.rev_map f ls)
+    (* List.append with forced tail-recursion *)
+    let append = fun xs ys -> List.rev_append (List.rev xs) ys
 end

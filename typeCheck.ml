@@ -10,28 +10,30 @@ module Gamma = Types.Gamma
 module Theta = Types.Theta
 module Epsilon = Types.Epsilon
 
-let memo = ref Epsilon.empty
-let reset_memo = fun () -> memo := Epsilon.empty
+
+let memo = ref FmlMap.empty
+let reset_memo = fun () -> memo := FmlMap.empty
 
 (* check if the formula fml can be typed with tau *)
 let rec is_typable = fun delta te fml tau ->
     Profile.check_time_out "model checking" !Flags.time_out;
-    let tbl = Epsilon.find_default FmlMap.empty tau !memo in
-    if FmlMap.mem fml tbl then FmlMap.find fml tbl
+    let tbl = FmlMap.find_default Epsilon.empty fml !memo in
+    if Epsilon.mem tau tbl then Epsilon.find tau tbl
     else
         let ret = is_typable_without_memo delta te fml tau in
-        let tbl = FmlMap.add fml ret tbl in
-        memo := Epsilon.add tau tbl !memo;
+        (* let tbl = FmlMap.find_default Epsilon.empty fml !memo in *)
+        let tbl = Epsilon.add tau ret tbl in
+        memo := FmlMap.add fml tbl !memo;
         ret
 and is_typable_without_memo = fun delta te fml tau ->
-    match fml with
-    | HFS.Or (xs) ->
+    match Enc.decode fml with
+    | Enc.Or (xs) ->
         let f = fun delta te tau x -> is_typable delta te x tau in
         List.exists (f delta te tau) xs
-    | HFS.And (xs) ->
+    | Enc.And (xs) ->
         let f = fun delta te tau x -> is_typable delta te x tau in
         List.for_all (f delta te tau) xs
-    | HFS.Box (a, x) ->
+    | Enc.Box (a, x) ->
         let q = Types.codom tau in
         let f = fun delta te x p ->
             let tau = Tau.encode ([], p) in
@@ -39,7 +41,7 @@ and is_typable_without_memo = fun delta te fml tau ->
         in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.for_all (f delta te x) ps
-    | HFS.Diamond (a, x) ->
+    | Enc.Diamond (a, x) ->
         let q = Types.codom tau in
         let f = fun delta te x p ->
             let tau = Tau.encode ([], p) in
@@ -47,7 +49,7 @@ and is_typable_without_memo = fun delta te fml tau ->
         in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.exists (f delta te x) ps
-    | HFS.App (x, ys) ->
+    | Enc.App (x, ys) ->
         let f = fun tau n tc -> tau = (Types.drop tc n) in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
@@ -61,8 +63,8 @@ and is_typable_app = fun delta te ys tau ->
 
 (* return the set of types that fml can be typed under delta *)
 let types = fun qs delta te fml ->
-    match fml with
-    | HFS.App (x, ys) ->
+    match Enc.decode fml with
+    | Enc.App (x, ys) ->
         let f = fun delta te x ys tau acc ->
             if is_typable_app delta te ys tau then
                 let tau = Types.drop tau (List.length ys) in
@@ -88,12 +90,15 @@ end)
 let hoge = ref FmlMap.empty
 let reset_hoge = fun fml -> hoge := FmlMap.remove fml !hoge
 
+let cnt = ref 0
+
 let types = fun qs delta lhste rhste fml ->
     let te = Types.merge_gammas lhste rhste in
     types qs delta te fml
 (*
     let fuga = FmlMap.find_default EnvMap.empty fml !hoge in
     if EnvMap.mem rhste fuga then
+        (* let _ = cnt := !cnt - 1; print_endline (string_of_int !cnt) in *)
         EnvMap.find rhste fuga
     else
         let te = Types.merge_gammas lhste rhste in

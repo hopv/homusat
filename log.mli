@@ -1,4 +1,4 @@
-(* log output *)
+(* Log output *)
 
 val println : int -> string -> unit
 val prerrln : int -> string -> unit

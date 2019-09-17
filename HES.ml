@@ -1,15 +1,12 @@
-(* (extended) HES *)
+(* (Extended) HES *)
 
-(* simple types *)
 type simple_type =
     | Prop
     | TyVar of int
     | Arrow of simple_type * simple_type
 
-(* generate a fresh type variable *)
-let gen_type =
-    let counter = ref 0 in
-    fun () ->
+(* Generate a fresh type variable *)
+let gen_type = let counter = ref 0 in fun () ->
     let i = !counter in
     counter := !counter + 1;
     TyVar (i)
@@ -22,7 +19,7 @@ let rec string_of_simple_type = fun t ->
         let sl = string_of_simple_type l in
         let sr = string_of_simple_type r in
         match l with
-        | Arrow _ -> "(" ^ sl ^ ") -> " ^ sr
+        | Arrow (_) -> "(" ^ sl ^ ") -> " ^ sr
         | _ -> sl ^ " -> " ^ sr
 
 (* HFL formulas *)
@@ -107,7 +104,7 @@ let rec string_of_formula = fun fml ->
         let sbody = string_of_formula body in
         "\\nu " ^ sx ^ " : " ^ st ^ ". " ^ sbody
 
-(* fixed-point operators *)
+(* Fixed-point operators *)
 type fp = Mu | Nu
 
 let string_of_fp = fun fp ->
@@ -115,7 +112,7 @@ let string_of_fp = fun fp ->
     | Mu -> "\\mu"
     | Nu -> "\\nu"
 
-(* equations in HES *)
+(* Equations in HES *)
 type equation = fp * (Id.t * Position.t) * simple_type * formula
 
 let string_of_equation = fun eq ->
@@ -126,7 +123,7 @@ let string_of_equation = fun eq ->
     let seq = "=_" ^ (string_of_fp fp) in
     sx ^ " : " ^ st ^ " " ^ seq ^ " " ^ sfml
 
-(* (extended) HES *)
+(* (Extended) HES *)
 type t = equation list
 
 let to_string = fun eqs ->

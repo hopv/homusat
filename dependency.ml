@@ -16,7 +16,7 @@ module IntMap = X.Map.Make (struct
    let compare : t -> t -> int = compare
 end)
 
-type element = Function of Id.t | Formulas of HFS.formula list
+type element = Function of Id.t | Formulas of Enc.elt list
 
 (* DFS + sort *)
 let rec dfs_aux = fun adj x (visited, acc) ->
@@ -231,14 +231,25 @@ module Queue = struct
                 match IntMap.find x !decoder with
                 | Function (x) -> Id.to_string x :: acc
                 | Formulas (ys) ->
-                    let ls = List.rev_map HFS.string_of_formula ys in
-                    ("[" ^ (String.concat "; " (List.rev ls)) ^ "]") :: acc
+                    let ls = X.List.map Enc.string_of_formula ys in
+                    ("[" ^ (String.concat "; " ls) ^ "]") :: acc
             in
-            let ls = IntSet.fold g scc [] in
-            let str = "{" ^ (String.concat ", " (List.rev ls)) ^ "}" in
+            let ls = List.rev (IntSet.fold g scc []) in
+            let str = "{" ^ (String.concat ", " ls) ^ "}" in
             print_endline str
         in
         print_endline "%DEP_SCCS";
+        List.iter f sccs
+
+    let restrict_edges = fun sccs ->
+        let f = fun scc ->
+            let g = fun scc x ->
+                let ys = IntMap.find_default IntSet.empty x !adj in
+                let ys = IntSet.inter ys scc in
+                adj := IntMap.add x ys !adj
+            in
+            IntSet.iter (g scc) scc
+        in
         List.iter f sccs
 
     let push = let cnt = ref 0 in (* for weights *) fun x queue ->
@@ -262,6 +273,7 @@ module Queue = struct
         add_dep_formulas flow_info;
         let sccs = topsort_sccs !vs !adj in
         (* Log.exec 2 (fun () -> print_sccs sccs); *)
+        restrict_edges sccs;
         add_priorities sccs;
         initial_pool !vs
 
