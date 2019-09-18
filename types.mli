@@ -18,7 +18,7 @@ val register_states : LTS.t -> unit
 val is_prop : Tau.t -> bool
 val codom : Tau.t -> LTS.state
 val drop : Tau.t -> Tau.t -> Tau.t
-val annot : 'a list -> Tau.t -> ('a * Sigma.t) list
+val annot : Enc.elt list -> Tau.t -> (Enc.elt * Sigma.t) list
 val strongest_type : HFS.simple_type -> LTS.state -> Tau.t
 val string_of_tau : Tau.t -> string
 val string_of_sigma : Sigma.t -> string

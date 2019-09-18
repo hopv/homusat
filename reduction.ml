@@ -4,6 +4,15 @@
 module LHS = Id.IdMap
 module IdSet = Id.IdSet
 
+(* F \mapsto (args, body) *)
+let generate_fmap = fun funcs ->
+    let f = fun acc func ->
+        let (_, x, _, args, fml) = func in
+        let args = X.List.map fst args in
+        LHS.add x (args, fml) acc
+    in
+    List.fold_left f LHS.empty funcs
+
 (* replace formal arguments with applied formulas *)
 let rec subst = fun sub fml ->
     Profile.check_time_out "model checking" !Flags.time_out;
@@ -70,7 +79,7 @@ let generate_nonrec_map = fun funcs ->
         let fml = reduce_fml acc fml in
         LHS.add x (args, fml) acc
     in
-    let fmap = Preproc.generate_fmap funcs in
+    let fmap = generate_fmap funcs in
     (* let nonrecs = Preproc.generate_nonrecs funcs in *)
     let nonrecs = Preproc.generate_onces funcs in
     (* Note that nonrecs are topologically sorted *)

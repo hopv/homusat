@@ -34,7 +34,7 @@ let get_rt = fun t ->
 
 let add_binding = fun env (x, t) -> Env.add x t env
 
-(* Convert an HFL formula to a sequence of normalized HFS functions *)
+(* Convert an HFL formula into a sequence of normalized HFS functions *)
 let rec convert_fml = fun fp env fml acc ->
     (* Or (a, b) -> [a'; ...; b'; ... ] *)
     let rec convert_or = fun fp env fml acc ->
@@ -78,7 +78,7 @@ let rec convert_fml = fun fp env fml acc ->
                 (HFS.App (x, args), acc, t)
             | _ -> assert false
     in
-    (* Convert a functional formula a function *)
+    (* Convert a functional formula into a function *)
     let convert_func = fun fp x env args body acc ->
         let (body, acc, t) = convert_fml fp env body acc in
         let f = fun acc (_, t) -> HFS.Arrow (t, acc) in

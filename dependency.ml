@@ -50,6 +50,7 @@ let generate_radj = fun adj ->
     in
     IntMap.fold f adj IntMap.empty
 
+(* SCC decomposition + topological sort *)
 let scc_decomposition = fun xs adj ->
     let f = fun radj (visited, acc) x ->
         if IntSet.mem x visited then (visited, acc)
@@ -60,58 +61,7 @@ let scc_decomposition = fun xs adj ->
     let (_, sorted) = IntSet.fold (dfs_aux adj) xs (IntSet.empty, []) in
     let radj = generate_radj adj in
     let (_, sccs) = List.fold_left (f radj) (IntSet.empty, []) sorted in
-    sccs
-
-(* map : x -> scc id, rmap : scc id -> xs *)
-let encode_sccs = fun sccs ->
-    let f = fun (id, map, rmap) scc ->
-        let g = fun id x (map, rmap) ->
-            let map = IntMap.add x id map in
-            let xs = IntMap.find_default IntSet.empty id rmap in
-            let xs = IntSet.add x xs in
-            let rmap = IntMap.add id xs rmap in
-            (map, rmap)
-        in
-        let (map, rmap) = IntSet.fold (g id) scc (map, rmap) in
-        (id + 1, map, rmap)
-    in
-    let seed = (0, IntMap.empty, IntMap.empty) in
-    let (_, map, rmap) = List.fold_left f seed sccs in
-    (map, rmap)
-
-(* topgraph: DAG consisting of sccs *)
-let construct_topgraph = fun adj sccs ->
-    let f = fun adj map (vs, es) scc ->
-        let g = fun adj map x (vs, es) ->
-            let h = fun map y acc ->
-                let y = IntMap.find y map in
-                IntSet.add y acc
-            in
-            let ys = IntMap.find x adj in
-            let x = IntMap.find x map in
-            let zs = IntMap.find_default IntSet.empty x es in
-            let zs = IntSet.fold (h map) ys zs in
-            let vs = IntSet.add x vs in
-            let es = IntMap.add x zs es in
-            (vs, es)
-        in
-        IntSet.fold (g adj map) scc (vs, es)
-    in
-    let (map, rmap) = encode_sccs sccs in
-    let seed = (IntSet.empty, IntMap.empty) in
-    let (vs, es) = List.fold_left (f adj map) seed sccs in
-    (vs, es, rmap)
-
-(* scc + topological sort on topgraph *)
-let topsort_sccs = fun xs adj ->
-    let f = fun rmap acc id ->
-        let scc = IntMap.find id rmap in
-        scc :: acc
-    in
-    let sccs = scc_decomposition xs adj in
-    let (xs, adj, rmap) = construct_topgraph adj sccs in
-    let (_, sorted) = IntSet.fold (dfs_aux adj) xs (IntSet.empty, []) in
-    List.rev (List.fold_left (f rmap) [] sorted)
+    List.rev sccs
 
 module Queue = struct
 
@@ -271,8 +221,8 @@ module Queue = struct
         add_formulas flow_info;
         add_dep_funcs funcs flow_info;
         add_dep_formulas flow_info;
-        let sccs = topsort_sccs !vs !adj in
-        (* Log.exec 2 (fun () -> print_sccs sccs); *)
+        let sccs = scc_decomposition !vs !adj in
+        Log.exec 5 (fun () -> print_sccs sccs);
         restrict_edges sccs;
         add_priorities sccs;
         initial_pool !vs

@@ -26,7 +26,7 @@ end)
 
 let counter = ref 0
 let encoder = ref FmlMap.empty
-let decoder = ref IntMap.empty
+let decoder = ref [| |] (* IntMap.empty *)
 (* let decoder = Hashtbl.create 1000000 *)
 
 let register = fun fml ->
@@ -35,8 +35,6 @@ let register = fun fml ->
     else begin
         let ret = !counter in
         encoder := FmlMap.add fml ret !encoder;
-        decoder := IntMap.add ret fml !decoder;
-        (* Hashtbl.add decoder ret fml; *)
         counter := ret + 1;
         ret
     end
@@ -52,16 +50,24 @@ let rec encode_fml = fun fml ->
     in
     register fml
 
+let init_decoder = fun () ->
+    let f = fun y x -> !decoder.(x) <- y in
+    decoder := Array.make !counter (Or ([]));
+    FmlMap.iter f !encoder
+
 let encode = fun funcs ->
     let f = fun func ->
         let (fp, x, t, args, body) = func in
         let body = encode_fml body in
         (fp, x, t, args, body)
     in
-    X.List.map f funcs
+    let funcs = X.List.map f funcs in
+    init_decoder ();
+    funcs
 
-let decode = fun fml -> IntMap.find fml !decoder
-    (* Hashtbl.find decoder fml *)
+let decode = fun x -> !decoder.(x)
+    (* IntMap.find x !decoder *)
+    (* Hashtbl.find decoder x *)
 
 let rec decode_fml = fun fml ->
     match decode fml with

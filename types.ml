@@ -119,7 +119,7 @@ module Tau = struct
     let normalize_sigmas = fun sigmas ->
         X.List.map normalize_sigma sigmas
 
-    (* encode tau to int after normalization *)
+    (* encode tau as an integer after normalization *)
     let encode = fun tau ->
         let (sigmas, q) = tau in
         if sigmas = [] then q

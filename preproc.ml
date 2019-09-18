@@ -1,4 +1,4 @@
-(* preprocesses *)
+(* Preprocesses *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap
@@ -6,7 +6,7 @@ module IdSet = Id.IdSet
 module States = LTS.States
 module Delta = LTS.Delta
 
-(* get all variables occurring in fml *)
+(* Get all variables occurring in a formula *)
 let get_xs = fun fml ->
     let rec f = fun xs fml ->
         match fml with
@@ -21,8 +21,8 @@ let get_xs = fun fml ->
     in
     f IdSet.empty fml
 
-(* the set of lhs variables *)
-let get_parents = fun funcs ->
+(* Get the set of all lhs variables *)
+let get_lhs = fun funcs ->
     let f = fun acc func ->
         let (_, x, _, _, _) = func in
         IdSet.add x acc
@@ -30,17 +30,17 @@ let get_parents = fun funcs ->
     List.fold_left f IdSet.empty funcs
 
 (* F \mapsto { G | G occurs in the body of F } *)
-let generate_childrens = fun funcs ->
-    let f = fun parents acc func ->
+let generate_adj = fun funcs ->
+    let f = fun lhs acc func ->
         let (_, x, _, _, fml) = func in
-        let xs = get_xs fml in
-        let children = IdSet.inter xs parents in
-        LHS.add x children acc
+        let ys = get_xs fml in
+        let ys = IdSet.inter lhs ys in
+        LHS.add x ys acc
     in
-    let parents = get_parents funcs in
-    List.fold_left (f parents) LHS.empty funcs
+    let lhs = get_lhs funcs in
+    List.fold_left (f lhs) LHS.empty funcs
 
-(* normal DFS *)
+(* Ordinary DFS *)
 let rec dfs = fun adj x visited ->
     if IdSet.mem x visited then visited
     else
@@ -48,7 +48,7 @@ let rec dfs = fun adj x visited ->
         let ys = LHS.find_default IdSet.empty x adj in
         IdSet.fold (dfs adj) ys visited
 
-(* remove variables unreachable from initial symbol *)
+(* Remove the functions unreachable from the initial symbol *)
 let remove_unreachables = fun funcs ->
     let f = fun reachables acc func ->
         let (_, x, _, _, _) = func in
@@ -57,8 +57,8 @@ let remove_unreachables = fun funcs ->
         else acc
     in
     let (_, x, _, _, _) = List.hd funcs in
-    let childrens = generate_childrens funcs in
-    let reachables = dfs childrens x IdSet.empty in
+    let adj = generate_adj funcs in
+    let reachables = dfs adj x IdSet.empty in
     List.rev (List.fold_left (f reachables) [] funcs)
 
 (* DFS + sort *)
@@ -70,7 +70,7 @@ let rec dfs_aux = fun adj x (visited, acc) ->
         let (visited, acc) = IdSet.fold (dfs_aux adj) ys (visited, acc) in
         (visited, x :: acc)
 
-(* DFS on reversed graph + scc *)
+(* DFS on the reversed graph + scc *)
 let rec rdfs_aux = fun radj x (visited, acc) ->
     if IdSet.mem x visited then (visited, acc)
     else
@@ -79,7 +79,7 @@ let rec rdfs_aux = fun radj x (visited, acc) ->
         let ys = LHS.find_default IdSet.empty x radj in
         IdSet.fold (rdfs_aux radj) ys (visited, acc)
 
-(* reversed adjacency list *)
+(* Reversed adjacency list *)
 let generate_radj = fun adj ->
     let f = fun x ys acc ->
         let g = fun x y acc ->
@@ -91,6 +91,7 @@ let generate_radj = fun adj ->
     in
     LHS.fold f adj LHS.empty
 
+(* SCC decomposition + topological sort *)
 let scc_decomposition = fun xs adj ->
     let f = fun radj (visited, acc) x ->
         if IdSet.mem x visited then (visited, acc)
@@ -101,36 +102,24 @@ let scc_decomposition = fun xs adj ->
     let (_, sorted) = IdSet.fold (dfs_aux adj) xs (IdSet.empty, []) in
     let radj = generate_radj adj in
     let (_, sccs) = List.fold_left (f radj) (IdSet.empty, []) sorted in
-    sccs
+    List.rev sccs
 
-(* topological sort of non-recursive functions *)
-let topsort_nonrecs = fun nonrecs childrens ->
-    let f = fun nonrecs childrens x acc ->
-        let children = LHS.find_default IdSet.empty x childrens in
-        let children = IdSet.inter nonrecs children in
-        LHS.add x children acc
-    in
-    let adj = IdSet.fold (f nonrecs childrens) nonrecs LHS.empty in
-    let (_, sorted) = IdSet.fold (dfs_aux adj) nonrecs (IdSet.empty, []) in
-    sorted
-
-(* topologically sorted list of non-recursive functions *)
+(* Topologically sorted list of the non-recursive functions *)
 let generate_nonrecs = fun funcs ->
-    let f = fun childrens acc scc ->
+    let f = fun adj acc scc ->
         if IdSet.cardinal scc = 1 then
             let x = IdSet.choose scc in
-            let ys = LHS.find_default IdSet.empty x childrens in
-            if IdSet.mem x ys then acc (* self-loop *)
-            else IdSet.add x acc
+            let ys = LHS.find_default IdSet.empty x adj in
+            if IdSet.mem x ys then acc (* Self-loop *)
+            else x :: acc
         else acc
     in
-    let parents = get_parents funcs in
-    let childrens = generate_childrens funcs in
-    let sccs = scc_decomposition parents childrens in
-    let nonrecs = List.fold_left (f childrens) IdSet.empty sccs in
-    topsort_nonrecs nonrecs childrens
+    let lhs = get_lhs funcs in
+    let adj = generate_adj funcs in
+    let sccs = scc_decomposition lhs adj in
+    List.rev (List.fold_left (f adj) [] sccs)
 
-(* count how many times each function is called *)
+(* Count how many times each function is called *)
 let rec count_calls_fml = fun acc fml ->
     match fml with
     | HFS.Or (xs)
@@ -148,7 +137,7 @@ let count_calls_func = fun acc func ->
     let (_, _, _, _, fml) = func in
     count_calls_fml acc fml
 
-(* topologically sorted list of functions called only once *)
+(* Topologically sorted list of the functions called only once *)
 let generate_onces = fun funcs ->
     let f = fun calls acc x ->
         if LHS.mem x calls then
@@ -161,73 +150,63 @@ let generate_onces = fun funcs ->
     let calls = List.fold_left count_calls_func LHS.empty funcs in
     List.rev (List.fold_left (f calls) [] nonrecs)
 
-(* remove edges connected with x *)
-let restrict_childrens = fun childrens x ->
-    let f = fun x y children acc ->
-        if IdSet.mem x children then
-            let children = IdSet.remove x children in
-            LHS.add y children acc
+(* Remove the edges connected to x *)
+let restrict_adj = fun adj x ->
+    let f = fun x y zs acc ->
+        if IdSet.mem x zs then
+            let zs = IdSet.remove x zs in
+            LHS.add y zs acc
         else acc
     in
-    let childrens = LHS.remove x childrens in
-    LHS.fold (f x) childrens childrens
+    let adj = LHS.remove x adj in
+    LHS.fold (f x) adj adj
 
-(* kernel variable \mapsto descendants *)
-(* kernel variable: recursive even when the vertices are restricted *)
-(*                  to those that have lower or equal priorities *)
-let generate_kernels = fun childrens funcs ->
-    let f = fun (childrens, kernels) func ->
-        let (fp, x, sort, args, body) = func in
-        let children = LHS.find x childrens in
-        let descendants = IdSet.fold (dfs childrens) children IdSet.empty in
-        let childrens = restrict_childrens childrens x in
+(* Kernel variable \mapsto its descendants *)
+(* Kernel variable: A variable recursive even when the vertices are res- *)
+(*                  tricted to those that have lower or equal priorities *)
+let generate_kernels = fun adj funcs ->
+    let f = fun (adj, kernels) func ->
+        let (_, x, _, _, _) = func in
+        let ys = LHS.find x adj in
+        let descendants = IdSet.fold (dfs adj) ys IdSet.empty in
+        let adj = restrict_adj adj x in
         if IdSet.mem x descendants then
             let kernels = LHS.add x descendants kernels in
-            (childrens, kernels)
-        else (childrens, kernels)
+            (adj, kernels)
+        else (adj, kernels)
     in
-    let seed = (childrens, LHS.empty) in
-    let (_, kernels) = List.fold_left f seed funcs in
+    let (_, kernels) = List.fold_left f (adj, LHS.empty) funcs in
     kernels
 
-(* kernel nu-variable \mapsto descendants *)
-let generate_kernel_nus = fun childrens funcs ->
+(* Kernel nu-variable \mapsto descendants *)
+let generate_kernel_nus = fun adj funcs ->
     let f = fun kernels func ->
-        let (fp, x, sort, args, body) = func in
+        let (fp, x, _, _, _) = func in
         if fp = HFS.Mu then LHS.remove x kernels
         else kernels
     in
-    let kernels = generate_kernels childrens funcs in
+    let kernels = generate_kernels adj funcs in
     List.fold_left f kernels funcs
 
-(* F -> { kernel G | F calls G and F is a descendant of G } *)
-let generate_dep_kernels = fun childrens kernels funcs ->
-    let f = fun childrens kernels acc func ->
-        let g = fun x kernels child acc ->
-            if LHS.mem child kernels then
-                let descendants = LHS.find child kernels in
+(* F \mapsto { G kernel | F calls G and F is a descendant of G } *)
+let generate_dep_kernels = fun adj kernels funcs ->
+    let f = fun adj kernels acc func ->
+        let g = fun kernels x y acc ->
+            if LHS.mem y kernels then
+                let descendants = LHS.find y kernels in
                 if IdSet.mem x descendants then
-                    IdSet.add child acc
+                    IdSet.add y acc
                 else acc
             else acc
         in
-        let (fp, x, sort, args, body) = func in
-        let children = LHS.find x childrens in
-        let deps = IdSet.fold (g x kernels) children IdSet.empty in
+        let (_, x, _, _, _) = func in
+        let ys = LHS.find x adj in
+        let deps = IdSet.fold (g kernels x) ys IdSet.empty in
         LHS.add x deps acc
     in
-    List.fold_left (f childrens kernels) LHS.empty funcs
+    List.fold_left (f adj kernels) LHS.empty funcs
 
-(* fmap: x \mapsto (args, body) *)
-let generate_fmap = fun funcs ->
-    let f = fun acc func ->
-        let (_, x, _, args, fml) = func in
-        let args = X.List.map fst args in
-        LHS.add x (args, fml) acc
-    in
-    List.fold_left f LHS.empty funcs
-
-(* priorities for functions *)
+(* F kernel \mapsto its priority *)
 let generate_priorities = fun funcs ->
     let f = fun kernels (i, acc) func ->
         let (fp, x, _, _, _) = func in
@@ -241,17 +220,17 @@ let generate_priorities = fun funcs ->
                 (i, LHS.add x i acc)
         else (* (i, LHS.add x 0 acc) *) (i, acc)
     in
-    let childrens = generate_childrens funcs in
-    let kernels = generate_kernels childrens funcs in
+    let adj = generate_adj funcs in
+    let kernels = generate_kernels adj funcs in
     let seed = (0, LHS.empty) in
     let rfuncs = List.rev funcs in
     let (_, priorities) = List.fold_left (f kernels) seed rfuncs in
     priorities
 
 let generate_kernels = fun funcs ->
-    let childrens = generate_childrens funcs in
-    let kernels = generate_kernel_nus childrens funcs in
-    let dep_kernels = generate_dep_kernels childrens kernels funcs in
+    let adj = generate_adj funcs in
+    let kernels = generate_kernel_nus adj funcs in
+    let dep_kernels = generate_dep_kernels adj kernels funcs in
     let f = fun kernel descendants acc -> IdSet.add kernel acc in
     let kernels = LHS.fold f kernels IdSet.empty in
     (kernels, dep_kernels)
