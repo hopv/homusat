@@ -50,16 +50,16 @@ and is_typable_without_memo = fun delta te fml tau ->
         let ps = Delta.find_default States.empty (q, a) delta in
         States.exists (f delta te x) ps
     | Enc.App (x, ys) ->
-        let f = fun tau n tc -> tau = (Types.drop tc n) in
+        let f = fun tau n tc -> tau = (Types.drop_tau tc n) in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
         Sigma.exists (is_typable_app delta te ys) tcs
 and is_typable_app = fun delta te ys tau ->
-    let f = fun delta te (y, sigma) ->
+    let f = fun delta te y sigma ->
         Sigma.for_all (is_typable delta te y) sigma
     in
-    let ys = Types.annot ys tau in
-    List.for_all (f delta te) ys
+    let sigmas = Types.drop_sigmas tau (List.length ys) in
+    List.for_all2 (f delta te) ys sigmas
 
 (* return the set of types that fml can be typed under delta *)
 let types = fun qs delta te fml ->
@@ -67,7 +67,7 @@ let types = fun qs delta te fml ->
     | Enc.App (x, ys) ->
         let f = fun delta te x ys tau acc ->
             if is_typable_app delta te ys tau then
-                let tau = Types.drop tau (List.length ys) in
+                let tau = Types.drop_tau tau (List.length ys) in
                 Sigma.add tau acc
             else acc
         in

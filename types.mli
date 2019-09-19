@@ -1,4 +1,4 @@
-(* intersection types *)
+(* Intersection types *)
 
 module Sigma : X.Set.S with type elt = int
 module Tau : sig
@@ -7,18 +7,18 @@ module Tau : sig
     val encode : raw -> t
     val decode : t -> raw
 end
-(* type environment *)
+(* Type environment *)
 module Gamma = Id.IdMap
-(* set of type environments *)
+(* Set of type environments *)
 module Theta : X.Set.S with type elt = Sigma.t Gamma.t
-(* map from tau to something *)
+(* Map from tau to something *)
 module Epsilon : X.Map.S with type key = int
 
 val register_states : LTS.t -> unit
 val is_prop : Tau.t -> bool
 val codom : Tau.t -> LTS.state
-val drop : Tau.t -> Tau.t -> Tau.t
-val annot : Enc.elt list -> Tau.t -> (Enc.elt * Sigma.t) list
+val drop_tau : Tau.t -> int -> Tau.t
+val drop_sigmas : Tau.t -> int -> Sigma.t list
 val strongest_type : HFS.simple_type -> LTS.state -> Tau.t
 val string_of_tau : Tau.t -> string
 val string_of_sigma : Sigma.t -> string

@@ -1,5 +1,5 @@
-(* reduce applications of non-recursive functions *)
-(* currently applied to the functions called only once *)
+(* Reduce applications of non-recursive functions *)
+(* Currently applied to the functions called only once *)
 
 module LHS = Id.IdMap
 module IdSet = Id.IdSet
@@ -13,18 +13,14 @@ let generate_fmap = fun funcs ->
     in
     List.fold_left f LHS.empty funcs
 
-(* replace formal arguments with applied formulas *)
+(* Replace formal arguments with applied formulas *)
 let rec subst = fun sub fml ->
     Profile.check_time_out "model checking" !Flags.time_out;
     match fml with
     | HFS.Or (xs) -> HFS.Or (X.List.map (subst sub) xs)
     | HFS.And (xs) -> HFS.And (X.List.map (subst sub) xs)
-    | HFS.Box (a, x) ->
-        let x = subst sub x in
-        HFS.Box (a, x)
-    | HFS.Diamond (a, x) ->
-        let x = subst sub x in
-        HFS.Diamond (a, x)
+    | HFS.Box (a, x) -> HFS.Box (a, subst sub x)
+    | HFS.Diamond (a, x) -> HFS.Diamond (a, subst sub x)
     | HFS.App (x, ys) ->
         let ys = X.List.map (subst sub) ys in
         if LHS.mem x sub then
@@ -36,27 +32,23 @@ let rec subst = fun sub fml ->
             | _ -> (* (assert (ys = [])); *) fml
         else HFS.App (x, ys)
 
-(* reduce applications of non-recursive functions *)
+(* Reduce applications of non-recursive functions *)
 let rec reduce_fml = fun nonrecs fml ->
     Profile.check_time_out "model checking" !Flags.time_out;
     match fml with
     | HFS.Or (xs) -> HFS.Or (X.List.map (reduce_fml nonrecs) xs)
     | HFS.And (xs) -> HFS.And (X.List.map (reduce_fml nonrecs) xs)
-    | HFS.Box (a, x) ->
-        let x = reduce_fml nonrecs x in
-        HFS.Box (a, x)
-    | HFS.Diamond (a, x) ->
-        let x = reduce_fml nonrecs x in
-        HFS.Diamond (a, x)
+    | HFS.Box (a, x) -> HFS.Box (a, reduce_fml nonrecs x)
+    | HFS.Diamond (a, x) -> HFS.Diamond (a, reduce_fml nonrecs x)
     | HFS.App (x, ys) ->
         if LHS.mem x nonrecs then
             let (args, fml) = LHS.find x nonrecs in
-            if List.length args = List.length ys then (* non-partial *)
+            if List.length args = List.length ys then (* Non-partial *)
                 let f = fun acc x y -> LHS.add x y acc in
                 let sub = List.fold_left2 f LHS.empty args ys in
                 let fml = subst sub fml in
                 reduce_fml nonrecs fml
-            else (* partial applications are ignored *)
+            else (* Partial applications are ignored *)
                 let ys = X.List.map (reduce_fml nonrecs) ys in
                 HFS.App (x, ys)
         else
@@ -72,7 +64,7 @@ let reduce_func = fun nonrecs func ->
         let fml = reduce_fml nonrecs fml in
         (fp, x, sort, args, fml)
 
-(* non-recursive function \mapsto (args, body) *)
+(* Non-recursive function \mapsto (args, body) *)
 let generate_nonrec_map = fun funcs ->
     let f = fun fmap acc x ->
         let (args, fml) = LHS.find x fmap in

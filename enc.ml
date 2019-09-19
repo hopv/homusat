@@ -1,9 +1,8 @@
-(* Encode formulas as integers *)
+(* Encoding of (sub)formulas as integers *)
 
 type elt = int
 
 type formula =
-    (* bare variables are expressed as empty applications *)
     | Or of elt list
     | And of elt list
     | Box of LTS.label * elt
@@ -14,11 +13,6 @@ type func = HFS.fp * Id.t * HFS.simple_type * (HFS.argument list) * elt
 
 type t = func list
 
-module IntMap = X.Map.Make (struct
-    type t = elt
-    let compare : t -> t -> int = compare
-end)
-
 module FmlMap = X.Map.Make (struct
     type t = formula
     let compare : t -> t -> int = compare
@@ -27,7 +21,6 @@ end)
 let counter = ref 0
 let encoder = ref FmlMap.empty
 let decoder = ref [| |] (* IntMap.empty *)
-(* let decoder = Hashtbl.create 1000000 *)
 
 let register = fun fml ->
     if FmlMap.mem fml !encoder then
@@ -66,8 +59,6 @@ let encode = fun funcs ->
     funcs
 
 let decode = fun x -> !decoder.(x)
-    (* IntMap.find x !decoder *)
-    (* Hashtbl.find decoder x *)
 
 let rec decode_fml = fun fml ->
     match decode fml with

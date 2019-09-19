@@ -1,12 +1,12 @@
-(* priority queue for saturation loop *)
-(* based on scc decomposition of dependency graph *)
+(* Priority queue for the saturation loop *)
+(* Based on the SCC decomposition of the dependency graph *)
 
 module IdSet = Id.IdSet
 module IdMap = Id.IdMap
 module FmlsSet = ACG.FmlsSet
 module FmlsMap = ACG.FmlsMap
 
-(* IntSet and IntMap can be replaced with arrays or hash tables *)
+(* These modules can be replaced with arrays or hash tables *)
 module IntSet = Set.Make (struct
    type t = int
    let compare : t -> t -> int = compare
@@ -24,12 +24,10 @@ let rec dfs_aux = fun adj x (visited, acc) ->
     else
         let visited = IntSet.add x visited in
         let ys = IntMap.find_default IntSet.empty x adj in
-        let (visited, acc) =
-            IntSet.fold (dfs_aux adj) ys (visited, acc)
-        in
+        let (visited, acc) = IntSet.fold (dfs_aux adj) ys (visited, acc) in
         (visited, x :: acc)
 
-(* DFS on reversed graph + scc *)
+(* DFS on the reversed graph + SCC *)
 let rec rdfs_aux = fun radj x (visited, acc) ->
     if IntSet.mem x visited then (visited, acc)
     else
@@ -38,7 +36,7 @@ let rec rdfs_aux = fun radj x (visited, acc) ->
         let ys = IntMap.find_default IntSet.empty x radj in
         IntSet.fold (rdfs_aux radj) ys (visited, acc)
 
-(* reversed adjacency list *)
+(* Reversed adjacency list/set *)
 let generate_radj = fun adj ->
     let f = fun x ys acc ->
         let g = fun x y acc ->
@@ -104,9 +102,9 @@ module Queue = struct
         decoder := IntMap.add !counter elt !decoder;
         vs := IntSet.add !counter !vs;
         adj := IntMap.add !counter IntSet.empty !adj;
-        (* weights := IntMap.add !counter !counter !weights; *)
         counter := !counter + 1
 
+    (* Add all lhs variables to the vertex set *)
     let add_funcs = fun funcs ->
         let f = fun func ->
             let (_, x, _, _, _) = func in
@@ -115,6 +113,7 @@ module Queue = struct
         in
         List.iter f funcs
 
+    (* Add all argument formulas to the vertex set *)
     let add_formulas = fun flow_info ->
         let f = fun ys xs ->
             let ys = Formulas (ys) in
@@ -123,6 +122,7 @@ module Queue = struct
         let rev_flows = Flow.get_rev_flows flow_info in
         FmlsMap.iter f rev_flows
 
+    (* Add the edge from x to elt *)
     let add_dep_x_element = fun x elt ->
         let y = EltMap.find elt !encoder in
         let ys = IntMap.find x !adj in
@@ -191,6 +191,7 @@ module Queue = struct
         print_endline "%DEP_SCCS";
         List.iter f sccs
 
+    (* Restrict edges to those that connect vertices in the same SCC *)
     let restrict_edges = fun sccs ->
         let f = fun scc ->
             let g = fun scc x ->
@@ -202,6 +203,7 @@ module Queue = struct
         in
         List.iter f sccs
 
+    (* Push an element to the queue *)
     let push = let cnt = ref 0 in (* for weights *) fun x queue ->
         let queue =
             if IntMap.mem x !weights && Pool.mem x queue then

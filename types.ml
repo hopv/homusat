@@ -1,4 +1,4 @@
-(* intersection types *)
+(* Intersection types *)
 
 module States = LTS.States
 
@@ -11,7 +11,7 @@ module Tau = struct
 
     type t = int
     type raw = Sigma.t list * LTS.state
-    (* int list * LTS.state can be used as an intermediate type *)
+    (* Should Sigma.t also be encoded as an integer? *)
 
     module IntMap = X.Map.Make (struct
         type t = int
@@ -73,15 +73,13 @@ module Tau = struct
             if x = y then true
             else if Hashtbl.mem memo (x, y) then
                 Hashtbl.find memo (x, y)
-            else if Hashtbl.mem memo (y, x) then
+            else
                 let ret =
-                    if Hashtbl.find memo (y, x) then false
+                    if Hashtbl.mem memo (y, x) then
+                        if Hashtbl.find memo (y, x) then false
+                        else subtype_decode x y
                     else subtype_decode x y
                 in
-                Hashtbl.add memo (x, y) ret;
-                ret
-            else
-                let ret = subtype_decode x y in
                 Hashtbl.add memo (x, y) ret;
                 ret
     and suptype = fun sigma1 sigma2 ->
@@ -128,8 +126,9 @@ module Tau = struct
             if SigmasMap.mem sigmas qmap then
                 SigmasMap.find sigmas qmap
             else
-                let normalized = if !Flags.noopt_mode then sigmas
-                                 else normalize_sigmas sigmas in
+                let normalized = normalize_sigmas sigmas in
+                    (* if !Flags.noopt_mode then sigmas *)
+                    (* else normalize_sigmas sigmas in  *)
                 if SigmasMap.mem normalized qmap then
                     let ret = SigmasMap.find normalized qmap in
                     let qmap = SigmasMap.add sigmas ret qmap in
@@ -159,8 +158,8 @@ end)
 let is_prop = Tau.is_prop
 let register_states = Tau.register_states
 
-(* get the return type of tau when n arguments are applied *)
-let drop = (* this function is called repeatedly and should be fast *)
+(* Get the return type of tau when n arguments are applied *)
+let drop_tau = (* This function is called repeatedly and should be fast *)
     let memo = Hashtbl.create 1000000 in
     let rec drop = fun i sigmas ->
         if i <= 0 then sigmas
@@ -168,38 +167,46 @@ let drop = (* this function is called repeatedly and should be fast *)
         | sigma :: sigmas -> drop (i - 1) sigmas
         | [] -> assert false
     in
-    fun i n ->
-    if n = 0 then i
-    else if Hashtbl.mem memo (i, n) then
-        Hashtbl.find memo (i, n)
+    fun tau n ->
+    if n = 0 then tau
+    else if Hashtbl.mem memo (tau, n) then
+        Hashtbl.find memo (tau, n)
     else
         let ret =
-            let (sigmas, q) = Tau.decode i in
+            let (sigmas, q) = Tau.decode tau in
             let sigmas = drop n sigmas in
             Tau.encode (sigmas, q) (* normalization can be skipped *)
         in
-        Hashtbl.add memo (i, n) ret;
+        Hashtbl.add memo (tau, n) ret;
         ret
 
-(* final type of tau *)
+(* Get the first n argument types of tau *)
+let drop_sigmas = (* This function too can be called repeatedly *)
+    let memo = Hashtbl.create 100000 in
+    let rec drop = fun i sigmas acc ->
+        if i <= 0 then List.rev acc
+        else match sigmas with
+        | sigma :: sigmas ->
+            let acc = sigma :: acc in
+            drop (i - 1) sigmas acc
+        | [] -> assert false
+    in
+    fun tau n ->
+    if n = 0 then []
+    else if Hashtbl.mem memo (tau, n) then
+        Hashtbl.find memo (tau, n)
+    else
+        let ret =
+            let (sigmas, q) = Tau.decode tau in
+            drop n sigmas []
+        in
+        Hashtbl.add memo (tau, n) ret;
+        ret
+
+(* Final type of tau *)
 let codom = fun i ->
     if is_prop i then i
     else let (_, q) = Tau.decode i in q
-
-(* attach a set of intersection types to each argument *)
-let annot = fun args i ->
-    let rec annot = fun args sigmas acc ->
-        match (args, sigmas) with
-        | ([], _) -> acc (* List.rev acc *)
-        | (arg :: args, sigma :: sigmas) ->
-            let acc = (arg, sigma) :: acc in
-            annot args sigmas acc
-        | (_, []) -> assert false
-    in
-    if args = [] then []
-    else
-        let (sigmas, q) = Tau.decode i in
-        annot args sigmas []
 
 (* T -> ... -> T -> q *)
 let strongest_type = fun sort q ->
@@ -260,7 +267,7 @@ let merge_gammas = fun gamma1 gamma2 ->
     in
     Gamma.union f gamma1 gamma2
 
-(* take Cartesian product of thetas *)
+(* Take Cartesian product of thetas *)
 let prod_thetas = fun theta1 theta2 ->
     let add_merged = fun gamma1 gamma2 acc ->
         Profile.check_time_out "model checking" !Flags.time_out;
@@ -272,7 +279,7 @@ let prod_thetas = fun theta1 theta2 ->
     in
     Theta.fold (f theta1) theta2 Theta.empty
 
-(* normalization making use of subtyping relation (slow) *)
+(* Normalization making use of the subtyping relation (slow) *)
 let merge_sigmas_with_subtype = fun sigma1 sigma2 ->
     let suptype = fun tau1 tau2 -> Tau.subtype tau2 tau1 in
     let not_subtype = fun tau1 tau2 -> not (Tau.subtype tau1 tau2) in
@@ -280,17 +287,17 @@ let merge_sigmas_with_subtype = fun sigma1 sigma2 ->
         if Sigma.exists (suptype tau) acc then acc
         else Sigma.add tau (Sigma.filter (not_subtype tau) acc)
     in
-    let sigma = Sigma.union sigma1 sigma2 in (* all elements are distinct *)
+    let sigma = Sigma.union sigma1 sigma2 in
     Sigma.fold f sigma Sigma.empty
 
-(* normalization making use of subtyping relation (slow) *)
+(* Normalization making use of the subtyping relation (slow) *)
 let merge_gammas_with_subtype = fun gamma1 gamma2 ->
     let f = fun x sigma1 sigma2 ->
         Some (merge_sigmas_with_subtype sigma1 sigma2)
     in
     Gamma.union f gamma1 gamma2
 
-(* normalization making use of subtyping relation (slow) *)
+(* Normalization making use of the subtyping relation (slow) *)
 let prod_thetas_with_subtype = fun theta1 theta2 ->
     let add_merged = fun gamma1 gamma2 acc ->
         let gamma = merge_gammas_with_subtype gamma1 gamma2 in
@@ -301,7 +308,7 @@ let prod_thetas_with_subtype = fun theta1 theta2 ->
     in
     Theta.fold (f theta1) theta2 Theta.empty
 
-(* check if gamma1 is (as a set of type bindings) a superset of gamma2 *)
+(* Check if gamma1 is (as a set of type bindings) a superset of gamma2 *)
 let weak_subenv = fun gamma1 gamma2 ->
     let f = fun gamma1 x sigma2 ->
         let sigma1 = Gamma.find_default Sigma.empty x gamma1 in
@@ -315,6 +322,7 @@ let merge_epsilons = fun epsilon1 epsilon2 ->
     in
     Epsilon.union f epsilon1 epsilon2
 
+(* Normalize all intersection types contained in gamma *)
 let normalize_gamma = fun gamma ->
     Gamma.map Tau.normalize_sigma gamma
 

@@ -1,4 +1,4 @@
-(* preprocesses *)
+(* Preprocesses *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap

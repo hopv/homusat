@@ -1,4 +1,4 @@
-(* priority queue for saturation loop *)
+(* Priority queue for the saturation loop *)
 
 type element = Function of Id.t | Formulas of Enc.elt list
 

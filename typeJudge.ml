@@ -67,7 +67,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
         let ps = Delta.find_default States.empty (q, a) delta in
         States.fold (f delta winning_nodes te x) ps Theta.empty
     | Enc.App (x, ys) ->
-        let f = fun tau n tc -> tau = (Types.drop tc n) in
+        let f = fun tau n tc -> tau = (Types.drop_tau tc n) in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
         Sigma.fold (judge_app delta winning_nodes te x ys) tcs Theta.empty
@@ -77,7 +77,7 @@ and judge_app = fun delta winning_nodes te x ys tau acc ->
         if Theta.is_empty theta then raise Empty
         else Opt.prod_thetas theta acc
     in
-    let judge_arg = fun delta winning_nodes te acc (y, sigma) ->
+    let judge_arg = fun delta winning_nodes te acc y sigma ->
         let seed = Theta.singleton Gamma.empty in
         let f = judge_tau delta winning_nodes te y in
         let theta = Sigma.fold f sigma seed in
@@ -88,10 +88,10 @@ and judge_app = fun delta winning_nodes te x ys tau acc ->
         if Sigma.mem tau sigma then Theta.singleton Gamma.empty
         else Theta.singleton (Gamma.singleton x (Sigma.singleton tau))
     in
-    try let ys = Types.annot ys tau in
+    try let sigmas = Types.drop_sigmas tau (List.length ys) in
         let seed = gen_seed winning_nodes x tau in
         let f = judge_arg delta winning_nodes te in
-        let theta = List.fold_left f seed ys in
+        let theta = List.fold_left2 f seed ys sigmas in
         Theta.union theta acc
         (* Opt.merge_thetas theta acc *)
     with Empty -> acc

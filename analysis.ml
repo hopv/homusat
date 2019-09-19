@@ -1,4 +1,4 @@
-(* Analysis of an input file *)
+(* Analysis of the input file *)
 
 module LHS = Id.IdMap
 module Delta = LTS.Delta
@@ -36,8 +36,8 @@ let get_priority = fun funcs ->
         let n = List.length funcs in
         LHS.fold f priorities (n + 1, 0)
 
-(* number of variables, logical connectives, and modal operators *)
-(* note that X \lor Y \lor Z is treated as \lor X Y Z for simplicity *)
+(* Number of variables, logical connectives, and modal operators *)
+(* Note that X \lor Y \lor Z is treated as \lor X Y Z for simplicity *)
 let rec calc_size = fun acc fml ->
     match fml with
     | HFS.Or (xs) | HFS.And (xs) ->
@@ -65,10 +65,6 @@ let analyze = fun funcs lts ->
     print_endline ("minimum priority: " ^ (string_of_int p));
     print_endline ("maximum priority: " ^ (string_of_int q));
     print_endline ("number of alternations: " ^ (string_of_int (q - p)));
-(*
-    let n = List.length funcs in
-    print_endline ("number of formulas: " ^ (string_of_int n));
-*)
     let (qs, _, _, _) = lts in
     let m = States.cardinal qs in
     print_endline ("number of LTS states: " ^ (string_of_int m))

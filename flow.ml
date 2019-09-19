@@ -1,20 +1,19 @@
-(* flow information *)
+(* Flow information *)
 
 (* flows: X \mapsto { \phi | X <~ \phi } *)
 (* rev_flows: \phi \mapsto { X | X <~ \phi } *)
 
-(* for construction of type environments *)
 (* fqmap: F \mapsto \bigcup { P | (F :: yss, P) is a node of ACG } *)
 (* xqmap: X \mapsto \bigcup { P | (X :: yss, P) is a node of ACG } *)
 (* aqmap: \phi mapsto \bigcup_{X <~ \phi} xqmap(X) *)
 (* fbmap: F \mapsto [ (yss, P) | (F :: yss, P) is a node of ACG ] *)
-(* fvmap: F \mapsto { X | X occurs in the body of F } *)
 (* ffmap: F \mapsto { G | G occurs in the body of F } *)
+(* fvmap: F \mapsto { X | X occurs in the body of F } *)
 (* abmap: \phi \mapsto [ yss | (par(\phi) :: yss, P) is a node of ACG ] *)
-(* avmap: \phi \mapsto { X | X occurs in \phi } *)
 (* afmap: \phi \mapsto { F | F occurs in \phi } *)
-(* parents: \phi \mapsto F : F is the parent of \phi *)
-(* childrens: F \mapsto { X/G | X/G occurs in the body of F } *)
+(* avmap: \phi \mapsto { X | X occurs in \phi } *)
+(* parent: \phi \mapsto F, where F is the parent of \phi *)
+(* children: F \mapsto { X/G | X/G occurs in the body of F } *)
 (* siblings: \phi \mapsto { X/G | X/G occurs in \phi } *)
 (* llmap: F \mapsto { G | F occurs in the body of G } *)
 (* lamap: F \mapsto { \phi | F occurs in \phi } *)
@@ -24,6 +23,7 @@
 module LHS = Id.IdMap
 module RHS = Id.IdMap
 module IdSet = Id.IdSet
+module IdMap = Id.IdMap
 module States = LTS.States
 module FmlSet = ACG.FmlSet
 module FmlSet2 = ACG.FmlSet2
@@ -37,13 +37,13 @@ type rev_flows = IdSet.t FmlsMap.t
 type fqmap = States.t LHS.t
 type aqmap = States.t FmlMap.t
 type fbmap = (Enc.elt list list * States.t) list LHS.t
-type fvmap = IdSet.t LHS.t
 type ffmap = IdSet.t LHS.t
+type fvmap = IdSet.t LHS.t
 type abmap = (Enc.elt list list) list FmlsMap.t
-type avmap = IdSet.t FmlsMap.t
 type afmap = IdSet.t FmlsMap.t
-type parents = Id.t FmlsMap.t
-type childrens = IdSet.t LHS.t
+type avmap = IdSet.t FmlsMap.t
+type parent = Id.t FmlsMap.t
+type children = IdSet.t LHS.t
 type siblings = IdSet.t FmlsMap.t
 type llmap = IdSet.t LHS.t
 type lamap = FmlsSet.t LHS.t
@@ -51,10 +51,11 @@ type rlmap = Id.t RHS.t
 type ramap = FmlsSet.t RHS.t
 type t = { flows : flows; rev_flows : rev_flows;
            fqmap : fqmap; aqmap : aqmap; fbmap : fbmap; abmap : abmap;
-           parents : parents; childrens : childrens; siblings : siblings;
+           parent : parent; children : children; siblings : siblings;
            llmap : llmap; lamap : lamap; rlmap : rlmap; ramap : ramap; }
 
-(* generate the set of lhs variables and the set of rhs variables *)
+(* Generate the set of lhs variables and the set of rhs variables *)
+(* Might be better to define as a record type { lhs; rhs } *)
 let generate_top_vars = fun funcs ->
     let f = fun (lhs, rhs) func ->
         let (_, x, _, args, _) = func in
@@ -65,7 +66,7 @@ let generate_top_vars = fun funcs ->
     in
     List.fold_left f (IdSet.empty, IdSet.empty) funcs
 
-(* obtain the set of all variables occurring in a formula *)
+(* Obtain the set of all variables occurring in a formula *)
 let rec get_xs = fun xs fml ->
     match Enc.decode fml with
     | Enc.Or (ys)
@@ -77,33 +78,26 @@ let rec get_xs = fun xs fml ->
         let xs = IdSet.add x xs in
         List.fold_left get_xs xs ys
 
-(* fqmap: F \mapsto \bigcup { P | (F :: yss, P) is a node of ACG } *)
-let generate_fqmap = fun top_vars acg ->
-    let f = fun lhs fml qs acc ->
+(* F/X \mapsto \bigcup { P | (F/X :: yss, P) is a node of ACG } *)
+let generate_qmap = fun dom acg ->
+    let f = fun dom fml qs acc ->
         match fml with
-        | ACG.App (x, yss) when IdSet.mem x lhs ->
-            let ps = LHS.find_default States.empty x acc in
+        | ACG.App (x, yss) when IdSet.mem x dom ->
+            let ps = IdMap.find_default States.empty x acc in
             let ps = States.union ps qs in
-            LHS.add x ps acc
+            IdMap.add x ps acc
         | _ -> acc
     in
-    let (lhs, _) = top_vars in
     let (nodes, _, _) = acg in
-    FmlMap2.fold (f lhs) nodes LHS.empty
+    FmlMap2.fold (f dom) nodes LHS.empty
+
+(* fqmap: F \mapsto \bigcup { P | (F :: yss, P) is a node of ACG } *)
+let generate_fqmap = fun top_vars acg ->
+    let (lhs, _) = top_vars in generate_qmap lhs acg
 
 (* xqmap: X \mapsto \bigcup { P | (X :: yss, P) is a node of ACG } *)
 let generate_xqmap = fun top_vars acg ->
-    let f = fun rhs fml qs acc ->
-        match fml with
-        | ACG.App (x, yss) when IdSet.mem x rhs ->
-            let ps = RHS.find_default States.empty x acc in
-            let ps = States.union ps qs in
-            RHS.add x ps acc
-        | _ -> acc
-    in
-    let (_, rhs) = top_vars in
-    let (nodes, _, _) = acg in
-    FmlMap2.fold (f rhs) nodes RHS.empty
+    let (_, rhs) = top_vars in generate_qmap rhs acg
 
 (* aqmap: \phi mapsto \bigcup_{X <~ \phi} xqmap(X) *)
 let generate_aqmap = fun top_vars acg ->
@@ -128,38 +122,34 @@ let generate_fbmap = fun top_vars acg ->
     let f = fun lhs fml qs acc ->
         match fml with
         | ACG.App (x, yss) when IdSet.mem x lhs ->
-            let zs = LHS.find_default [] x acc in
-            let zs = (yss, qs) :: zs in
-            LHS.add x zs acc
+            let bindings = LHS.find_default [] x acc in
+            let bindings = (yss, qs) :: bindings in
+            LHS.add x bindings acc
         | _ -> acc
     in
     let (lhs, _) = top_vars in
     let (nodes, _, _) = acg in
     FmlMap2.fold (f lhs) nodes LHS.empty
 
-(* fvmap: F \mapsto { X | X occurs in the body of F } *)
-let generate_fvmap = fun top_vars funcs ->
-    let f = fun rhs acc func ->
+(* F \mapsto { X/G | X/G occurs in the body of F } *)
+let generate_fxmap = fun dom funcs ->
+    let f = fun dom acc func ->
         let (_, x, _, _, body) = func in
         let xs = get_xs IdSet.empty body in
-        let xs = IdSet.inter rhs xs in
+        let xs = IdSet.inter dom xs in
         LHS.add x xs acc
     in
-    let (_, rhs) = top_vars in
-    List.fold_left (f rhs) LHS.empty funcs
+    List.fold_left (f dom) LHS.empty funcs
 
 (* ffmap: F \mapsto { G | G occurs in the body of F } *)
 let generate_ffmap = fun top_vars funcs ->
-    let f = fun lhs acc func ->
-        let (_, x, _, _, body) = func in
-        let xs = get_xs IdSet.empty body in
-        let xs = IdSet.inter lhs xs in
-        LHS.add x xs acc
-    in
-    let (lhs, _) = top_vars in
-    List.fold_left (f lhs) LHS.empty funcs
+    let (lhs, _) = top_vars in generate_fxmap lhs funcs
 
-(* simplify ys -> xss to ys -> xs *)
+(* fvmap: F \mapsto { X | X occurs in the body of F } *)
+let generate_fvmap = fun top_vars funcs ->
+    let (_, rhs) = top_vars in generate_fxmap rhs funcs
+
+(* Simplify ys -> xss to ys -> xs *)
 let simplify_rev_flows = fun rev_flows ->
     let f = fun ys xss acc ->
         let g = fun acc xs ->
@@ -171,12 +161,12 @@ let simplify_rev_flows = fun rev_flows ->
     in
     FmlsMap.fold f rev_flows FmlsMap.empty
 
-(* exclude unused variables from simplified rev_flows *)
+(* Exclude out unused formulas from rev_flows *)
 let restrict_rev_flows = fun fvmap acg ->
     let f = fun x fvs acc -> IdSet.union fvs acc in
     let g = fun fvs ys zs acc ->
         let zs = IdSet.inter zs fvs in
-        if IdSet.is_empty zs then acc
+        if IdSet.is_empty zs then acc (* Unused *)
         else FmlsMap.add ys zs acc
     in
     let (nodes, flows, rev_flows) = acg in
@@ -185,75 +175,40 @@ let restrict_rev_flows = fun fvmap acg ->
     let rev_flows = FmlsMap.fold (g fvs) rev_flows FmlsMap.empty in
     (nodes, flows, rev_flows)
 
-(* avmap: \phi \mapsto { X | X occurs in \phi } *)
-let generate_avmap = fun top_vars acg ->
-    let f = fun rhs ys zs acc ->
-        let xs = List.fold_left get_xs IdSet.empty ys in
-        let xs = IdSet.inter xs rhs in
-        FmlsMap.add ys xs acc
-    in
-    let (_, rhs) = top_vars in
-    let (_, _, rev_flows) = acg in
-    FmlsMap.fold (f rhs) rev_flows FmlsMap.empty
-
-(* afmap: \phi \mapsto { F | F occurs in \phi } *)
-let generate_afmap = fun top_vars acg ->
-    let f = fun lhs ys zs acc ->
-        let xs = List.fold_left get_xs IdSet.empty ys in
-        let xs = IdSet.inter xs lhs in
-        FmlsMap.add ys xs acc
-    in
-    let (lhs, _) = top_vars in
-    let (_, _, rev_flows) = acg in
-    FmlsMap.fold (f lhs) rev_flows FmlsMap.empty
-
-(* fml is a subformula of the body of p *)
-let rec add_parent = fun p acc fml ->
+(* The formula fml is a subformula of the body of par *)
+let rec add_parent = fun par acc fml ->
     match Enc.decode fml with
     | Enc.Or (ys)
     | Enc.And (ys) ->
-        List.fold_left (add_parent p) acc ys
+        List.fold_left (add_parent par) acc ys
     | Enc.Box (a, x)
-    | Enc.Diamond (a, x) -> (add_parent p) acc x
+    | Enc.Diamond (a, x) -> add_parent par acc x
     | Enc.App (x, ys) ->
-        let acc = FmlsMap.add ys p acc in
-        List.fold_left (add_parent p) acc ys
+        let acc = FmlsMap.add ys par acc in
+        List.fold_left (add_parent par) acc ys
 
-(* parents: \phi \mapsto F : F is the parent of \phi *)
-let generate_parents = fun acg funcs ->
+(* parent: \phi \mapsto F, where F is the parent of \phi *)
+let generate_parent_unrestricted = fun funcs ->
     let f = fun acc func ->
-        let (fp, x, sort, args, body) = func in
+        let (_, x, _, _, body) = func in
         add_parent x acc body
     in
-    let g = fun ps ys zs acc ->
+    List.fold_left f FmlsMap.empty funcs
+
+(* parent: \phi \mapsto F, where F is the parent of \phi *)
+let generate_parent = fun acg funcs ->
+    let f = fun ps ys zs acc ->
         let x = FmlsMap.find ys ps in
         FmlsMap.add ys x acc
     in
-    let ps = List.fold_left f FmlsMap.empty funcs in
-    let (_, _, rev_flows) = acg in
-    FmlsMap.fold (g ps) rev_flows FmlsMap.empty
+    let parent = generate_parent_unrestricted funcs in
+    let (_, _, rev_flows) = acg in (* For restriction *)
+    FmlsMap.fold (f parent) rev_flows FmlsMap.empty
 
-(* abmap: \phi \mapsto [ yss | (P :: yss, qs) is a node of ACG } *)
-let generate_abmap = fun top_vars acg fbmap parents ->
-    let f = fun rhs fbmap parents ys zs acc ->
-        let xs = List.fold_left get_xs IdSet.empty ys in
-        let inter = IdSet.inter xs rhs in
-        if IdSet.is_empty inter then
-            FmlsMap.add ys [] acc
-        else
-            let p = FmlsMap.find ys parents in
-            let bindings = LHS.find_default [] p fbmap in
-            let contexts = X.List.map fst bindings in
-            FmlsMap.add ys contexts acc
-    in
-    let (_, rhs) = top_vars in
-    let (_, _, rev_flows) = acg in
-    FmlsMap.fold (f rhs fbmap parents) rev_flows FmlsMap.empty
-
-(* childrens: F \mapsto { X/G | X/G occurs in the body of F } *)
-let generate_childrens = fun funcs ->
+(* children: F \mapsto { X/G | X/G occurs in the body of F } *)
+let generate_children = fun funcs ->
     let f = fun acc func ->
-        let (fp, x, sort, args, body) = func in
+        let (_, x, _, _, body) = func in
         let xs = get_xs IdSet.empty body in
         LHS.add x xs acc
     in
@@ -269,37 +224,56 @@ let generate_siblings = fun acg ->
     let (_, _, rev_flows) = acg in
     FmlsMap.fold f rev_flows FmlsMap.empty
 
+(* abmap: \phi \mapsto [ yss | (par(\phi) :: yss, qs) is a node of ACG } *)
+let generate_abmap = fun top_vars acg fbmap parent ->
+    let f = fun rhs fbmap parent ys zs acc ->
+        let xs = List.fold_left get_xs IdSet.empty ys in
+        let xs = IdSet.inter rhs xs in
+        if IdSet.is_empty xs then (* Contains no rhs variable *)
+            FmlsMap.add ys [] acc
+        else
+            let par = FmlsMap.find ys parent in
+            let bindings = LHS.find_default [] par fbmap in
+            let contexts = X.List.map fst bindings in
+            FmlsMap.add ys contexts acc
+    in
+    let (_, rhs) = top_vars in
+    let (_, _, rev_flows) = acg in
+    FmlsMap.fold (f rhs fbmap parent) rev_flows FmlsMap.empty
+
+(* \phi \mapsto { F/X | F/X occurs in \phi } *)
+let generate_axmap = fun dom acg ->
+    let f = fun dom ys zs acc ->
+        let xs = List.fold_left get_xs IdSet.empty ys in
+        let xs = IdSet.inter dom xs in
+        FmlsMap.add ys xs acc
+    in
+    let (_, _, rev_flows) = acg in
+    FmlsMap.fold (f dom) rev_flows FmlsMap.empty
+
+(* afmap: \phi \mapsto { F | F occurs in \phi } *)
+let generate_afmap = fun top_vars acg ->
+    let (lhs, _) = top_vars in generate_axmap lhs acg
+
+(* avmap: \phi \mapsto { X | X occurs in \phi } *)
+let generate_avmap = fun top_vars acg ->
+    let (rhs, _) = top_vars in generate_axmap rhs acg
+
 (* llmap: F \mapsto { G | F occurs in the body of G } *)
 let generate_llmap = fun top_vars funcs ->
     let f = fun lhs acc func ->
-        let g = fun x y acc ->
+        let g = fun x y acc -> (* y occurs in the body of x *)
             let xs = LHS.find_default IdSet.empty y acc in
             let xs = IdSet.add x xs in
             LHS.add y xs acc
         in
         let (_, x, _, _, body) = func in
-        let xs = get_xs IdSet.empty body in
-        let xs = IdSet.inter lhs xs in
-        IdSet.fold (g x) xs acc
+        let ys = get_xs IdSet.empty body in
+        let ys = IdSet.inter lhs ys in
+        IdSet.fold (g x) ys acc
     in
     let (lhs, _) = top_vars in
     List.fold_left (f lhs) LHS.empty funcs
-
-(* lamap: F \mapsto { \phi | F occurs in \phi } *)
-let generate_lamap = fun top_vars acg ->
-    let f = fun lhs ys zs acc ->
-        let g = fun ys x acc ->
-            let yss = LHS.find_default FmlsSet.empty x acc in
-            let yss = FmlsSet.add ys yss in
-            LHS.add x yss acc
-        in
-        let xs = List.fold_left get_xs IdSet.empty ys in
-        let xs = IdSet.inter lhs xs in
-        IdSet.fold (g ys) xs acc
-    in
-    let (lhs, _) = top_vars in
-    let (_, _, rev_flows) = acg in
-    FmlsMap.fold (f lhs) rev_flows LHS.empty
 
 (* rlmap: X \mapsto F, where X is an argument of F *)
 let generate_rlmap = fun funcs ->
@@ -312,21 +286,28 @@ let generate_rlmap = fun funcs ->
     in
     List.fold_left f RHS.empty funcs
 
-(* ramap: X \mapsto { \phi | X occurs in \phi } *)
-let generate_ramap = fun top_vars acg ->
-    let f = fun rhs ys zs acc ->
-        let g = fun ys x acc ->
-            let yss = RHS.find_default FmlsSet.empty x acc in
+(* F/X \mapsto { \phi | F/X occurs in \phi } *)
+let generate_xamap = fun dom acg ->
+    let f = fun dom ys zs acc ->
+        let g = fun ys x acc -> (* x occurs in ys *)
+            let yss = IdMap.find_default FmlsSet.empty x acc in
             let yss = FmlsSet.add ys yss in
-            LHS.add x yss acc
+            IdMap.add x yss acc
         in
         let xs = List.fold_left get_xs IdSet.empty ys in
-        let xs = IdSet.inter rhs xs in
+        let xs = IdSet.inter dom xs in
         IdSet.fold (g ys) xs acc
     in
-    let (_, rhs) = top_vars in
     let (_, _, rev_flows) = acg in
-    FmlsMap.fold (f rhs) rev_flows RHS.empty
+    FmlsMap.fold (f dom) rev_flows IdMap.empty
+
+(* lamap: F \mapsto { \phi | F occurs in \phi } *)
+let generate_lamap = fun top_vars acg ->
+    let (lhs, _) = top_vars in generate_xamap lhs acg
+
+(* ramap: X \mapsto { \phi | X occurs in \phi } *)
+let generate_ramap = fun top_vars acg ->
+    let (_, rhs) = top_vars in generate_xamap rhs acg
 
 let generate_flow_info = fun funcs lts ->
     let acg = ACG.construct funcs lts in
@@ -336,10 +317,10 @@ let generate_flow_info = fun funcs lts ->
     let fbmap = generate_fbmap top_vars acg in
     let fvmap = generate_fvmap top_vars funcs in
     let acg = restrict_rev_flows fvmap acg in
-    let parents = generate_parents acg funcs in
-    let childrens = generate_childrens funcs in
+    let parent = generate_parent acg funcs in
+    let children = generate_children funcs in
     let siblings = generate_siblings acg in
-    let abmap = generate_abmap top_vars acg fbmap parents in
+    let abmap = generate_abmap top_vars acg fbmap parent in
     let llmap = generate_llmap top_vars funcs in
     let lamap = generate_lamap top_vars acg in
     let rlmap = generate_rlmap funcs in
@@ -347,7 +328,7 @@ let generate_flow_info = fun funcs lts ->
     let (_, flows, rev_flows) = acg in
     { flows : flows; rev_flows : rev_flows;
       fqmap : fqmap; aqmap : aqmap; fbmap : fbmap; abmap : abmap;
-      parents : parents; childrens : childrens; siblings : siblings;
+      parent : parent; children : children; siblings : siblings;
       llmap : llmap; lamap : lamap; rlmap : rlmap; ramap : ramap; }
 
 let get_flows = fun flow_info -> flow_info.flows
@@ -356,38 +337,40 @@ let get_fqmap = fun flow_info -> flow_info.fqmap
 let get_aqmap = fun flow_info -> flow_info.aqmap
 let get_fbmap = fun flow_info -> flow_info.fbmap
 let get_abmap = fun flow_info -> flow_info.abmap
-let get_parents = fun flow_info -> flow_info.parents
-let get_childrens = fun flow_info -> flow_info.childrens
+let get_parent = fun flow_info -> flow_info.parent
+let get_children = fun flow_info -> flow_info.children
 let get_siblings = fun flow_info -> flow_info.siblings
 let get_llmap = fun flow_info -> flow_info.llmap
 let get_lamap = fun flow_info -> flow_info.lamap
 let get_rlmap = fun flow_info -> flow_info.rlmap
 let get_ramap = fun flow_info -> flow_info.ramap
 
-(* return binding list for x *)
+(* Return binding list for the lhs variable x *)
 let get_bindings = fun x flow_info ->
     let fbmap = get_fbmap flow_info in
     LHS.find_default [] x fbmap
 
+(* Return binding list for the argument formula(s) ys *)
 let get_contexts = fun ys flow_info ->
     let abmap = get_abmap flow_info in
     FmlsMap.find ys abmap
 
+(* Return the parent of the formula(s) ys *)
 let get_parent = fun ys flow_info ->
-    let parents = get_parents flow_info in
-    FmlsMap.find ys parents
+    let parent = get_parent flow_info in
+    FmlsMap.find ys parent
 
-(* return the set of variables occurring in the body of x *)
+(* Return the set of variables occurring in the body of x *)
 let get_children = fun x flow_info ->
-    let childrens = get_childrens flow_info in
-    LHS.find x childrens
+    let children = get_children flow_info in
+    LHS.find x children
 
-(* return the set of variables occurring in ys *)
+(* Return the set of variables occurring in the formula(s) ys *)
 let get_siblings = fun ys flow_info ->
     let siblings = get_siblings flow_info in
     FmlsMap.find ys siblings
 
-(* destinations of propagation from a lhs variable x *)
+(* Destinations of the propagation from the lhs variable x *)
 let get_dep_lhs = fun x flow_info ->
     let llmap = get_llmap flow_info in
     let lamap = get_lamap flow_info in
@@ -395,7 +378,7 @@ let get_dep_lhs = fun x flow_info ->
     let zs = LHS.find_default FmlsSet.empty x lamap in
     (ys, zs)
 
-(* destinations of propagation from a rhs variable x *)
+(* Destinations of the propagation from the rhs variable x *)
 let get_dep_rhs = fun x flow_info ->
     let rlmap = get_rlmap flow_info in
     let ramap = get_ramap flow_info in

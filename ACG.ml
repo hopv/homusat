@@ -1,6 +1,6 @@
 (* Abstract Configuration Graph *)
 
-(*** Rough Sketch of Construction ***)
+(*** Rough sketch of the construction process ***)
 (*
 0. Set (F_{1}, {q_{0}}) as the root
 1. For each node (F \phi_{1} ... \phi_{\ell}, P), where an equation of the
@@ -62,6 +62,7 @@ module FmlsMap = X.Map.Make (struct
 end)
 
 (* ACG: (nodes, flows, rev_flows) *)
+(* Might be better to define as a record type { nodes; flows; rev_flows } *)
 type t = States.t FmlMap2.t * FmlSet.t RHS.t * Id.t list list FmlsMap.t
 
 let convert = fun fml ->
@@ -84,7 +85,7 @@ let initial_node = fun funcs lts ->
     let (_, _, _, q0) = lts in
     (App (x, []), States.singleton q0)
 
-(* the set of states reachable through a modal operator *)
+(* The set of states reachable through a modal operator *)
 let next_states = fun delta qs a ->
     let f = fun delta a q acc ->
         let qs = Delta.find_default States.empty (q, a) delta in
@@ -92,7 +93,7 @@ let next_states = fun delta qs a ->
     in
     States.fold (f delta a) qs States.empty
 
-(* append zss as additional arguments to the formula fml *)
+(* Append zss as additional arguments to the formula fml *)
 let append_args = fun fml zss ->
     match Enc.decode fml with
     | Enc.App (x, ys) ->
@@ -100,7 +101,7 @@ let append_args = fun fml zss ->
         else App (x, ys :: zss)
     | _ -> (* assert (zss = []); *) convert fml
 
-(* push (phi :: yss, qs) for each phi such that x <~ phi *)
+(* Push (phi :: yss, qs) for each phi such that x <~ phi *)
 let push_flows = fun x yss qs flows queue ->
     let f = fun yss qs z queue ->
         let z = append_args z yss in
@@ -109,12 +110,12 @@ let push_flows = fun x yss qs flows queue ->
     let zs = RHS.find_default FmlSet.empty x flows in
     FmlSet.fold (f yss qs) zs queue
 
-(* update an old node *)
+(* Update an old node *)
 let update_node = fun fmap delta
                       queue nodes flows rev_flows xnodes fml qs ->
     let qs' = FmlMap2.find fml nodes in
     let qs_diff = States.diff qs qs' in
-    if States.is_empty qs_diff then
+    if States.is_empty qs_diff then (* Already up-to-date *)
         (queue, nodes, flows, rev_flows, xnodes)
     else
         let nodes = FmlMap2.add fml (States.union qs_diff qs') nodes in
@@ -138,7 +139,7 @@ let update_node = fun fmap delta
                 let queue = push_flows x yss qs_diff flows queue in
                 (queue, nodes, flows, rev_flows, xnodes)
 
-(* push (y :: zss, qs) for each node of the form (x zss, qs) *)
+(* Push (y :: zss, qs) for each node of the form (x zss, qs) *)
 let push_xnodes = fun x y nodes xnodes queue ->
     let f = fun y nodes z queue ->
         match z with
@@ -160,7 +161,7 @@ let split_xs = fun xs ys ->
     in
     f xs ys []
 
-(* add bindings of the form x <~ y *)
+(* Add bindings of the form x <~ y *)
 let rec update_flows = fun xs yss queue nodes flows rev_flows xnodes ->
     let f = fun nodes xnodes (queue, flows) x y ->
         let zs = RHS.find_default FmlSet.empty x flows in
@@ -179,13 +180,13 @@ let rec update_flows = fun xs yss queue nodes flows rev_flows xnodes ->
         let rev_flows = FmlsMap.add ys (xs :: xss) rev_flows in
         update_flows next_xs yss queue nodes flows rev_flows xnodes
 
-(* fml is of the form App (x, yss) *)
+(* The formula fml is of the form App (x, yss) *)
 let update_xnodes = fun x fml xnodes ->
     let zs = RHS.find_default FmlSet2.empty x xnodes in
     let zs = FmlSet2.add fml zs in
     RHS.add x zs xnodes
 
-(* expand a new node *)
+(* Expand a new node *)
 let expand_node = fun fmap delta
                       queue nodes flows rev_flows xnodes fml qs ->
     let nodes = FmlMap2.add fml qs nodes in
@@ -213,7 +214,7 @@ let expand_node = fun fmap delta
             let xnodes = update_xnodes x fml xnodes in
             (queue, nodes, flows, rev_flows, xnodes)
 
-(* main loop *)
+(* Main loop *)
 let rec expand = fun fmap delta queue nodes flows rev_flows xnodes ->
     Profile.check_time_out "model checking" !Flags.time_out;
     if FmlMap2.is_empty queue then

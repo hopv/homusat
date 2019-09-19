@@ -1,4 +1,4 @@
-(* saturation loop *)
+(* Saturation loop *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap
@@ -396,8 +396,10 @@ let check_loop_count = fun lhste argte ->
 
 let restrict_lhste = fun cs lhste ->
     let f = fun lhste x acc ->
-        let sigma = Gamma.find_default Sigma.empty x lhste in
-        Gamma.add x sigma acc
+        if Gamma.mem x lhste then
+            let sigma = Gamma.find x lhste in
+            Gamma.add x sigma acc
+        else acc
     in
     IdSet.fold (f lhste) cs Gamma.empty
 

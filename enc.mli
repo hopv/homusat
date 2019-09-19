@@ -1,4 +1,4 @@
-(* Encode formulas as integers *)
+(* Encoding of (sub)formulas as integers *)
 
 type elt = int
 

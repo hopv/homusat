@@ -174,7 +174,7 @@ let iss_to_theta = fun rmap iss ->
     in
     List.fold_left (f rmap) Theta.empty iss
 
-(* this function also can be a bottleneck of whole process *)
+(* this function also can be a bottleneck of the whole process *)
 let normalize_theta = fun theta ->
     let theta = Theta.map normalize_gamma theta in
     let (rmap, iss) = theta_to_iss theta in

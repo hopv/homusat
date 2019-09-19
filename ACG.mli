@@ -16,6 +16,8 @@ module FmlsSet : Set.S with type elt = Enc.elt list
 module FmlMap : X.Map.S with type key = Enc.elt
 module FmlMap2 : X.Map.S with type key = formula
 module FmlsMap : X.Map.S with type key = Enc.elt list
+
+(* ACG: (nodes, flows, rev_flows) *)
 type t = States.t FmlMap2.t * FmlSet.t RHS.t * Id.t list list FmlsMap.t
 
 val construct : Enc.t -> LTS.t -> t
