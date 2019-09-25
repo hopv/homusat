@@ -10,7 +10,6 @@ module Gamma = Types.Gamma
 module Theta = Types.Theta
 module Epsilon = Types.Epsilon
 
-
 let memo = ref FmlMap.empty
 let reset_memo = fun () -> memo := FmlMap.empty
 
@@ -21,7 +20,6 @@ let rec is_typable = fun delta te fml tau ->
     if Epsilon.mem tau tbl then Epsilon.find tau tbl
     else
         let ret = is_typable_without_memo delta te fml tau in
-        (* let tbl = FmlMap.find_default Epsilon.empty fml !memo in *)
         let tbl = Epsilon.add tau ret tbl in
         memo := FmlMap.add fml tbl !memo;
         ret
@@ -34,23 +32,23 @@ and is_typable_without_memo = fun delta te fml tau ->
         let f = fun delta te tau x -> is_typable delta te x tau in
         List.for_all (f delta te tau) xs
     | Enc.Box (a, x) ->
-        let q = Types.codom tau in
-        let f = fun delta te x p ->
-            let tau = Tau.encode ([], p) in
+        let f = fun delta te x q ->
+            let tau = Tau.encode ([], q) in
             is_typable delta te x tau
         in
+        let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.for_all (f delta te x) ps
     | Enc.Diamond (a, x) ->
-        let q = Types.codom tau in
-        let f = fun delta te x p ->
-            let tau = Tau.encode ([], p) in
+        let f = fun delta te x q ->
+            let tau = Tau.encode ([], q) in
             is_typable delta te x tau
         in
+        let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.exists (f delta te x) ps
     | Enc.App (x, ys) ->
-        let f = fun tau n tc -> tau = (Types.drop_tau tc n) in
+        let f = fun tau n tc -> tau = Types.drop_tau tc n in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
         Sigma.exists (is_typable_app delta te ys) tcs

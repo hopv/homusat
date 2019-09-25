@@ -161,8 +161,31 @@ let simplify_rev_flows = fun rev_flows ->
     in
     FmlsMap.fold f rev_flows FmlsMap.empty
 
+(* Get the head variables occuring in the formula fml *)
+let rec get_hvs = fun hvs fml ->
+    match Enc.decode fml with
+    | Enc.Or (ys)
+    | Enc.And (ys) ->
+        List.fold_left get_hvs hvs ys
+    | Enc.Box (a, x)
+    | Enc.Diamond (a, x) -> get_hvs hvs x
+    | Enc.App (x, ys) ->
+        if ys = [] then
+            List.fold_left get_hvs hvs ys
+        else List.fold_left get_hvs (IdSet.add x hvs) ys
+
+(* Generate the set of head variables *)
+let generate_hvs = fun funcs ->
+    let f = fun acc func ->
+        let (_, _, _, _, body) = func in
+        match Enc.decode body with
+        | Enc.App (x, []) -> IdSet.add x acc
+        | _ -> get_hvs acc body
+    in
+    List.fold_left f IdSet.empty funcs
+
 (* Exclude out unused formulas from rev_flows *)
-let restrict_rev_flows = fun fvmap acg ->
+let restrict_rev_flows = fun acg funcs fvmap ->
     let f = fun x fvs acc -> IdSet.union fvs acc in
     let g = fun fvs ys zs acc ->
         let zs = IdSet.inter zs fvs in
@@ -316,7 +339,7 @@ let generate_flow_info = fun funcs lts ->
     let aqmap = generate_aqmap top_vars acg in
     let fbmap = generate_fbmap top_vars acg in
     let fvmap = generate_fvmap top_vars funcs in
-    let acg = restrict_rev_flows fvmap acg in
+    let acg = restrict_rev_flows acg funcs fvmap in
     let parent = generate_parent acg funcs in
     let children = generate_children funcs in
     let siblings = generate_siblings acg in

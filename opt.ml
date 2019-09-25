@@ -1,22 +1,10 @@
-(* optimization through removal of unnecessary types *)
+(* Optimization through removal of unnecessary types *)
 
 module Sigma = Types.Sigma
 module Gamma = Types.Gamma
 module Theta = Types.Theta
 
-let normalize_sigma = fun sigma ->
-    let suptype = fun tau1 tau2 -> Types.subtype tau2 tau1 in
-    let not_subtype = fun tau1 tau2 -> not (Types.subtype tau1 tau2) in
-    let f = fun tau acc ->
-        if Sigma.exists (suptype tau) acc then acc
-        else Sigma.add tau (Sigma.filter (not_subtype tau) acc)
-    in
-    Sigma.fold f sigma Sigma.empty
-
-let normalize_gamma = fun gamma ->
-    Gamma.map normalize_sigma gamma
-
-module IntSet = Set.Make (struct
+module IntSet = X.Set.Make (struct
     type t = int
     let compare : t -> t -> int = compare
 end)
@@ -32,7 +20,7 @@ end)
 (* Map.cardinal is slow *)
 let counter = ref 0
 
-(* convert sigma (the set of types for i-th argument) to int list *)
+(* Convert sigma (the set of types for i-th argument) to an int list *)
 let sigma_to_is = fun i map rmap acc sigma ->
     let f = fun i tau (map, rmap, acc) ->
         if IntIntMap.mem (i, tau) map then
@@ -47,8 +35,8 @@ let sigma_to_is = fun i map rmap acc sigma ->
     in
     Sigma.fold (f i) sigma (map, rmap, acc)
 
-(* convert sigma list to int list *)
-(* structure of sigmas is lost at this point (probably should be avoided) *)
+(* Convert a sigma list to an int list *)
+(* Structure of sigmas is lost at this point (probably should be avoided) *)
 let sigmas_to_is = fun map rmap sigmas ->
     let rec f = fun i map rmap sigmas acc ->
         match sigmas with
@@ -59,11 +47,11 @@ let sigmas_to_is = fun map rmap sigmas ->
     in
     f 0 map rmap sigmas []
 
-(* convert sigma list list to int list list *)
+(* Convert a sigma list list to an int list list *)
 let sigmass_to_iss = fun sigmass ->
     let f = fun (map, rmap, acc) sigmas ->
         let (map, rmap, is) = sigmas_to_is map rmap sigmas in
-        let is = List.sort compare is in (* necessary *)
+        let is = List.sort compare is in (* Necessary! *)
         (map, rmap, is :: acc)
     in
     counter := 0;
@@ -72,7 +60,7 @@ let sigmass_to_iss = fun sigmass ->
     let (map, rmap, iss) = List.fold_left f (map, rmap, []) sigmass in
     (rmap, iss)
 
-(* convert int list to a map from i to the set of types for i-th argument *)
+(* Convert an int list to a map from i to the types of the i-th argument *)
 let is_to_map = fun rmap is ->
     let f = fun rmap acc i ->
         let (j, tau) = IntMap.find i rmap in
@@ -82,7 +70,7 @@ let is_to_map = fun rmap is ->
     in
     List.fold_left (f rmap) IntMap.empty is
 
-(* concert map to sigma list *)
+(* Convert a map from i to the types of the i-th argument to a sigma list *)
 let map_to_sigmas = fun n map ->
     let rec f = fun i map acc ->
         if i < 0 then acc
@@ -93,16 +81,16 @@ let map_to_sigmas = fun n map ->
     in
     f (n - 1) map []
 
-(* convert int list to sigma list *)
+(* Convert an int list to a sigma list *)
 let is_to_sigmas = fun n rmap is ->
     let map = is_to_map rmap is in
     map_to_sigmas n map
 
-(* convert int list list to sigma list list *)
+(* Convert an int list list to a sigma list list *)
 let iss_to_sigmass = fun n rmap iss ->
     List.rev_map (is_to_sigmas n rmap) iss
 
-(* compare two sigma lists of the same length *)
+(* Compare two sigma lists of the same length *)
 let compare_sigmass = fun sigmas1 sigmas2 ->
     let rec compare_elementwise = fun sigmas1 sigmas2 ->
         match (sigmas1, sigmas2) with
@@ -115,7 +103,7 @@ let compare_sigmass = fun sigmas1 sigmas2 ->
     in
     compare_elementwise sigmas1 sigmas2
 
-(* this function often becomes a bottleneck of the whole process *)
+(* This function often becomes a bottleneck of the whole process *)
 let normalize_sigmass = fun sigmass ->
     if sigmass = [] then []
     else
@@ -123,9 +111,9 @@ let normalize_sigmass = fun sigmass ->
         let (rmap, iss) = sigmass_to_iss sigmass in
         let iss = AMS.all_maximal_sets iss in
         let sigmass = iss_to_sigmass n rmap iss in
-        List.sort compare_sigmass sigmass (* sort the result *)
+        List.sort compare_sigmass sigmass
 
-(* convert gamma to int list *)
+(* Convert gamma to an int list *)
 let gamma_to_is = fun map rmap gamma ->
     let f = fun x sigma (map, rmap, acc) ->
         let g = fun x tau (map, rmap, acc) ->
@@ -143,11 +131,11 @@ let gamma_to_is = fun map rmap gamma ->
     in
     Gamma.fold f gamma (map, rmap, [])
 
-(* convert theta to int list list *)
+(* Convert theta to an int list list *)
 let theta_to_iss = fun theta ->
     let f = fun gamma (map, rmap, acc) ->
         let (map, rmap, is) = gamma_to_is map rmap gamma in
-        let is = List.sort compare is in (* necessary *)
+        let is = List.sort compare is in (* Necessary! *)
         (map, rmap, is :: acc)
     in
     counter := 0;
@@ -156,7 +144,7 @@ let theta_to_iss = fun theta ->
     let (map, rmap, iss) = Theta.fold f theta (map, rmap, []) in
     (rmap, iss)
 
-(* convert int list to gamma *)
+(* Convert an int list to gamma *)
 let is_to_gamma = fun rmap is ->
     let f = fun rmap acc i ->
         let (x, tau) = IntMap.find i rmap in
@@ -166,7 +154,7 @@ let is_to_gamma = fun rmap is ->
     in
     List.fold_left (f rmap) Gamma.empty is
 
-(* convert int list list to theta *)
+(* Convert an int list list to theta *)
 let iss_to_theta = fun rmap iss ->
     let f = fun rmap acc is ->
         let gamma = is_to_gamma rmap is in
@@ -174,22 +162,21 @@ let iss_to_theta = fun rmap iss ->
     in
     List.fold_left (f rmap) Theta.empty iss
 
-(* this function also can be a bottleneck of the whole process *)
+(* This function also can be a bottleneck of the whole process *)
 let normalize_theta = fun theta ->
-    let theta = Theta.map normalize_gamma theta in
+    let theta = Theta.map Types.normalize_gamma theta in
     let (rmap, iss) = theta_to_iss theta in
     iss_to_theta rmap (AMS.all_minimal_sets iss)
 
-(* take Cartesian product of thetas with optimization *)
+(* Take the Cartesian product of two thetas *)
 let prod_thetas = fun theta1 theta2 ->
-    if !Flags.noopt_mode then Types.prod_thetas theta1 theta2 else
+    (* if !Flags.noopt_mode then Types.prod_thetas theta1 theta2 else *)
     if 1 < Theta.cardinal theta1 && 1 < Theta.cardinal theta2 then
         let theta = Types.prod_thetas theta1 theta2 in
         normalize_theta theta
     else Types.prod_thetas theta1 theta2
 
-(* take maximal sets instead of minimal sets (unused) *)
-let normalize_tes = fun tes ->
-    let (rmap, iss) = theta_to_iss tes in
-    let iss = AMS.all_maximal_sets iss in
-    iss_to_theta rmap iss
+(* Take the union of two thetas with some optimization *)
+let merge_thetas = fun theta1 theta2 ->
+    (* normalize_theta (Theta.union theta1 theta2) *)
+    Theta.union theta1 theta2 (* No optimization *)

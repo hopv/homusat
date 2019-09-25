@@ -2,6 +2,7 @@
 
 module States = LTS.States
 
+(* Should Sigma.t also be encoded as an integer? *)
 module Sigma = X.Set.Make (struct
     type t = int
     let compare : t -> t -> int = compare
@@ -9,9 +10,8 @@ end)
 
 module Tau = struct
 
-    type t = int
+    type t = int (* Encoded as an integer *)
     type raw = Sigma.t list * LTS.state
-    (* Should Sigma.t also be encoded as an integer? *)
 
     module IntMap = X.Map.Make (struct
         type t = int
@@ -47,6 +47,7 @@ module Tau = struct
     let map = ref StateMap.empty
     let rmap = ref IntMap.empty
 
+    (* A propositional type q is encoded as the same code as the state q *)
     let register_states = fun lts ->
         let rec register_state = fun q ->
             let qmap = StateMap.find_default SigmasMap.empty q !map in
@@ -66,7 +67,7 @@ module Tau = struct
         if is_prop i then ([], i)
         else IntMap.find i !rmap
 
-    (* subtype relation *)
+    (* Subtype relation *)
     let rec subtype =
         let memo = Hashtbl.create 100000 in
         fun x y ->
@@ -105,6 +106,7 @@ module Tau = struct
             List.for_all2 suptype sigmas1 sigmas2
         else false
 
+    (* Remove all subsumed types from a set of intersection types *)
     let normalize_sigma = fun sigma ->
         let strict_suptype = fun i j -> i <> j && subtype j i in
         let f = fun i acc ->
@@ -113,11 +115,21 @@ module Tau = struct
             else acc
         in
         Sigma.fold f sigma sigma
+    (*
+    let normalize_sigma = fun sigma ->
+        let suptype = fun tau1 tau2 -> subtype tau2 tau1 in
+        let not_subtype = fun tau1 tau2 -> not (subtype tau1 tau2) in
+        let f = fun tau acc ->
+            if Sigma.exists (suptype tau) acc then acc
+            else Sigma.add tau (Sigma.filter (not_subtype tau) acc)
+        in
+        Sigma.fold f sigma Sigma.empty
+    *)
 
     let normalize_sigmas = fun sigmas ->
         X.List.map normalize_sigma sigmas
 
-    (* encode tau as an integer after normalization *)
+    (* Encode tau as an integer after normalization *)
     let encode = fun tau ->
         let (sigmas, q) = tau in
         if sigmas = [] then q
@@ -145,11 +157,14 @@ module Tau = struct
 
 end
 
+(* A Type environment *)
 module Gamma = Id.IdMap
+(* Set of type environments *)
 module Theta = X.Set.Make (struct
     type t = Sigma.t Gamma.t
     let compare = Gamma.compare Sigma.compare
 end)
+(* A map from intersection types *)
 module Epsilon = X.Map.Make (struct
     type t = Tau.t
     let compare : t -> t -> int = compare
@@ -175,12 +190,12 @@ let drop_tau = (* This function is called repeatedly and should be fast *)
         let ret =
             let (sigmas, q) = Tau.decode tau in
             let sigmas = drop n sigmas in
-            Tau.encode (sigmas, q) (* normalization can be skipped *)
+            Tau.encode (sigmas, q) (* Normalization can be skipped *)
         in
         Hashtbl.add memo (tau, n) ret;
         ret
 
-(* Get the first n argument types of tau *)
+(* Get the first n arguments of tau *)
 let drop_sigmas = (* This function too can be called repeatedly *)
     let memo = Hashtbl.create 100000 in
     let rec drop = fun i sigmas acc ->
@@ -267,7 +282,14 @@ let merge_gammas = fun gamma1 gamma2 ->
     in
     Gamma.union f gamma1 gamma2
 
-(* Take Cartesian product of thetas *)
+let is_trivial = fun theta ->
+    (* Theta.compare (Theta.singleton Gamma.empty) theta = 0 *)
+    if Theta.cardinal theta = 1 then
+        Gamma.is_empty (Theta.choose theta)
+    else false
+
+(* Take the Cartesian product of two thetas *)
+(* This function is time-consuming and should be avoided as possible *)
 let prod_thetas = fun theta1 theta2 ->
     let add_merged = fun gamma1 gamma2 acc ->
         Profile.check_time_out "model checking" !Flags.time_out;
@@ -277,7 +299,9 @@ let prod_thetas = fun theta1 theta2 ->
     let f = fun theta gamma acc ->
         Theta.fold (add_merged gamma) theta acc
     in
-    Theta.fold (f theta1) theta2 Theta.empty
+    if is_trivial theta2 then theta1
+    else if is_trivial theta1 then theta2
+    else Theta.fold (f theta2) theta1 Theta.empty
 
 (* Normalization making use of the subtyping relation (slow) *)
 let merge_sigmas_with_subtype = fun sigma1 sigma2 ->

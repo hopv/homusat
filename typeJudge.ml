@@ -22,66 +22,69 @@ let rec type_envs = fun delta winning_nodes te fml tau ->
     if Epsilon.mem tau tbl then Epsilon.find tau tbl
     else
         let ret = type_envs_without_memo delta winning_nodes te fml tau in
-        (* let tbl = FmlMap.find_default Epsilon.empty fml !memo in *)
         let tbl = Epsilon.add tau ret tbl in
         memo := FmlMap.add fml tbl !memo;
         ret
 and type_envs_without_memo = fun delta winning_nodes te fml tau ->
     match Enc.decode fml with
     | Enc.Or (xs) ->
-        let f = fun delta winning_nodes te tau acc x ->
-            let theta = type_envs delta winning_nodes te x tau in
-            Theta.union theta acc
+        let f = fun delta winning_nodes te tau x ->
+            type_envs delta winning_nodes te x tau
         in
-        List.fold_left (f delta winning_nodes te tau) Theta.empty xs
+        let thetas = List.rev_map (f delta winning_nodes te tau) xs in
+        (* List.fold_left Theta.union Theta.empty thetas *)
+        List.fold_left Opt.merge_thetas Theta.empty thetas
     | Enc.And (xs) ->
-        let f = fun delta winning_nodes te tau acc x ->
-            if Theta.is_empty acc then acc
-            else
-                let theta = type_envs delta winning_nodes te x tau in
-                Opt.prod_thetas theta acc
-        in
-        let f = f delta winning_nodes te tau in
-        List.fold_left f (Theta.singleton Gamma.empty) xs
-    | Enc.Box (a, x) ->
-        let q = Types.codom tau in
-        let f = fun delta winning_nodes te x p acc ->
-            let tau = Tau.encode ([], p) in
+        let f = fun delta winning_nodes te tau x ->
             let theta = type_envs delta winning_nodes te x tau in
-            if Theta.is_empty theta then raise Empty
-            else Opt.prod_thetas theta acc
+            if Theta.is_empty theta then raise Empty else theta
         in
-        let ps = Delta.find_default States.empty (q, a) delta in
         begin try
+            let thetas = List.rev_map (f delta winning_nodes te tau) xs in
             let seed = Theta.singleton Gamma.empty in
-            States.fold (f delta winning_nodes te x) ps seed
+            List.fold_left Opt.prod_thetas seed thetas
+        with Empty -> Theta.empty end
+    | Enc.Box (a, x) ->
+        let f = fun delta winning_nodes te x q ->
+            let tau = Tau.encode ([], q) in
+            let theta = type_envs delta winning_nodes te x tau in
+            if Theta.is_empty theta then raise Empty else theta
+        in
+        let q = Types.codom tau in
+        let ps = Delta.find_default States.empty (q, a) delta in
+        let ps = States.elements ps in
+        begin try
+            let thetas = List.rev_map (f delta winning_nodes te x) ps in
+            let seed = Theta.singleton Gamma.empty in
+            List.fold_left Opt.prod_thetas seed thetas
         with Empty -> Theta.empty end
     | Enc.Diamond (a, x) ->
-        let q = Types.codom tau in
-        let f = fun delta winning_nodes te x p acc ->
-            let tau = Tau.encode ([], p) in
-            let theta = type_envs delta winning_nodes te x tau in
-            Theta.union theta acc
-            (* Opt.merge_thetas theta acc *)
+        let f = fun delta winning_nodes te x q ->
+            let tau = Tau.encode ([], q) in
+            type_envs delta winning_nodes te x tau
         in
+        let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
-        States.fold (f delta winning_nodes te x) ps Theta.empty
+        let ps = States.elements ps in
+        let thetas = List.rev_map (f delta winning_nodes te x) ps in
+        (* List.fold_left Theta.union Theta.empty thetas *)
+        List.fold_left Opt.merge_thetas Theta.empty thetas
     | Enc.App (x, ys) ->
-        let f = fun tau n tc -> tau = (Types.drop_tau tc n) in
+        let f = fun tau n tc -> tau = Types.drop_tau tc n in
         let tcs = Env.find_default Sigma.empty x te in
         let tcs = Sigma.filter (f tau (List.length ys)) tcs in
         Sigma.fold (judge_app delta winning_nodes te x ys) tcs Theta.empty
 and judge_app = fun delta winning_nodes te x ys tau acc ->
-    let judge_tau = fun delta winning_nodes te y tau acc ->
+    let judge_tau = fun delta winning_nodes te y tau ->
         let theta = type_envs delta winning_nodes te y tau in
-        if Theta.is_empty theta then raise Empty
-        else Opt.prod_thetas theta acc
+        if Theta.is_empty theta then raise Empty else theta
     in
-    let judge_arg = fun delta winning_nodes te acc y sigma ->
-        let seed = Theta.singleton Gamma.empty in
+    let judge_arg = fun delta winning_nodes te y sigma ->
         let f = judge_tau delta winning_nodes te y in
-        let theta = Sigma.fold f sigma seed in
-        Opt.prod_thetas theta acc
+        let taus = Sigma.elements sigma in
+        let thetas = List.rev_map f taus in
+        let seed = Theta.singleton Gamma.empty in
+        List.fold_left Opt.prod_thetas seed thetas
     in
     let gen_seed = fun winning_nodes x tau ->
         let sigma = Env.find_default Sigma.empty x winning_nodes in
@@ -89,11 +92,12 @@ and judge_app = fun delta winning_nodes te x ys tau acc ->
         else Theta.singleton (Gamma.singleton x (Sigma.singleton tau))
     in
     try let sigmas = Types.drop_sigmas tau (List.length ys) in
-        let seed = gen_seed winning_nodes x tau in
         let f = judge_arg delta winning_nodes te in
-        let theta = List.fold_left2 f seed ys sigmas in
-        Theta.union theta acc
-        (* Opt.merge_thetas theta acc *)
+        let thetas = List.rev_map2 f ys sigmas in
+        let seed = gen_seed winning_nodes x tau in
+        let theta = List.fold_left Opt.prod_thetas seed thetas in
+        (* Theta.union acc theta *)
+        Opt.merge_thetas acc theta
     with Empty -> acc
 
 module EnvMap = X.Map.Make (struct

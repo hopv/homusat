@@ -5,7 +5,7 @@ LIBS = unix
 default: native-code
 # OCAMLC = ocamlcp
 # OCAMLOPT = ocamloptp
-# OCAMLFLAGS = -P -fim
+# OCAMLFLAGS = -P -fimt
 
 SOURCES = \
 x.ml \

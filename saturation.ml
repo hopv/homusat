@@ -231,7 +231,7 @@ let generate_sigmass_context =
 let subsumed = fun sigmas1 sigmas2 ->
     List.for_all2 Sigma.subset sigmas1 sigmas2
 
-(* sum of cardnals *)
+(* sum of cardinals *)
 let cardinal_sigmas = fun sigmas ->
     let sum = fun acc sigma -> acc + Sigma.cardinal sigma in
     List.fold_left sum 0 sigmas

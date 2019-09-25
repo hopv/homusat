@@ -2,10 +2,9 @@
 (* http://www.bayardo.org/ps/sdm2011.pdf by Bayardo and Panda *)
 (* https://arxiv.org/abs/1508.01753 by Marinov, Nash, and Gregg *)
 
-(* input is assumed to be given as an int list list, *)
+(* The input is assumed to be given as an int list list, *)
 (* where each int list is sorted and represents a set of integers *)
 
-(* print int list list *)
 let print_iss = fun iss ->
     let f = fun is ->
         let ls = X.List.map string_of_int is in
@@ -16,8 +15,8 @@ let print_iss = fun iss ->
     let str = String.concat "; " ls in
     print_endline ("[" ^ str ^ "]")
 
-(* lexicographic ordering on lists of integers *)
-(* probably the same as the standard compare function *)
+(* The lexicographic ordering on lists of integers *)
+(* Probably the same as the standard compare function *)
 let rec compare_int_lists = fun is1 is2 ->
     match (is1, is2) with
     | ([], []) -> 0
@@ -28,7 +27,7 @@ let rec compare_int_lists = fun is1 is2 ->
         else if i2 < i1 then 1
         else compare_int_lists is1 is2
 
-(* decides whether is1 is a prefix of is2 *)
+(* Check if is1 is a prefix of is2 *)
 let rec is_prefix = fun is1 is2 ->
     match (is1, is2) with
     | ([], _) -> true
@@ -37,22 +36,21 @@ let rec is_prefix = fun is1 is2 ->
         if i1 = i2 then is_prefix is1 is2
         else false
 
-(* iss is assumed to be lexicographically ordered *)
+(* The input iss is assumed to be lexicographically ordered *)
 let remove_all_prefixes = fun iss ->
-    let rec scan_backwards = fun riss acc ->
-        match riss with
+    let rec f = fun iss acc ->
+        match iss with
         | [] -> acc
         | [is] -> is :: acc
-        | succ :: (prev :: riss) ->
+        | prev :: (succ :: iss) ->
             if is_prefix prev succ then
-                scan_backwards (succ :: riss) acc
-            else scan_backwards (prev :: riss) (succ :: acc)
+                f (succ :: iss) acc
+            else f (succ :: iss) (prev :: acc)
     in
-    let riss = List.rev iss in
-    scan_backwards riss []
+    List.rev (f iss [])
 
 (* min.(i) := minimum size of iss.(i), ..., iss.(n - 1) *)
-(* if min.(i) = |iss.(i)| then subsumption judgment can be skipped *)
+(* If min.(i) = |iss.(i)| then subsumption judgment can be skipped *)
 let generate_mins = fun iss ->
     let rec f = fun iss i acc mins ->
         if i < 0 then mins
@@ -66,11 +64,12 @@ let generate_mins = fun iss ->
     let mins = Array.make n 0 in
     f iss (n - 1) max_int mins
 
-(* converts int list list to int array array (for binary search) *)
+(* Convert int list list to int array array (for binary search) *)
 let convert_to_arrays = fun iss ->
     Array.of_list (X.List.map Array.of_list iss)
 
-(* returns the first i such that l < i <= r and cond i *)
+(* Return the first i such that l < i <= r and cond i *)
+(* # r is returned if no such i exists *)
 let rec lower_bound = fun l r cond ->
     if r - 1 <= l then r
     else
@@ -78,7 +77,8 @@ let rec lower_bound = fun l r cond ->
         if cond c then lower_bound l c cond
         else lower_bound c r cond
 
-(* returns the last i such that l <= i < r and cond i *)
+(* Return the last i such that l <= i < r and cond i *)
+(* # l is returned if no such i exists *)
 let rec upper_bound = fun l r cond ->
     if r - 1 <= l then l
     else
@@ -86,31 +86,31 @@ let rec upper_bound = fun l r cond ->
         if cond c then upper_bound c r cond
         else upper_bound l c cond
 
-(* returns the first i such that l <= i < r and v <= s.(i) *)
+(* Return the least i such that l <= i < r and v <= s.(i) *)
+(* # r - 1 is returned if no such i exists *)
 let next_item = fun s l r v ->
     let cond = fun s v i -> v <= s.(i) in
     lower_bound (l - 1) (r - 1) (cond s v)
 
-(* given: d.(l).(k) = v *)
-(* returns the first i such that l < i <= r with v <> d.(i).(k) *)
+(* Return the least i such that l < i <= r and v <= d.(i).(k) *)
+(* # r is returned if no such i exists *)
 let next_begin_range = fun d l r v k ->
-    let cond = fun d v k i -> v <> d.(i).(k) in
+    let cond = fun d v k i -> v <= d.(i).(k) in
     lower_bound l r (cond d v k)
 
-(* given: d.(l).(k) = v *)
-(* returns the last i such that l <= i <= r with v = d.(i).(k) *)
+(* Return the largest i such that l <= i <= r and d.(i).(k) <= v *)
 let next_end_range = fun d l r v k ->
-    let cond = fun d v k i -> v = d.(i).(k) in
+    let cond = fun d v k i -> d.(i).(k) <= v in
     upper_bound l (r + 1) (cond d v k)
 
-(* mark d.(b) as subsumed if b <= e and |d.(b)| = k *)
+(* Mark d.(b) as subsumed if b <= e and |d.(b)| = k *)
 let rec mark = fun d b e k subsumed ->
     if b <= e && Array.length d.(b) = k then begin
         subsumed.(b) <- true;
         mark d (b + 1) e k subsumed
     end else (b, subsumed)
 
-(* mark all sets in d.(b..e).(k..) subsumed by s.(j..) *)
+(* Mark all sets in d.(b..e).(k..) subsumed by s.(j..) *)
 let rec mark_subsumed = fun d s n b e j k subsumed ->
     Profile.check_time_out "model checking" !Flags.time_out;
     if e < b then subsumed
@@ -120,8 +120,8 @@ let rec mark_subsumed = fun d s n b e j k subsumed ->
         let w = s.(j) in
         if w < v then subsumed
         else if v < w then
-            let b = next_begin_range d b e v k in
-            if d.(b).(k) = v then subsumed
+            let b = next_begin_range d b e w k in
+            if d.(b).(k) < w then subsumed
             else mark_subsumed d s n b e j k subsumed
         else (* v = w *)
             let e' = next_end_range d b e w k in
@@ -138,7 +138,7 @@ let rec mark_subsumed = fun d s n b e j k subsumed ->
             in
             mark_subsumed d s n (e' + 1) e j k subsumed
 
-(* iteratively mark all subsumed sets *)
+(* Iteratively mark all subsumed sets *)
 let generate_subsumed = fun iss ->
     let rec loop = fun iss mins e i subsumed ->
         if e <= i then subsumed
@@ -160,7 +160,7 @@ let generate_subsumed = fun iss ->
     let mins = generate_mins iss in
     loop iss mins (n - 1) 0 subsumed
 
-(* gather all sets that are not marked as subsumed *)
+(* Gather all sets that are not marked as subsumed *)
 let gather_maximal_sets = fun iss subsumed ->
     let rec loop = fun iss subsumed i acc ->
         if i < 0 then acc
@@ -180,7 +180,20 @@ let all_maximal_sets = fun iss ->
     let subsumed = generate_subsumed iss in
     gather_maximal_sets iss subsumed
 
-(* decides whether s.(j..) subsumes some of d.(b..e).(k..) *)
+(* The input iss is assumed to be lexicographically ordered *)
+let remove_all_successors_of_prefixes = fun iss ->
+    let rec f = fun iss acc ->
+        match iss with
+        | [] -> acc
+        | [is] -> is :: acc
+        | prev :: (succ :: iss) ->
+            if is_prefix prev succ then
+                f (prev :: iss) acc
+            else f (succ :: iss) (prev :: acc)
+    in
+    List.rev (f iss [])
+
+(* Check if s.(j..) subsumes some of d.(b..e).(k..) *)
 let rec subsumes = fun d s n b e j k ->
     Profile.check_time_out "model checking" !Flags.time_out;
     if e < b then false
@@ -190,8 +203,8 @@ let rec subsumes = fun d s n b e j k ->
         let w = s.(j) in
         if w < v then false
         else if v < w then
-            let b = next_begin_range d b e v k in
-            if d.(b).(k) = v then false
+            let b = next_begin_range d b e w k in
+            if d.(b).(k) < w then false
             else subsumes d s n b e j k
         else (* v = w *)
             let e' = next_end_range d b e w k in
@@ -204,23 +217,7 @@ let rec subsumes = fun d s n b e j k ->
                     else subsumes d s n (e' + 1) e j k
                 else subsumes d s n (e' + 1) e j k
 
-let init_is_minimal = fun iss is_minimal ->
-    let rec loop = fun iss n s i is_minimal ->
-        if n <= i then is_minimal
-        else
-            let t = Array.to_list iss.(i) in
-            if is_prefix s t then begin
-                is_minimal.(i) <- false;
-                loop iss n s (i + 1) is_minimal
-            end else loop iss n t (i + 1) is_minimal
-    in
-    let n = Array.length iss in
-    if n = 0 then is_minimal
-    else
-        let s = Array.to_list iss.(0) in
-        loop iss n s 1 is_minimal
-
-(* iteratively mark all subsumed sets *)
+(* Iteratively mark all subsumed sets *)
 let generate_is_minimal = fun iss ->
     let rec loop = fun iss mins e i is_minimal ->
         if e <= i then is_minimal
@@ -237,11 +234,10 @@ let generate_is_minimal = fun iss ->
     in
     let n = Array.length iss in
     let is_minimal = Array.make n true in
-    let is_minimal = init_is_minimal iss is_minimal in
     let mins = generate_mins iss in
     loop iss mins (n - 1) 0 is_minimal
 
-(* gather all sets that are marked as minimal *)
+(* Gather all sets that are marked as minimal *)
 let gather_minimal_sets = fun iss is_minimal ->
     let rec loop = fun iss is_minimal i acc ->
         if i < 0 then acc
@@ -255,6 +251,7 @@ let gather_minimal_sets = fun iss is_minimal ->
 
 let all_minimal_sets = fun iss ->
     let iss = List.sort compare_int_lists iss in
+    let iss = remove_all_successors_of_prefixes iss in
     let iss = convert_to_arrays iss in
     let is_minimal = generate_is_minimal iss in
     gather_minimal_sets iss is_minimal

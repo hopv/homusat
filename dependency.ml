@@ -204,6 +204,7 @@ module Queue = struct
         List.iter f sccs
 
     (* Push an element to the queue *)
+    (* Currently FIFO ordering is adopted *)
     let push = let cnt = ref 0 in (* for weights *) fun x queue ->
         let queue =
             if IntMap.mem x !weights && Pool.mem x queue then
