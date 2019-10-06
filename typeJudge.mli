@@ -1,4 +1,4 @@
-(* type judgments for lhs variables *)
+(* Type judgments for lhs variables *)
 
 module Env = Id.IdMap
 module Delta = LTS.Delta

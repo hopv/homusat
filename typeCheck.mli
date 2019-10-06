@@ -1,4 +1,4 @@
-(* type check for argument formulas *)
+(* Type checks for argument formulas *)
 
 module Env = Id.IdMap
 module Delta = LTS.Delta

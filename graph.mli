@@ -1,4 +1,4 @@
-(* basic graph algorithms for parity game solving *)
+(* Basic graph algorithms for parity game solving *)
 
 module LHS = Id.IdMap
 module Tau = Types.Tau

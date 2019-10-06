@@ -1,4 +1,4 @@
-(* optimization for immediate winning positions *)
+(* Optimization for immediate winning positions *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap

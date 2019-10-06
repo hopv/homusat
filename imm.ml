@@ -1,4 +1,4 @@
-(* optimization for immediate winning positions *)
+(* Optimization for immediate winning positions *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap
@@ -12,7 +12,7 @@ module Gamma = Types.Gamma
 module Theta = Types.Theta
 module Epsilon = Types.Epsilon
 
-(* remove _ |- tau from epsilon if x : tau is a winning node *)
+(* Remove * |- tau from epsilon if x : tau is a winning node *)
 let remove_imms_rhs = fun x winning_nodes epsilon ->
     let f = fun tau (new_imms, epsilon) ->
         if Epsilon.mem tau epsilon then
@@ -22,10 +22,9 @@ let remove_imms_rhs = fun x winning_nodes epsilon ->
         else (new_imms, epsilon)
     in
     let sigma = LHS.find_default Sigma.empty x winning_nodes in
-    let seed = (Sigma.empty, epsilon) in
-    Sigma.fold f sigma seed
+    Sigma.fold f sigma (Sigma.empty, epsilon)
 
-(* for each x : sigma \in gamma, subtract winning nodes of x from sigma *)
+(* For each x : sigma \in gamma, subtract winning nodes of x from sigma *)
 let remove_imms_gamma = fun winning_nodes gamma ->
     let f = fun winning_nodes x sigma gamma ->
         if LHS.mem x winning_nodes then
@@ -38,7 +37,7 @@ let remove_imms_gamma = fun winning_nodes gamma ->
     in
     Gamma.fold (f winning_nodes) gamma gamma
 
-(* for each theta |- tau in epsilon, apply remove_imms_gamma to theta *)
+(* For each gamma |- tau in epsilon, apply remove_imms_gamma to gamma *)
 let remove_imms_lhs = fun winning_nodes epsilon ->
     let f = fun winning_nodes tau theta (new_imms, epsilon) ->
         let theta = Theta.map (remove_imms_gamma winning_nodes) theta in
@@ -48,16 +47,15 @@ let remove_imms_lhs = fun winning_nodes epsilon ->
             (new_imms, epsilon)
          else (new_imms, Epsilon.add tau theta epsilon)
     in
-    let seed = (Sigma.empty, epsilon) in
-    Epsilon.fold (f winning_nodes) epsilon seed
+    Epsilon.fold (f winning_nodes) epsilon (Sigma.empty, epsilon)
 
-(* remove winning nodes from the both sides of epsilon *)
-let remove_winning_nodes_epsilon = fun x winning_nodes epsilon ->
+(* Remove winning nodes from the both sides of epsilon *)
+let remove_imms_epsilon = fun x winning_nodes epsilon ->
     let (old_imms, epsilon) = remove_imms_rhs x winning_nodes epsilon in
     let (new_imms, epsilon) = remove_imms_lhs winning_nodes epsilon in
     (new_imms, epsilon)
 
-(* remove _ |- x : tau from tj if x : tau is a winning node *)
+(* Remove * |- x : tau from tj if x : tau is a winning node *)
 let remove_winning_nodes_rhs = fun winning_nodes tj ->
     let f = fun x sigma tj ->
         if LHS.mem x tj then
@@ -83,7 +81,7 @@ let rec loop = (* new_winning_nodes is unprocessed *)
         (epsilon, imms, winning_nodes, tj)
     else
         let (new_imms, epsilon) =
-            remove_winning_nodes_epsilon x new_winning_nodes epsilon
+            remove_imms_epsilon x new_winning_nodes epsilon
         in
         let tj = remove_winning_nodes_rhs new_winning_nodes tj in
         let imms = Sigma.union imms new_imms in
@@ -101,7 +99,7 @@ let add_imms_to_epsilon = fun imms epsilon ->
     Sigma.fold f imms epsilon
 
 let optimize = fun x epsilon winning_nodes tj ->
-    if !Flags.noopt_mode then (epsilon, winning_nodes, tj) else
+    (* if !Flags.noopt_mode then (epsilon, winning_nodes, tj) else *)
     let (old_imms, epsilon) = remove_imms_rhs x winning_nodes epsilon in
     let (new_imms, epsilon) = remove_imms_lhs winning_nodes epsilon in
     let new_winning_nodes = imms_to_winning_nodes x new_imms in

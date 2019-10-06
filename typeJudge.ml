@@ -1,4 +1,4 @@
-(* type judgments for lhs variables *)
+(* Type judgments for lhs variables *)
 
 module Env = Id.IdMap
 module Delta = LTS.Delta
@@ -15,7 +15,7 @@ exception Empty
 let memo = ref FmlMap.empty
 let reset_memo = fun () -> memo := FmlMap.empty
 
-(* return the set of type environments under which fml has type tau *)
+(* Return the set of type environments under which fml has type tau *)
 let rec type_envs = fun delta winning_nodes te fml tau ->
     Profile.check_time_out "model checking" !Flags.time_out;
     let tbl = FmlMap.find_default Epsilon.empty fml !memo in
@@ -31,6 +31,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
         let f = fun delta winning_nodes te tau x ->
             type_envs delta winning_nodes te x tau
         in
+        (* assert (Types.is_prop tau); *)
         let thetas = List.rev_map (f delta winning_nodes te tau) xs in
         (* List.fold_left Theta.union Theta.empty thetas *)
         List.fold_left Opt.merge_thetas Theta.empty thetas
@@ -39,6 +40,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
             let theta = type_envs delta winning_nodes te x tau in
             if Theta.is_empty theta then raise Empty else theta
         in
+        (* assert (Types.is_prop tau); *)
         begin try
             let thetas = List.rev_map (f delta winning_nodes te tau) xs in
             let seed = Theta.singleton Gamma.empty in
@@ -50,6 +52,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
             let theta = type_envs delta winning_nodes te x tau in
             if Theta.is_empty theta then raise Empty else theta
         in
+        (* assert (Types.is_prop tau); *)
         let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         let ps = States.elements ps in
@@ -63,6 +66,7 @@ and type_envs_without_memo = fun delta winning_nodes te fml tau ->
             let tau = Tau.encode ([], q) in
             type_envs delta winning_nodes te x tau
         in
+        (* assert (Types.is_prop tau); *)
         let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         let ps = States.elements ps in
@@ -80,12 +84,12 @@ and judge_app = fun delta winning_nodes te x ys tau acc ->
         if Theta.is_empty theta then raise Empty else theta
     in
     let judge_arg = fun delta winning_nodes te y sigma ->
-        let f = judge_tau delta winning_nodes te y in
         let taus = Sigma.elements sigma in
-        let thetas = List.rev_map f taus in
-        let seed = Theta.singleton Gamma.empty in
-        List.fold_left Opt.prod_thetas seed thetas
+        List.rev_map (judge_tau delta winning_nodes te y) taus
     in
+    (* We can make this function return a nonempty type environment *)
+    (* only when x is an rhs variable, and delay the construction of *)
+    (* the edge set until the saturation loop is completed. *)
     let gen_seed = fun winning_nodes x tau ->
         let sigma = Env.find_default Sigma.empty x winning_nodes in
         if Sigma.mem tau sigma then Theta.singleton Gamma.empty
@@ -93,7 +97,12 @@ and judge_app = fun delta winning_nodes te x ys tau acc ->
     in
     try let sigmas = Types.drop_sigmas tau (List.length ys) in
         let f = judge_arg delta winning_nodes te in
-        let thetas = List.rev_map2 f ys sigmas in
+        let g = fun thetas ->
+            let seed = Theta.singleton Gamma.empty in
+            List.fold_left Opt.prod_thetas seed thetas
+        in
+        let thetass = List.rev_map2 f ys sigmas in
+        let thetas = List.rev_map g thetass in
         let seed = gen_seed winning_nodes x tau in
         let theta = List.fold_left Opt.prod_thetas seed thetas in
         (* Theta.union acc theta *)

@@ -1,4 +1,4 @@
-(* saturation loop *)
+(* Saturation loop *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap

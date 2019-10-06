@@ -1,4 +1,4 @@
-(* basic graph algorithms for parity game solving *)
+(* Basic graph algorithms for parity game solving *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap
@@ -8,7 +8,7 @@ module Gamma = Types.Gamma
 module Theta = Types.Theta
 module Epsilon = Types.Epsilon
 
-(* can be replaced with an array or a hash table *)
+(* Can be replaced with an array or a hash table *)
 module IntMap = X.Map.Make (struct
     type t = int
     let compare : t -> t -> int = compare
@@ -25,9 +25,10 @@ module Vertex = struct
         let st = Types.string_of_tau i in
         sx ^ " : " ^ st
 end
-module VS = Set.Make (Vertex)
+module VS = X.Set.Make (Vertex)
 module Adj = X.Map.Make (Vertex)
 
+(* Adjacency list and initial vertex *)
 type t = VS.t list Adj.t * Vertex.t
 
 let string_of_vs = fun vs ->
@@ -61,17 +62,14 @@ let gamma_to_vs = fun gamma ->
     Gamma.fold f gamma VS.empty
 
 let theta_to_vss = fun theta ->
-    let f = fun gamma acc ->
-        let vs = gamma_to_vs gamma in
-        vs :: acc
-    in
-    Theta.fold f theta []
+    let gammas = Theta.elements theta in
+    List.rev_map gamma_to_vs gammas
 
 let vss_to_vs = fun vss ->
     let vs = List.fold_left VS.union VS.empty vss in
     VS.elements vs
 
-(* add vertices reachable from (x, tau) *)
+(* Add vertices reachable from (x, tau) *)
 let rec add_vertex = fun tj adj (x, tau) ->
     if Adj.mem (x, tau) adj then adj
     else
@@ -93,7 +91,7 @@ let construct = fun funcs lts tj ->
     let adj = add_vertex tj Adj.empty v0 in
     (adj, v0)
 
-(* include vertices unreachable from the initial vertex *)
+(* Include vertices unreachable from the initial vertex *)
 let construct_all = fun funcs lts tj ->
     let f = fun x epsilon adj ->
         let g = fun x tau theta adj ->
@@ -106,6 +104,7 @@ let construct_all = fun funcs lts tj ->
     let adj = LHS.fold f tj Adj.empty in
     (adj, v0)
 
+(* Reversed adjacency list/set *)
 let generate_radj = fun adj ->
     let f = fun v wss acc ->
         let g = fun v acc w ->
@@ -118,9 +117,9 @@ let generate_radj = fun adj ->
     in
     Adj.fold f adj Adj.empty
 
-(* make the maximum priority even, and *)
+(* Make the maximum priority even, and *)
 (* fill the list so that for each step the priority decreases by one *)
-(* at first the partiion is increasingly ordered and not filled *)
+(* Initially the partiion is increasingly ordered and not filled *)
 let fill_partition = fun partition ->
     let rec fill = fun i partition acc ->
         match partition with
@@ -138,8 +137,8 @@ let fill_partition = fun partition ->
     if max_priority mod 2 = 0 then partition
     else (max_priority + 1, VS.empty) :: partition
 
-(* make a partition of vertices according to their priorities *)
-(* they are ordered so that the head has an even priority, and *)
+(* Make a partition of vertices according to their priorities *)
+(* They are ordered so that the head has an even priority, and *)
 (* the successor always has the priority of its predecessor minus one *)
 let generate_partition = fun priorities adj ->
     let f = fun priorities (x, tau) vss acc ->
@@ -149,10 +148,10 @@ let generate_partition = fun priorities adj ->
         IntMap.add i vs acc
     in
     let map = Adj.fold (f priorities) adj IntMap.empty in
-    let partition = IntMap.bindings map in (* increasing and not filled *)
+    let partition = IntMap.bindings map in (* Increasing and not filled *)
     fill_partition partition
 
-(* check if the graph contains the initial vertex *)
+(* Check if the graph contains the initial vertex *)
 let contains_v0 = fun graph ->
     let (adj, v0) = graph in
     Adj.mem v0 adj

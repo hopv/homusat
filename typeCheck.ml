@@ -1,4 +1,4 @@
-(* type check for argument formulas *)
+(* Type checks for argument formulas *)
 
 module Env = Id.IdMap
 module Delta = LTS.Delta
@@ -13,7 +13,7 @@ module Epsilon = Types.Epsilon
 let memo = ref FmlMap.empty
 let reset_memo = fun () -> memo := FmlMap.empty
 
-(* check if the formula fml can be typed with tau *)
+(* Check if the formula fml can be typed with tau *)
 let rec is_typable = fun delta te fml tau ->
     Profile.check_time_out "model checking" !Flags.time_out;
     let tbl = FmlMap.find_default Epsilon.empty fml !memo in
@@ -27,15 +27,18 @@ and is_typable_without_memo = fun delta te fml tau ->
     match Enc.decode fml with
     | Enc.Or (xs) ->
         let f = fun delta te tau x -> is_typable delta te x tau in
+        (* assert (Types.is_prop tau); *)
         List.exists (f delta te tau) xs
     | Enc.And (xs) ->
         let f = fun delta te tau x -> is_typable delta te x tau in
+        (* assert (Types.is_prop tau); *)
         List.for_all (f delta te tau) xs
     | Enc.Box (a, x) ->
         let f = fun delta te x q ->
             let tau = Tau.encode ([], q) in
             is_typable delta te x tau
         in
+        (* assert (Types.is_prop tau); *)
         let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.for_all (f delta te x) ps
@@ -44,6 +47,7 @@ and is_typable_without_memo = fun delta te fml tau ->
             let tau = Tau.encode ([], q) in
             is_typable delta te x tau
         in
+        (* assert (Types.is_prop tau); *)
         let q = Types.codom tau in
         let ps = Delta.find_default States.empty (q, a) delta in
         States.exists (f delta te x) ps
@@ -59,7 +63,7 @@ and is_typable_app = fun delta te ys tau ->
     let sigmas = Types.drop_sigmas tau (List.length ys) in
     List.for_all2 (f delta te) ys sigmas
 
-(* return the set of types that fml can be typed under delta *)
+(* Return the set of types that fml can be typed under delta *)
 let types = fun qs delta te fml ->
     match Enc.decode fml with
     | Enc.App (x, ys) ->

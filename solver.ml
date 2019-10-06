@@ -1,4 +1,4 @@
-(* simple parity game solver *)
+(* Simple parity game solver *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap
@@ -18,7 +18,7 @@ let initial_candids = fun radj vs ->
     in
     VS.fold (f radj) vs VS.empty
 
-(* generic function for attractor *)
+(* Generic function for attractor *)
 let rec attr_base = fun func adj radj removed acc vs ->
     let f = fun func adj radj removed candid new_vs ->
         let wss = Adj.find_default [] candid adj in
@@ -57,7 +57,7 @@ let attr = fun adj radj removed i us ->
     if i mod 2 = 0 then attr_nu adj radj removed vs
     else attr_mu adj radj removed vs
 
-(* generic function for generate *)
+(* Generic function for generate *)
 let generate_base = fun func adj ->
     let f = fun func v wss acc ->
         if func wss then VS.add v acc
@@ -73,7 +73,7 @@ let generate_live_ends = fun adj ->
     let contains_empty = fun wss -> List.exists VS.is_empty wss in
     generate_base contains_empty adj
 
-(* generic function for remove *)
+(* Generic function for remove *)
 let remove_base = fun func adj radj vs ->
     let f = fun func vs candid acc ->
         let wss = Adj.find_default [] candid acc in
@@ -103,7 +103,7 @@ let remove_live_ends = fun adj radj vs ->
     in
     remove_base take_diff adj radj vs
 
-(* generic function for shrink *)
+(* Generic function for shrink *)
 let shrink_base = fun generate attr remove graph ->
     let (adj, v0) = graph in
     let radj = Graph.generate_radj adj in
@@ -119,7 +119,7 @@ let shrink_nu = fun graph ->
     shrink_base generate_live_ends attr_nu remove_live_ends graph
 
 (* Zielonka's algorithm *)
-(* return winning nodes for the current player to the left *)
+(* Return winning nodes for the current player to the left *)
 let rec zielonka = fun adj radj partition removed ->
     match partition with
     | [] -> (VS.empty, VS.empty)
@@ -139,7 +139,7 @@ let rec zielonka = fun adj radj partition removed ->
             let (ws, ls) = zielonka adj radj partition removed in
             (ws, VS.union us ls)
 
-(* entrance for Zielonka's algorithm *)
+(* Entrance for Zielonka's algorithm *)
 let zielonka = fun funcs graph ->
     let (adj, v0) = graph in
     let radj = Graph.generate_radj adj in

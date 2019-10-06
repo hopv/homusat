@@ -1,4 +1,4 @@
-(* simple parity game solver *)
+(* Simple parity game solver *)
 
 module LHS = Id.IdMap
 module RHS = Id.IdMap

@@ -64,7 +64,7 @@ let print_argte = fun argte ->
     in
     FmlsMap.iter f argte
 
-(* split xs into xs1 and xs2 so that |xs1| = |ys| *)
+(* Split xs into xs1 and xs2 so that |xs1| = |ys| *)
 let split_xs = fun xs ys ->
     let rec f = fun xs ys acc ->
         match (xs, ys) with
@@ -75,42 +75,45 @@ let split_xs = fun xs ys ->
     f xs ys []
 
 (* { x : sigma | x is a free variable } *)
-let generate_gamma = fun xs cs sigmas ->
-    let f = fun cs gamma x sigma ->
+let generate_gamma = fun xs fvs sigmas ->
+    let f = fun fvs gamma x sigma ->
         if Sigma.is_empty sigma then gamma
-        else if IdSet.mem x cs then Gamma.add x sigma gamma
+        else if IdSet.mem x fvs then Gamma.add x sigma gamma
         else gamma
     in
-    List.fold_left2 (f cs) Gamma.empty xs sigmas
+    List.fold_left2 (f fvs) Gamma.empty xs sigmas
 
-let generate_theta = fun xs cs sigmass ->
-    let f = fun xs cs theta sigmas ->
-        let gamma = generate_gamma xs cs sigmas in
+(* { { x : sigma | x is a free variable } } *)
+let generate_theta = fun xs fvs sigmass ->
+    let f = fun xs fvs theta sigmas ->
+        let gamma = generate_gamma xs fvs sigmas in
         Theta.add gamma theta
     in
-    List.fold_left (f xs cs) Theta.empty sigmass
+    List.fold_left (f xs fvs) Theta.empty sigmass
 
-let prod_rhstes = fun argte xs cs ys rhstes ->
+let prod_rhstes = fun argte xs ys fvs rhstes ->
     let (xs, next_xs) = split_xs xs ys in
     if FmlsMap.mem ys argte then
         let sigmass = FmlsMap.find ys argte in
-        let theta = generate_theta xs cs sigmass in
+        let theta = generate_theta xs fvs sigmass in
         let rhstes = Types.prod_thetas theta rhstes in
         (rhstes, next_xs)
     else (rhstes, next_xs)
 
-(* generate type environment for rhs variables *)
-let generate_rhstes = fun argte xs cs yss ->
-    let rec f = fun argte xs cs yss acc ->
+(* Generate type environments for rhs variables *)
+let generate_rhstes = fun argte xs fvs yss ->
+    let rec f = fun argte xs fvs yss acc ->
         match yss with
         | [] -> acc
         | ys :: yss ->
-            let (acc, next_xs) = prod_rhstes argte xs cs ys acc in
-            f argte next_xs cs yss acc
+            let (acc, next_xs) = prod_rhstes argte xs ys fvs acc in
+            f argte next_xs fvs yss acc
     in
     let seed = Theta.singleton Gamma.empty in
-    f argte xs cs yss seed
+    f argte xs fvs yss seed
 
+(* Generate an intersection type \sigma_{1} -> ... -> \sigma_{k} -> q *)
+(* from a type judgment x_{1} : \sigma_{1}, ..., x_{n} : \sigma_{k} |- q *)
 let generate_tau = fun xs q gamma ->
     let g = fun (sigmas, gamma) x ->
         let sigma = Gamma.find_default Sigma.empty x gamma in
@@ -122,6 +125,7 @@ let generate_tau = fun xs q gamma ->
     let tau = Tau.encode (List.rev rsigmas, q) in
     (tau, gamma)
 
+(* Generate epsilon from newly derived type judgments *)
 let generate_epsilon = fun xs q theta ->
     let f = fun xs q gamma acc ->
         let (tau, gamma) = generate_tau xs q gamma in
@@ -142,30 +146,30 @@ let generate_epsilon_q =
 
 let generate_epsilon_rhste =
     fun qs delta winning_nodes lhste x ys body rhste acc ->
-    TypeJudge.reset_memo ();
+    TypeJudge.reset_memo (); (* Set a new memo for the new type env. *)
     (* let te = Types.merge_gammas lhste rhste in *)
     let f = generate_epsilon_q delta winning_nodes lhste rhste x ys body in
     States.fold f qs acc
 
 let generate_epsilon_binding =
-    fun delta winning_nodes lhste argte x ys body cs acc binding ->
+    fun delta winning_nodes lhste argte x ys body fvs acc binding ->
     let (zss, qs) = binding in
-    let rhstes = generate_rhstes argte ys cs zss in
+    let rhstes = generate_rhstes argte ys fvs zss in
     let f = generate_epsilon_rhste qs delta winning_nodes lhste x ys body in
     Theta.fold f rhstes acc
 
 let generate_epsilon_lhs =
-    fun fmap delta flow_info winning_nodes lhste argte x cs ->
+    fun fmap delta flow_info winning_nodes lhste argte x fvs ->
     let (ys, body) = LHS.find x fmap in
     let bindings = Flow.get_bindings x flow_info in
     let f =
         generate_epsilon_binding delta winning_nodes
-                                 lhste argte x ys body cs
+                                 lhste argte x ys body fvs
     in
     List.fold_left f Epsilon.empty bindings
 
 let update_tj = fun x epsilon tj ->
-    LHS.add x epsilon tj
+    LHS.add x epsilon tj (* Simply update with the new epsilon *)
     (*
     let tmp = LHS.find_default Epsilon.empty x tj in
     let epsilon = Types.merge_epsilons tmp epsilon in
@@ -178,14 +182,15 @@ let update_lhste = fun x epsilon lhste ->
     let old_sigma = Gamma.find_default Sigma.empty x lhste in
     let diff = Sigma.diff sigma old_sigma in
     if Sigma.is_empty diff then
-        (lhste, false)
+        (lhste, false) (* Not updated *)
     else
+        (* Simply update with the new sigma *)
         let lhste = Gamma.add x sigma lhste in
-        (lhste, true)
+        (lhste, true) (* Updated *)
         (*
         let sigma = Sigma.union old_sigma diff in
         let lhste = Gamma.add x sigma lhste in
-        (lhste, true)
+        (lhste, true) (* Updated *)
         *)
 
 let generate_sigmas_rhste = fun delta aqmap lhste rhste ys ->
@@ -194,7 +199,7 @@ let generate_sigmas_rhste = fun delta aqmap lhste rhste ys ->
         let sigma = TypeCheck.types qs delta lhste rhste y in
         sigma :: acc
     in
-    TypeCheck.reset_memo ();
+    TypeCheck.reset_memo (); (* Set a new memo for the new type env. *)
     (* let te = Types.merge_gammas lhste rhste in *)
     let rsigmas = List.fold_left (f delta aqmap lhste rhste) [] ys in
     List.rev rsigmas
@@ -222,21 +227,16 @@ let merge_sigmass = fun sigmass ->
     List.fold_left f [] sigmass
 
 let generate_sigmass_context =
-    fun delta aqmap lhste argte xs ys cs acc zss ->
-    let rhstes = generate_rhstes argte xs cs zss in
+    fun delta aqmap lhste argte xs ys fvs acc context ->
+    let rhstes = generate_rhstes argte xs fvs context in
     let sigmass = generate_sigmass_rhstes delta aqmap lhste rhstes ys in
     List.rev_append sigmass acc
 
-(* safe and simple comparison *)
+(* Safe and simple comparison (possibly inefficient in the long run) *)
 let subsumed = fun sigmas1 sigmas2 ->
     List.for_all2 Sigma.subset sigmas1 sigmas2
 
-(* sum of cardinals *)
-let cardinal_sigmas = fun sigmas ->
-    let sum = fun acc sigma -> acc + Sigma.cardinal sigma in
-    List.fold_left sum 0 sigmas
-
-(* compare two sigma lists *)
+(* Compare two sigma lists *)
 let compare_sigmass = fun sigmas1 sigmas2 ->
     let rec compare_elementwise = fun sigmas1 sigmas2 ->
         match (sigmas1, sigmas2) with
@@ -248,28 +248,13 @@ let compare_sigmass = fun sigmas1 sigmas2 ->
         | _ -> assert false
     in
     compare_elementwise sigmas1 sigmas2
-    (*
-    let cardinal1 = cardinal_sigmas sigmas1 in
-    let cardinal2 = cardinal_sigmas sigmas2 in
-    let cc = compare cardinal1 cardinal2 in
-    if cc = 0 then compare_elementwise sigmas1 sigmas2
-    else cc
-    *)
-
-(* inefficient and not used *)
-let normalize_sigmass = fun sigmass ->
-    let add_if_not_subsumed = fun acc sigmas ->
-        if List.exists (subsumed sigmas) acc then acc
-        else sigmas :: acc
-    in
-    let sigmass = List.sort compare_sigmass sigmass in
-    List.fold_left add_if_not_subsumed [] (List.rev sigmass)
 
 module SigmasSet = X.Set.Make (struct
     type t = Sigma.t list
     let compare : t -> t -> int = compare_sigmass
 end)
 
+(* Memoize sigmas subsumed by another sigmas *)
 let memo_sub = ref FmlsMap.empty
 
 let remove_subsumed = fun ys sigmass ->
@@ -286,12 +271,6 @@ let update_subsumed = fun ys old_sigmass new_sigmass ->
     let new_diff = SigmasSet.union diff old_diff in
     memo_sub := FmlsMap.add ys new_diff !memo_sub
 
-let normalize_sigmass = fun ys sigmass ->
-    let sigmass = remove_subsumed ys sigmass in
-    let optimized = Opt.normalize_sigmass sigmass in
-    update_subsumed ys sigmass optimized;
-    optimized
-
 (* Naive implementation *)
 (* Can be improved using some sophisticated algorithm like AMS-Lex *)
 let merge_sigmass = fun sigmass1 sigmass2 ->
@@ -303,7 +282,7 @@ let merge_sigmass = fun sigmass1 sigmass2 ->
     let merged = List.fold_left (f sigmass1) sigmass1 sigmass2 in
     SigmasSet.elements (SigmasSet.of_list merged)
 
-let normalize_sigmass2 = fun argte ys sigmass ->
+let normalize_sigmass = fun argte ys sigmass ->
     let sigmass = remove_subsumed ys sigmass in
     let sigmass = SigmasSet.of_list sigmass in
     let old_sigmass = FmlsMap.find_default [] ys argte in
@@ -324,22 +303,12 @@ let normalize_sigmass2 = fun argte ys sigmass ->
                 (* exclusive. How should we merge them? *)
                 let old_sigmass = SigmasSet.elements old_sigmass in
                 merge_sigmass old_sigmass new_sigmass
-                (*
-                let merged = List.rev_append new_sigmass old_sigmass in
-                Opt.normalize_sigmass merged
-                *)
     in
     let sigmass = SigmasSet.elements sigmass in
     update_subsumed ys sigmass optimized;
     optimized
 
-let normalize_sigmass3 = fun argte ys sigmass ->
-    let old_sigmass = FmlsMap.find_default [] ys argte in
-    let new_sigmass = List.rev_append old_sigmass sigmass in
-    let new_sigmass = SigmasSet.of_list new_sigmass in
-    SigmasSet.elements new_sigmass
-
-let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys cs ->
+let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys fvs ->
     let aqmap = Flow.get_aqmap flow_info in
     let contexts = Flow.get_contexts ys flow_info in
     if contexts = [] then
@@ -348,15 +317,13 @@ let generate_sigmass_rhs = fun fmap delta flow_info lhste argte x ys cs ->
     else
         let (xs, _) = LHS.find x fmap in
         let f =
-            generate_sigmass_context delta aqmap lhste argte xs ys cs
+            generate_sigmass_context delta aqmap lhste argte xs ys fvs
         in
         let sigmass = List.fold_left f [] contexts in
-        (* normalize_sigmass ys sigmass *)
-        normalize_sigmass2 argte ys sigmass
-        (* normalize_sigmass3 argte ys sigmass *)
+        normalize_sigmass argte ys sigmass
         (* Opt.normalize_sigmass sigmass *)
 
-(* check if updated assuming that both lists are normalized *)
+(* Check if updated assuming that both lists are normalized *)
 let updated_sigmass = fun sigmass1 sigmass2 ->
     if List.length sigmass1 = List.length sigmass2 then
         not (List.for_all2 (List.for_all2 Sigma.equal) sigmass1 sigmass2)
@@ -366,11 +333,12 @@ let update_argte = fun ys sigmass argte ->
     let old_sigmass = FmlsMap.find_default [] ys argte in
     if old_sigmass = [] then
         let argte = FmlsMap.add ys sigmass argte in
-        (argte, true)
+        (argte, true) (* Updated *)
     else if updated_sigmass sigmass old_sigmass then
-        (FmlsMap.add ys sigmass argte, true)
-    else (argte, false)
+        (FmlsMap.add ys sigmass argte, true) (* Updated *)
+    else (argte, false) (* No updated *)
 
+(* Add winning nodes to tj *)
 let add_winning_nodes = fun winning_nodes tj ->
     let f = fun x sigma tj ->
         let g = fun x tau tj ->
@@ -394,14 +362,14 @@ let check_loop_count = fun lhste argte ->
         raise Over_loop
     end else ()
 
-let restrict_lhste = fun cs lhste ->
+let restrict_lhste = fun fvs lhste ->
     let f = fun lhste x acc ->
         if Gamma.mem x lhste then
             let sigma = Gamma.find x lhste in
             Gamma.add x sigma acc
         else acc
     in
-    IdSet.fold (f lhste) cs Gamma.empty
+    IdSet.fold (f lhste) fvs Gamma.empty
 
 let add_axioms = fun axioms dep_kernels x lhste ->
     let f = fun axioms kernel acc ->
@@ -413,7 +381,10 @@ let add_axioms = fun axioms dep_kernels x lhste ->
     let kernels = LHS.find_default IdSet.empty x dep_kernels in
     IdSet.fold (f axioms) kernels lhste
 
+(* Memoize type environments already checked by TypeJudge.type_envs *)
 let prev_x = ref LHS.empty
+
+(* TypeJudge.hoge must be refreshed when lhste is updated *)
 let update_prev_x = fun x lhste ->
     let prev_lhste = LHS.find_default Gamma.empty x !prev_x in
     if Gamma.equal Sigma.equal lhste prev_lhste then ()
@@ -426,13 +397,13 @@ let propagate_lhs =
     fun fmap delta flow_info winning_nodes axioms dep_kernels tj lhste argte queue x ->
     Log.exec 3 (fun () ->
         print_endline ("propagating " ^ (Id.to_string x)));
-    let cs = Flow.get_children x flow_info in
-    let lhste' = restrict_lhste cs lhste in
+    let fvs = Flow.get_children x flow_info in
+    let lhste' = restrict_lhste fvs lhste in
     let lhste' = add_axioms axioms dep_kernels x lhste' in
     update_prev_x x lhste';
     let epsilon =
         generate_epsilon_lhs fmap delta flow_info
-                             winning_nodes lhste' argte x cs
+                             winning_nodes lhste' argte x fvs
     in
     let (epsilon, winning_nodes, tj) =
         Imm.optimize x epsilon winning_nodes tj
@@ -445,7 +416,10 @@ let propagate_lhs =
         (winning_nodes, axioms, tj, lhste, argte, queue)
     else (winning_nodes, axioms, tj, lhste, argte, queue)
 
+(* Memoize type environments already checked by TypeCheck.types *)
 let prev_ys = ref FmlsMap.empty
+
+(* TypeCheck.hoge must be refreshed when lhste is updated *)
 let update_prev_ys = fun ys lhste ->
     let prev_lhste = FmlsMap.find_default Gamma.empty ys !prev_ys in
     if Gamma.equal Sigma.equal lhste prev_lhste then ()
@@ -459,12 +433,12 @@ let propagate_rhs =
     Log.exec 3 (fun () ->
         print_endline ("propagating " ^ (string_of_formulas ys)));
     let x = Flow.get_parent ys flow_info in
-    let cs = Flow.get_siblings ys flow_info in
-    let lhste' = restrict_lhste cs lhste in
+    let fvs = Flow.get_siblings ys flow_info in
+    let lhste' = restrict_lhste fvs lhste in
     let lhste' = add_axioms axioms dep_kernels x lhste' in
     update_prev_ys ys lhste';
     let sigmass =
-        generate_sigmass_rhs fmap delta flow_info lhste' argte x ys cs
+        generate_sigmass_rhs fmap delta flow_info lhste' argte x ys fvs
     in
     let (argte, updated) = update_argte ys sigmass argte in
     if updated then
